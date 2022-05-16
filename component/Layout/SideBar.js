@@ -19,6 +19,7 @@ const SideBar = ({ isSide, showSide }) => {
 
   const dispatch = useDispatch();
   const logout = () => {
+    // localStorage.originalCount=0
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -55,7 +56,7 @@ const SideBar = ({ isSide, showSide }) => {
       {isSide ? (
         session ? (
           <SpaceDiv>
-            <Avatar size={44} src={session.user.image} />
+            <Avatar size={44} src="kurumi.jpg"  />
           </SpaceDiv>
         ) : (
           <SpaceDiv>
@@ -74,7 +75,7 @@ const SideBar = ({ isSide, showSide }) => {
               <img src="logout.png" /> 로그아웃
             </button>
           ) : (
-            <button onClick={logout}>
+            <button onClick={()=>logout()}>
               <img src="logout.png" /> 로그아웃
             </button>
           )}

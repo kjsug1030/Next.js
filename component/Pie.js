@@ -5,9 +5,8 @@ import { Card } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
 const Pie = ({ userRate }) => {
-
-  const userRateRidding=userRate.R?userRate.R:0
-  const userRateRunning=userRate.B?userRate.B:0
+  const userRateRidding = userRate.R ? userRate.R : 0;
+  const userRateRunning = userRate.B ? userRate.B : 0;
 
   const options = {
     plugins: {
@@ -15,16 +14,16 @@ const Pie = ({ userRate }) => {
         position: "bottom",
       },
     },
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: true, // 반응형 자동 높이설정 off
   };
 
-  const labels = ["러닝", "달리기"];
+  const labels = ["라이딩", "러닝"];
   const data = {
     labels,
     datasets: [
       {
-        label: ["러닝", "달리기"],
+        label: ["라이딩", "러닝"],
         data: [userRateRidding, userRateRunning],
         backgroundColor: ["#0288D1", "#BBDEFB"],
       },
@@ -33,9 +32,13 @@ const Pie = ({ userRate }) => {
 
   return (
     <PieDiv>
+      {/* <TopCard> */}
+      {/* <span className="title">나의 운동비율</span> */}
+      {/* </TopCard> */}
+
       <CardWrapper>
         <h3>나의 운동비율</h3>
-        <Doughnut data={data} options={options} width={290} height={280} />
+        <Doughnut data={data} options={options} width={250} height={290} />
       </CardWrapper>
     </PieDiv>
   );
@@ -45,8 +48,8 @@ export default React.memo(Pie);
 
 const PieDiv = styled.div`
   display: inline-block;
-  // width: 30%;
-  // margin-right: 3.3%;
+  width: 30%;
+  margin-right: 3.3%;
   // max-width: 230px;
 
   // min-height: 450px;
@@ -63,15 +66,20 @@ const PieDiv = styled.div`
     padding: 0 !important;
   }
 
-  //   @media Screen and (max-width: 1280px) {
-  //     width: 50%;
-  //     height: 100%;
-  //   }
-
-  //   @media Screen and (max-width: 767px) {
-  //     width: 100%;
-  //     height: 100%;
-  //   }
+  // .title {
+  //   display: inline-block;
+  //   width: 100%;
+  //   max-width: 200px;
+  //   height: 60px;
+  //   line-height: 30px;
+  //   text-align: left;
+  //   background: #467ada;
+  //   color: #fff;
+  //   padding-left: 15px;
+  //   font-size: 26px;
+  //   font-weight: bold;
+  //   clip-path: polygon(65% 0%, 100% 100%, 100% 100%, 0 100%, 0 0);
+  // }
 `;
 
 const CardWrapper = styled(Card)`
@@ -91,3 +99,7 @@ const CardWrapper = styled(Card)`
     margin-bottom: 30px;
   }
 `;
+
+// const TopCard = styled.div`
+
+// `;

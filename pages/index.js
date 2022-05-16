@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import {
   Menu,
   Button,
@@ -8,17 +8,33 @@ import {
   Divider,
   Modal,
   Empty,
+  Timeline,
   Statistic,
-  Progress
+  modal,
+  Badge
 } from "antd";
+import {LoadingOutlined} from '@ant-design/icons'
+
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "../component/LoginForm";
 import axios from "axios";
 
 import wrapper from "../store/configureStore";
 import PostCard from "../component/PostCard";
-import MyNote from "../component/MyNote";
-import { LOAD_MY_INFO_REQUEST , USER_RATE_REQUEST, WEEKRECORD_REQUEST,WEEKRECORD_BIKE_REQUEST, WEATHER_REQUEST, PROGRESS_REQUEST} from "../reducers/user";
+
+import {
+  LOAD_MY_INFO_REQUEST,
+  USER_RATE_REQUEST,
+  WEEKRECORD_REQUEST,
+  WEEKRECORD_BIKE_REQUEST,
+  WEATHER_REQUEST,
+  PROGRESS_REQUEST,
+  NOFICATION_SUCCESS,
+  NOFICATION_REQUEST,
+  FOLLOWING_REQUEST,
+  NOFICATION_DELETE_REQUEST,
+  CHECK_NOFICATION_REQUEST,
+} from "../reducers/user";
 import { LOAD_MORE_POST_REQUEST, LOAD_POSTS_REQUEST } from "../reducers/post";
 
 import { END } from "redux-saga";
@@ -36,22 +52,76 @@ import Target from "../component/Target";
 import MMR from "../component/MMR";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import PurposePie from "../component/purposePie";
+import Progress from "../component/Progress";
+// import { disableCursor } from "@fullcalendar/common";
 
 function index() {
 
-  const {weekRecord,userRate,weekBikeRecord,purposeProgress}=useSelector((state)=>(state.user))
+  const followAcceptSuccess = () => {
+    Modal.success({
+      content: "팔로우수락을 했습니다!",
+    });
+  };
 
+
+  const { weekRecord, userRate, weekBikeRecord, purposeProgress } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
     Modal.destroyAll();
   });
 
+
   const { searchMap } = useSelector((state) => state.map);
-  const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, loadMorePostLoading } = useSelector(
+  const { me,nofication ,noficationCheckCount} = useSelector((state) => state.user);
+  const { mainPosts, hasMorePosts, loadMorePostLoading,loadMorePostErrorBolean,loadMorePostNumberError } = useSelector(
     (state) => state.post
   );
+
+  const [noficationCount,setNoficationCount]=useState(0)
+
+  // const [checkNoficationCount, setCheckNoficationCount]=useState(0)
+
+  const [noficationLength,setNoficationLength]=useState(nofication.data.length)
+    const originalNoficationLength=nofication.data.length
   const dispatch = useDispatch();
+
+  const checkNoficationCountfunction=()=>{
+    // dispatch({
+    //   type:CHECK_NOFICATION_REQUEST,
+    //   data:nofication.data.length
+    // })
+    
+    localStorage.setItem(me.name, nofication.data.length)
+
+
+    // localStorage[me.name]=nofication.data.length
+    // setCheckNoficationCount(nofication.data.length)//새로고침하면저장이안됨
+    setNoficationCount(0)
+  }
+
+  // nickName=me.name
+
+  useEffect(()=>{
+   
+    if(!localStorage.getItem(me.name)){
+      localStorage.setItem(me.name,0)
+
+    }
+   
+    console.log('fd',localStorage)
+    console.log('length',nofication.data.length)
+    console.log('check',localStorage.originalCount)
+   
+      if(nofication.data.length-localStorage.getItem(me.name)>0){
+        setNoficationCount(noficationCount+(nofication.data.length-localStorage.getItem(me.name)))
+      }
+    
+  
+  },[])
+
+
 
   useEffect(() => {
     function onScroll() {
@@ -59,7 +129,7 @@ function index() {
         window.scrollY + document.documentElement.clientHeight >
         document.documentElement.scrollHeight - 300
       ) {
-        if (hasMorePosts && !loadMorePostLoading) {
+        if (hasMorePosts && !loadMorePostLoading&&!loadMorePostErrorBolean) {
           dispatch({
             type: LOAD_MORE_POST_REQUEST,
             data: mainPosts.nextPage,
@@ -73,64 +143,93 @@ function index() {
     };
   }, [hasMorePosts, loadMorePostLoading]);
 
+  const followAccept=(id)=>{
+    followAcceptSuccess()
+
+    console.log('qwresadasd',id)
+    dispatch({
+      type:FOLLOWING_REQUEST,
+      data:id
+    })
+  }
+
+  const noficationDelete=(id)=>{
+    dispatch({
+      type:NOFICATION_DELETE_REQUEST,
+      data:id
+    })
+  }
+
   return (
     <Container>
-    <LeftDiv>
-      <GreyLine />
-      <PostDiv>
-        {mainPosts.length === 0 ? (
-          <Empty description="포스트가 존재하지 않습니다" />
-        ) : (
-          mainPosts.data.map((post) => <PostCard post={post} key={post.id} />)
-        )}
-        {/* <Empty description="포스트가 존재하지 않습니다" /> */}
-      </PostDiv>
-      <GreyRightLine />
-    </LeftDiv>
-    <RightDiv
-    // style={{
-    //   display: "inline-block",
-    //   width: "50%",
-    //   position: "fixed",
-    //   top: "13%",
-    //   right: 0,
-    //   padding: 12,
-    //   // overflow: "visible",
-    //   height: "100%",
-    // }}
-    >
-      <div
-        style={{
-          display: "inline-block",
-          width: "100%",
-          position: "sticky",
-          top: "10%",
-          right: 0,
-          padding: 12,
-        }}
-      >
-        <TopDiv>
-          <WeekChart weekRecord={weekRecord} weekBikeRecord={weekBikeRecord} />
-          <MMR />
-        </TopDiv>
-        <BottomDiv>
-          <Pie userRate={userRate} />
-          {/* <MyNoteNote /> */}
-          {/* <PurposePie purposeProgress={purposeProgress}></PurposePie> */}
-          <Card>
-          *러닝목표율
-          {purposeProgress.run[0]?<div><Progress type="circle" percent={purposeProgress.run[0].progress}></Progress><div>목표:{purposeProgress.run[0].goalDistance}km</div><div>시작일:{purposeProgress.run[0].firstDate}</div><div>종료일:{purposeProgress.run[0].lastDate}</div></div>:<div>러닝등록된목표가없습니다.</div>}
+      <LeftDiv>
+        {/* <GreyLine /> */}
+        <PostDiv>
+          {mainPosts.length === 0 ? (
+            <>
+              <Empty description="포스트가 존재하지 않습니다" />
+            </>
+          ) : (
+            mainPosts.data.map((post,i) => (
+              <>
+                              <span className="title">Post</span>
 
-          *자전거목표율
-          {purposeProgress.bike[0]?<div><Progress type="circle" percent={purposeProgress.bike[0].progress}></Progress><div>목표:{purposeProgress.bike[0].goalDistance}km</div><div>시작일:{purposeProgress.bike[0].firstDate}</div><div>종료일:{purposeProgress.bike[0].lastDate}</div></div>:<div>자전거등록된목표가없습니다.</div>}
-
-          </Card>
+              {<PostCard post={post} key={post.id} />}
+                
+              </>
+            ))
+          )}
+          {/* <Empty description="포스트가 존재하지 않습니다" /> */}
+          {
+            loadMorePostErrorBolean?null:<LoadingOutlined style={{zIndex:'5',fontSize:40,marginLeft:250}}/>
+          }
           
-          <Target />
-        </BottomDiv>
-      </div>
-    </RightDiv>
-  </Container>
+
+        </PostDiv>
+
+        <GreyRightLine />
+      </LeftDiv>
+      <RightDiv>
+        <div
+          style={{
+            display: "inline-block",
+            width: "100%",
+            position: "sticky",
+            top: "15%",
+            right: 0,
+            padding: 12,
+          }}
+        >
+          <TopDiv>
+            <WeekChart weekRecord={weekRecord} weekBikeRecord={weekBikeRecord} />
+            {/* <MMR />
+             */}
+               <Badge count={noficationCount}>
+                 <Button onClick={()=>checkNoficationCountfunction()}>알림확인하기</Button>
+               </Badge>
+               {nofication?nofication.data.map((m)=>(
+               <>
+               <Card>
+                 {m.not_message} 
+               {m.not_type==='followRequest'? <Button primary onClick={()=>followAccept(m.target_mem_id)}>요청수락</Button>:null}
+              
+                <Button danger onClick={()=>noficationDelete(m.not_id)}>삭제</Button>
+                </Card>
+                <br></br>
+                </>
+             )):null}
+    
+            
+          </TopDiv>
+
+          <BottomDiv>
+            <Pie userRate={userRate} />
+            <Progress />
+            <Target />
+          </BottomDiv>
+        </div>
+      </RightDiv>
+    </Container>
   );
 }
 
@@ -139,32 +238,33 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
     if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;
+      axios.defaults.headers.Cookie = cookie;  
     }
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
-
     context.store.dispatch({
       type: LOAD_POSTS_REQUEST,
     });
     context.store.dispatch({
-      type:WEEKRECORD_REQUEST
-    })
+      type: WEEKRECORD_REQUEST,
+    });
     context.store.dispatch({
-      type:WEEKRECORD_BIKE_REQUEST
-    })
+      type: WEEKRECORD_BIKE_REQUEST,
+    });
     context.store.dispatch({
-      type:USER_RATE_REQUEST
-    })
+      type: USER_RATE_REQUEST,
+    });
     context.store.dispatch({
-      type:WEATHER_REQUEST
-    })
+      type: WEATHER_REQUEST,
+    });
     context.store.dispatch({
-      type:PROGRESS_REQUEST
+      type: PROGRESS_REQUEST,
+    });
+    context.store.dispatch({
+      type:NOFICATION_REQUEST,
     })
-    
-    
+
     console.log("getssr", new Date().toTimeString());
 
     context.store.dispatch(END);
@@ -181,6 +281,8 @@ const Container = styled.div`
   // height: 1300px;
   padding: 0 2%;
   // border: 1px solid grey;
+
+  // padding: "3% 0,
 
   position: relative;
 
@@ -256,6 +358,27 @@ const PostDiv = styled.div`
     font-weight: bold;
     font-size: 26px;
   }
+
+  .ant-card {
+    border-top-left-radius: 0 !important;
+  }
+
+  .title {
+    display: inline-block;
+    width: 100%;
+    max-width: 140px;
+    height: 35px;
+    line-height: 30px;
+    text-align: left;
+    background: #467ada;
+    color: #fff;
+    padding-left: 15px;
+    font-size: 26px;
+    font-weight: bold;
+    clip-path: polygon(65% 0%, 100% 100%, 100% 100%, 0 100%, 0 0);
+    position: relative;
+    left: 1px;
+  }
 `;
 
 const TopDiv = styled.div`
@@ -264,7 +387,7 @@ const TopDiv = styled.div`
 `;
 
 const BottomDiv = styled.div`
-  margin-top: 5%;
+  margin-top: 3%;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -283,7 +406,7 @@ const GreyLine = styled.div`
 `;
 
 const GreyRightLine = styled(GreyLine)`
-  left: 45%;
+  left: 49%;
   margin-left: 15px;
   margin-right: 0;
 `;

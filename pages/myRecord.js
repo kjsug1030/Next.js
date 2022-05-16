@@ -123,7 +123,7 @@ function myRecord() {
     },
     {
       title: "총 러닝 거리",
-      distance: totalRunTime.distance?totalRunTime.distance+'km':0+'km',
+      distance: totalRunTime.distance?totalRunTime.distance.toFixed(2)+'km':0+'km',
     },
   ];
 

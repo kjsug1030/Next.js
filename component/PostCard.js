@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Card,
   Button,
@@ -10,10 +10,12 @@ import {
   Col,
   Empty,
   Carousel,
+  Badge,
 } from "antd";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
+import {COMMENT_DELETE_REQUEST, LOAD_COMMENT_REQUEST,LIKE_REQUEST,UNLIKE_REQUEST} from '../reducers/post'
 import {
   RetweetOutlined,
   HeartTwoTone,
@@ -38,6 +40,7 @@ import postcss from "postcss";
 import moment from "moment";
 
 import ImageCarousel from "./imageCarousel";
+import "moment/locale/ko";
 
 // import ImageCarousel from "./imageCarousel ";
 //
@@ -61,109 +64,127 @@ const CardWrapper = styled.div`
 `;
 
 const PostCard = ({ post }) => {
+
+
+  const {me}=useSelector((state)=>state.user)
+  const {comment,likeRequest}=useSelector((state)=>state.post)
+
+  const {like,setLike}=useState(post.likes.length)
+
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const [liked, setLiked] = useState(false);
   const [mmr, setMmr] = useState(false);
+  const dispatch=useDispatch();
 
-  const onToggleMmr = () => {
-    setMmr((prev) => !prev);
+  const commentDelete=(id)=>{
+    dispatch({
+      type:COMMENT_DELETE_REQUEST,
+      data:id
+    })
+  }
+
+
+
+  const onToggleLike = (post) => {
+    setLiked((prev) => !prev);
+    console.log('likeCheck',post.likeCheck)
+    dispatch({
+      type:LIKE_REQUEST,
+      data:post.id
+    })
+  
+   
   };
 
-  const onToggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
-  }, []);
 
-  const onToggleComment = useCallback(() => {
+  const onToggleComment = (id) => {
     setCommentFormOpened((prev) => !prev);
-  }, []);
+    if(commentFormOpened===false){
+      dispatch({
+        type:LOAD_COMMENT_REQUEST,
+        data:id
+      })
+    }
+   
+  };
 
   const dateFormat = (d) => {
     let date = moment(d);
     return date.format("MM월DD일");
   };
 
-  
   return (
     <Container>
-      <span className="title">Post</span>
-      <Card
-        // cover={post.Images[0] && <PostImages images={post.Images} />}
-        style={{
-          width: "100%",
-          // height: "29vw",
-          padding: "12px",
-          borderRadius: 20,
-          marginBottom: "20px !important",
-          // marginLeft: 100,
-        }}
-        hoverable
-      >
-        <Row gutter={[16, 16]}>
-          {/* {post.image && (
+      {/* <span className="title">Post</span> */}
+      <Badge.Ribbon text={moment(post.created_at).fromNow()} color="#467ada">
+        <Card
+          // cover={post.Images[0] && <PostImages images={post.Images} />}
+          style={{
+            width: "100%",
+            // height: "29vw",
+            padding: "12px",
+            borderRadius: 20,
+            marginBottom: "20px !important",
+            // marginLeft: 100,
+          }}
+          hoverable
+        >
+          <Row gutter={[16, 16]}>
+            {/* {post.image && (
             <Col span={12}>
               <ImageCarousel post={post} />
             </Col>
           )} */}
-          <Col span={12}>
-            <ImageCarousel post={post} />
-          </Col>
-          {/* <Col span={12}>
-            <img
-              className="imgimg"
-              width={300}
-              height={330}
-              alt="지도사진"
-              src={
-                post.map_image[0]
-                  ? post.map_image[0].url
-                  : // : "https://cdn-icons.flaticon.com/png/512/5540/premium/5540531.png?token=exp=1650162938~hmac=72129843982ff4f18bebfb639ee9623d"
-                    "https://t4.ftcdn.net/jpg/02/51/95/53/240_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg"
-              }
-            />
-          </Col> */}
-          <Col span={12}>
-            <RightCol>
-              <Card.Meta
-                style={{ position: "relative" }}
-                avatar={
-                  <Avatar className="card1" size={40} src="kurumi.jpg">
-                    {post.user.name}
-                  </Avatar>
-                }
-                description={<div>{moment(post.created_at).fromNow()}</div>}
-              />
-              <TitleDiv>
-                <a style={{ bottom: 30, fontSize: 20, position: "relative" }}>
-                  {post.user.name}
-                </a>
-                <br />
-              </TitleDiv>
-              <SpaceDiv
-                style={{
-                  // height: 150,
-                  // border: "1px solid #e9e9e9",
-                }}
-              >
-                <p>제목:{post.title}</p>
-                <p>내용:{post.content}</p>
-                <p>소모 칼로리 : {post.calorie}</p>
-                {/* 함께 달린 유저ID가 넘어오면 함께달린 유저도 표시 */}
-                {/* <p>내가 함께달린 유저ID : {post.opponent_id}</p> */}
-                <p>평균속도 : {post.average_speed}</p>
-                <p>뛴거리 :{post.distance}</p>
+            <Col span={12}>
+              <ImageCarousel post={post} />
+            </Col>
+            
+            <Col span={12}>
+              <RightCol>
+                <Card.Meta
+                  style={{ position: "relative" }}
+                  avatar={
+                    <Avatar className="card1" size={40} src="kurumi.jpg">
+                      {post.user.name}
+                    </Avatar>
+                  }
+                  // description={<div>{moment(post.created_at).fromNow()}</div>}
+                />
 
-              </SpaceDiv>
-              <HashTag>
-                {/* <a>#라이딩</a>
+                <TitleDiv>
+                  <a style={{ bottom: 30, fontSize: 20, position: "relative" }}>
+                    {post.user.name}
+                  </a>
+                  <br />
+                </TitleDiv>
+                <SpaceDiv
+                  style={{
+                    // height: 150,
+                    border: "1px solid #e9e9e9",
+                  }}
+                  className="space"
+                >
+                  <p>제목 : {post.title}</p>
+                  {/* <p>내용 : {post.content}</p> */}
+
+                  {/* 함께 달린 유저ID가 넘어오면 함께달린 유저도 표시 */}
+                  {/* <p>내가 함께달린 유저ID : {post.opponent_id}</p> */}
+                  <p>평균속도 : {post.average_speed} km/h</p>
+                  <p>뛴거리 : {post.distance} km</p>
+                  <p>소모 칼로리 : {post.calorie} cal</p>
+                </SpaceDiv>
+                <HashTag>
+                  {/* 
                 <a>#대회</a>
                 <a>#골인</a> */}
-                <br />
-              </HashTag>
-              <DescriptionWrapper>
-                {/* <Descriptions.Item><h3>{post.content}</h3></Descriptions.Item> */}
-              </DescriptionWrapper>
-              <SecondBtnDiv>
-                {/* <Button
+                  <a>#Running</a>
+                  <br />
+                </HashTag>
+                <DescriptionWrapper>
+                  <Descriptions.Item>{post.content}</Descriptions.Item>
+                </DescriptionWrapper>
+                <SecondBtnDiv>
+                  {/* <Button
                   style={{ width: 160, marginLeft: 10, borderRadius: 15 }}
                   onClick={onToggleMmr}
                 >
@@ -174,43 +195,44 @@ const PostCard = ({ post }) => {
                   )}
                   MMR
                 </Button> */}
-                <Button
-                  style={{
-                    width: 160,
-                    marginLeft: 10,
-                    borderRadius: 15,
-                  }}
-                  onClick={onToggleLike}
-                >
-                  {liked ? (
-                    <HeartTwoTone twoToneColor="#eb2f96" key="heart" />
-                  ) : (
-                    <HeartOutlined key="heart" onClick={onToggleLike} />
-                  )}
-                  Like
-                </Button>
-                <Button
-                  style={{ width: 160, marginLeft: 10, borderRadius: 15 }}
-                  onClick={onToggleComment}
-                >
-                  <CommentOutlined />
-                  comment
-                </Button>
-              </SecondBtnDiv>
-            </RightCol>
-          </Col>
-        </Row>
+                  <Button
+                    style={{
+                      width: 160,
+                      marginLeft: 10,
+                      borderRadius: 15,
+                    }}
+                    onClick={()=>onToggleLike(post)}
+                  >
+                    {post.likeCheck? (
+                      <HeartTwoTone twoToneColor="#eb2f96" key="heart" />
+                    ) : (
+                      <HeartOutlined key="heart" />
+                    )}
+                    Like  {post.likes.length}
+                  </Button>
+                  <Button
+                    style={{ width: 160, marginLeft: 10, borderRadius: 15 }}
+                    onClick={()=>onToggleComment(post.id)}
+                  >
+                    <CommentOutlined />
+                    comment
+                  </Button>
+                </SecondBtnDiv>
+              </RightCol>
+            </Col>
+          </Row>
 
-        {/* <div>{post.content}</div> */}
-      </Card>
+          {/* <div>{post.content}</div> */}
+        </Card>
+      </Badge.Ribbon>
       {commentFormOpened && (
         <>
-          <CommentForm post={post} />
+          <CommentForm  comment={comment} postId={post.id} />
           <List
-            style={{ width: 500, marginLeft: 100 }}
-            header={`${post.comment.length} 댓글`}
+            // style={{ width: 500, marginLeft: 100 }}
+            header={`${comment.length} 댓글`}
             itemLayout="horizontal"
-            dataSource={post.comment}
+            dataSource={comment}
             renderItem={(item) => (
               <li>
                 <Comment
@@ -221,13 +243,18 @@ const PostCard = ({ post }) => {
                     </a>
                   }
                   content={item.content}
+                  
                 />
+                {me.id===item.user_id?<Button type="danger" onClick={()=>commentDelete(item.id)}>삭제</Button>:null}
+                
               </li>
             )}
           />
         </>
       )}
+
     </Container>
+    
   );
 };
 
@@ -283,6 +310,10 @@ const Container = styled.div`
     right: 16px;
   }
 
+  .ant-ribbon {
+    top: 33px;
+  }
+
   img {
     border-radius: 16px;
   }
@@ -291,27 +322,6 @@ const Container = styled.div`
     // object-fit: cover;
     width: 100%;
     // height: 100%;
-  }
-
-  .ant-btn {
-    width: 100% !important;
-  }
-
-  .title {
-    display: inline-block;
-    width: 100%;
-    max-width: 150px;
-    height: 35px;
-    line-height: 30px;
-    text-align: left;
-    background: #467ada;
-    color: #fff;
-    padding-left: 15px;
-    font-size: 26px;
-    font-weight: bold;
-    clip-path: polygon(65% 0%, 100% 100%, 100% 100%, 0 100%, 0 0);
-    position: relative;
-    right: 40%;
   }
 `;
 
@@ -356,6 +366,8 @@ const RightCol = styled.div`
   // border: 1px solid grey;
   // padding-top: 20px;
 
+  position: relative;
+
   .card1 {
     position: relative;
     top: 4px;
@@ -364,6 +376,19 @@ const RightCol = styled.div`
   // .ant-card-description {
   //   top: 10px;
   // }
+
+  .ant-btn {
+    width: 100% !important;
+  }
+
+  .space {
+    p {
+      text-align: left;
+      font-size: 14px;
+      // margin-top: 1px;
+      padding-left: 20px;
+    }
+  }
 `;
 
 const DateDiv = styled.div`

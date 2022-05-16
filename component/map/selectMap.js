@@ -315,12 +315,12 @@ function selectMap({}) {
                   size="large"
                 />
                 <Buttons>
-                  {mapState === "B" ? (
+                {mapState === "B" ? (
                     <>
                       <Button
                         className="btn1"
                         onClick={bikeSelectMap}
-                        style={{ background: "#1890ff", color: "#fff" }}
+                        style={{ background: "#467ada", color: "#fff" }}
                       >
                         자전거
                       </Button>
@@ -336,7 +336,7 @@ function selectMap({}) {
                       <Button
                         className="btn2"
                         onClick={runningSelectMap}
-                        style={{ background: "#1890ff", color: "#fff" }}
+                        style={{ background: "#467ada", color: "#fff" }}
                       >
                         달리기
                       </Button>
@@ -382,7 +382,7 @@ function selectMap({}) {
               <GoogleMap
                 id="marker-example"
                 mapContainerStyle={mapContainerStyle}
-                zoom={14}
+                zoom={15}
                 center={geom}
                 onLoad={handleOnLoad}
                 onDragEnd={handleCenterChanged}
@@ -467,16 +467,20 @@ export const getStaticProps = wrapper.getStaticProps(async (context) => {
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });
-
 const Container = styled.div`
   // 전체 div
   width: 100%;
   height: 100%;
   // padding-top: 1%;
+  ant-btn {
+    background: #467ada;
+    border-color: #467ada;
+    color: #fff;
+  }
 
   .ant-input {
     border-radius: 15px;
-    border-radius: 1px solid #1890ff;
+    border-radius: 1px solid #467ada;
   }
 
   .ant-input-group-wrapper {
@@ -551,6 +555,11 @@ const LeftDiv = styled.div`
   .scroll::-webkit-scrollbar {
     display: none;
   }
+
+  .ant-btn-primary {
+    border-color: #467ada;
+    background: #467ada;
+  }
 `;
 
 export const Title = styled.p`
@@ -581,13 +590,13 @@ const Buttons = styled.div`
   }
 
   Button:hover {
-    background: #1683e8;
-    border-color: #1683e8;
+    background: #467ada;
+    border-color: #467ada;
     color: #fff;
   }
 
   // Button:focus {
-  //   background: #1683e8;
+  //   background: #467ada;
   //   color: #fff;
   // }
 `;

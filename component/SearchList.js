@@ -52,8 +52,12 @@ function SearchList({
     <Container>
       <Card hoverable>
         <DivDiv>
-          <LeftDiv>
-            <MdDirectionsBike size={90} />
+        <LeftDiv>
+            {searchMap.event === "B" ? (
+              <MdDirectionsBike size={90} />
+            ) : (
+              <FaRunning size={90} />
+            )}
           </LeftDiv>
           <RightDiv>
             <h1
@@ -112,6 +116,7 @@ const LeftDiv = styled.div`
   height: 170px;
   padding: 10px;
   background: #1890ff;
+  background: #467ada;
   // background: linear-gradient(to right, #66b5ff, #3fa3ff, #1890ff);
   border-radius: 9px 0 0 9px;
   z-index: 1;

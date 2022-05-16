@@ -12,11 +12,11 @@ import {
 import wrapper from "../../store/configureStore";
 import { END } from "redux-saga";
 import axios from "axios";
-import { Card, Table, Button, Popover, Avatar, Timeline } from "antd";
+import { Card, Table, Button, Popover, Avatar } from "antd";
+const { Column } = Table;
 import styled from "styled-components";
 import moment from "moment";
 import { Title, CardDiv } from "../../component/map/selectMap";
-const { Column } = Table;
 import { useRouter } from "next/router";
 import RouteInformation from "../../component/RouteInformation";
 import { useParams } from "react-router-dom";
@@ -32,75 +32,45 @@ import {
 } from "react-vis";
 import "react-vis/dist/style.css";
 
-
-
-function timeChange(seconds) {
-  //3항 연산자를 이용하여 10보다 작을 경우 0을 붙이도록 처리 하였다.
-  var hour =
-    parseInt(seconds / 3600) < 10
-      ? // ? "0" + parseInt(seconds / 3600)
-        parseInt(seconds / 3600)
-      : null;
-  var min =
-    parseInt((seconds % 3600) / 60) < 10
-      ? "0" + parseInt((seconds % 3600) / 60)
-      : parseInt((seconds % 3600) / 60);
-  var sec = seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60;
-  //연산한 값을 화면에 뿌려주는 코드
-  const value = hour === 0 ? min + ":" + sec : hour + ":" + min + ":" + sec;
-  return value;
-}
-
-
 function oneRoute() {
-    const {userId}=useParams()
-    const router = useRouter();
+  const { userId } = useParams();
+  const router = useRouter();
 
+  const { loadMap, mapRank, myMapRank } = useSelector((state) => state.map);
+  const { me } = useSelector((state) => state.user);
 
+  // const [highAltitude, setHighAltitude] = useState("");
+  // const [lowAltitude, setLowAltitude] = useState("");
 
-    const { loadMap, mapRank,myMapRank} = useSelector((state) => state.map);
-    const {me}=useSelector((state)=>state.user)
-    console.log(loadMap)
+  var highAltitude = loadMap.altitude[0].y;
+  var lowAltitude = loadMap.altitude[0].y;
 
+  const [strokeWeight, setStrokeWeight] = useState(5);
+  const [elevPath, setElevPath] = useState({
+    lat: "",
+    lng: "",
+  });
+  const [state, setState] = useState({
+    crosshairValue: [],
+  });
+  const [index, setIndex] = useState("");
 
-   var highAltitude=loadMap.altitude[0].y
-   var lowAltitude=loadMap.altitude[0].y
-
-    const [strokeWeight, setStrokeWeight] = useState(5);
-    const [elevPath, setElevPath] = useState({
-        lat: "",
-        lng: "",
-      })
-    const [state, setState] = useState({
-        crosshairValue: [],
-      });
-    const [index, setIndex] = useState("");
-
-    for(var i=1; i<loadMap.altitude.length; i++){
-      if(lowAltitude>loadMap.altitude[i].y){
-          lowAltitude=loadMap.altitude[i].y
-      }
-      if(highAltitude<loadMap.altitude[i].y){
-          highAltitude=loadMap.altitude[i].y
-      }
+  for (var i = 1; i < loadMap.altitude.length; i++) {
+    if (lowAltitude > loadMap.altitude[i].y) {
+      lowAltitude = loadMap.altitude[i].y;
+    }
+    if (highAltitude < loadMap.altitude[i].y) {
+      highAltitude = loadMap.altitude[i].y;
+    }
   }
 
-    const dispatch = useDispatch();
-  
-    
+  const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch({
-            type: LOAD_LOGIN_REQUEST
-            });
-          
-    },[])
- 
-
-
-
- 
-
+  useEffect(() => {
+    dispatch({
+      type: LOAD_LOGIN_REQUEST,
+    });
+  }, []);
 
   const mouseOut = () => {
     setStrokeWeight(5);
@@ -137,13 +107,12 @@ function oneRoute() {
 
   //elevmarker
 
- 
-
   const handleMouseOver = () => {
     console.log("qqqq");
     setState({ crosshairValue: [] });
     setIndex(0);
   };
+
   const qq = (value, { index }) => {
     console.log(value);
     console.log("aa", index);
@@ -158,37 +127,51 @@ function oneRoute() {
   };
   //elevmarker
 
-  
-
   const dateFormat = (d) => {
     let date = moment(d);
     return date.format("YYYY년 MM월 DD일");
   };
 
-  const sortData = ["ascend", "descend", "ascend"];
+  function timeChange(seconds) {
+    //3항 연산자를 이용하여 10보다 작을 경우 0을 붙이도록 처리 하였다.
+    var hour =
+      parseInt(seconds / 3600) < 10
+        ? // ? "0" + parseInt(seconds / 3600)
+          parseInt(seconds / 3600)
+        : null;
+    var min =
+      parseInt((seconds % 3600) / 60) < 10
+        ? "0" + parseInt((seconds % 3600) / 60)
+        : parseInt((seconds % 3600) / 60);
+    var sec = seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60;
+    //연산한 값을 화면에 뿌려주는 코드
+    const value = hour === 0 ? min + ":" + sec : hour + ":" + min + ":" + sec;
+    return value;
+  }
 
   return (
     <>
       <Container>
-          
-        <TitleText>{loadMap.trackName}</TitleText>
         <OverviewDiv>
-          <div>
-            <div className="title">거리</div>
-            <div className="item">{loadMap.totalDistance.toFixed(2)}km</div>
-          </div>
-          <div>
-            <div className="title">최고 고도</div>
-            <div className="item">{parseFloat(highAltitude).toFixed(2) }m</div>
-          </div>
-          <div>
-            <div className="title">최저 고도</div>
-            <div className="item">{parseFloat(lowAltitude).toFixed(2) }m</div>
-          </div>
-          <div>
-            <div className="title">평균경사도</div>
-            <div className="item">{loadMap.avgSlope}%</div>
-          </div>
+          <h1>{loadMap.trackName}</h1>
+          <FlexDiv>
+            <div>
+              <div className="title">거리</div>
+              <div className="item">{loadMap.totalDistance.toFixed(2)}km</div>
+            </div>
+            <div>
+              <div className="title">최고 고도</div>
+              <div className="item">{parseFloat(highAltitude).toFixed(2)}m</div>
+            </div>
+            <div>
+              <div className="title">최저 고도</div>
+              <div className="item">{parseFloat(lowAltitude).toFixed(2)}m</div>
+            </div>
+            <div>
+              <div className="title">평균경사도</div>
+              <div className="item">{loadMap.avgSlope}%</div>
+            </div>
+          </FlexDiv>
         </OverviewDiv>
         <TopDiv>
           <LeftDiv>
@@ -198,9 +181,8 @@ function oneRoute() {
                   <GoogleMap
                     id="marker-example"
                     mapContainerStyle={mapContainerStyle}
-                    zoom={14}
+                    zoom={15}
                     center={{
-                      
                       lat: loadMap.gps.coordinates[0][1],
                       lng: loadMap.gps.coordinates[0][0],
                     }}
@@ -210,7 +192,7 @@ function oneRoute() {
                         // lat: loadMap.start_latlng[1],
                         // lng: loadMap.start_latlng[0],
                         lat: loadMap.gps.coordinates[0][1],
-                      lng: loadMap.gps.coordinates[0][0],
+                        lng: loadMap.gps.coordinates[0][0],
                       }}
                     />
 
@@ -238,13 +220,17 @@ function oneRoute() {
             </MapDiv>
             <MouseDiv>
               <CardDiv hoverable>
-                <XYPlot width={700} height={200} onMouseLeave={handleMouseOver}>
+                <XYPlot
+                  width={975}
+                  height={200}
+                  onMouseLeave={handleMouseOver}
+                  style={{ maxWidth: 975 }}
+                >
                   <VerticalGridLines />
                   <HorizontalGridLines />
                   <XAxis />
                   <YAxis />
                   <LineSeries data={loadMap.altitude} onNearestX={qq} />
-                  
                 </XYPlot>
               </CardDiv>
             </MouseDiv>
@@ -259,71 +245,124 @@ function oneRoute() {
               }}
             >
               <CardWrapper>
-              <TopCard>
-                <div>
-                  <span>순위</span>
-                  <span>속도</span>
-                  <span>기록</span>
-                  <span>날짜</span>
-                </div>
-              </TopCard>
+                <TopCard>
+                  <div>
+                    <span>순위</span>
+                    <span>속도</span>
+                    <span>기록</span>
+                    <span>날짜</span>
+                  </div>
+                </TopCard>
 
-                {myMapRank[0]==0?<div>순위데이터없음</div>:
-                <Card>
-                  순위:{myMapRank[0].rank+'위'}<br></br>
-                  속도:{myMapRank[0].post.average_speed+'km'}<br></br>
-                  기록:{myMapRank[0].post.time}<br></br>
-                  날짜:{myMapRank[0].post.created_at}<br></br>
-                </Card>
-                
-                
-                }  
+                {myMapRank[0] == 0 ? (
+                  <div>순위데이터없음</div>
+                ) : (
+                  <BottomCard hoverable>
+                    <div style={{ width: "100%", display: "flex" }}>
+                      <span style={{ marginLeft: 15 }} className="span1">
+                        {myMapRank[0].rank + "위"}
+                      </span>
+                      <span style={{ paddingLeft: 0 }} className="span2">
+                        {myMapRank[0].post.average_speed + "km"}
+                      </span>
+                      <span style={{ paddingLeft: 0 }}>
+                        {timeChange(myMapRank[0].post.time)}
+                      </span>
+                      <span style={{ paddingLeft: 0 }}>
+                        {dateFormat(myMapRank[0].post.created_at)}
+                      </span>
+                    </div>
+                  </BottomCard>
+                )}
               </CardWrapper>
             </div>
-        
           </RightDiv>
         </TopDiv>
-      </Container>
+        <BottomDiv>
+        <div style={{fontWeight:'bold',fontSize:30}}>전체순위</div>
+          <BottomTopCard>
+            <div>
+              <span className="span1">순위</span>
+              <span className="span2">이름</span>
+              <span>평균속도</span>
+              <span>기록(시간)</span>
+              <span>날짜</span>
+            </div>
+          </BottomTopCard>
+                 
+          {mapRank[0] == 0 ? (
+            <BottomCard>
+              <div>순위데이터없음</div>
+            </BottomCard>
+          ) : (
+            mapRank[0].map((b, index) => (
+              <BottomCard className="table">
+                <div
+                  style={{
+                    display: "flex",
+                    overFlow: "auto",
+                  }}
+                >
+                  {index + 1 == 1 ? (
+                    <>
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png"
+                        style={{ position: "relative", left: 15 }}
+                      />
+                      <div style={{ width: 240 }} />
+                    </>
+                  ) : index + 1 === 2 ? (
+                    <>
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/2583/2583319.png"
+                        style={{ position: "relative", left: 15 }}
+                      />
+                      <div style={{ width: 240 }} />
+                    </>
+                  ) : index + 1 === 3 ? (
+                    <>
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/2583/2583434.png"
+                        style={{ position: "relative", left: 15 }}
+                      />
+                      <div style={{ width: 240 }} />
+                    </>
+                  ) : (
+                    <div
+                      className="rank"
+                      style={{ width: 270, paddingLeft: 20 }}
+                    >
+                      {index + 1 + "위"}
+                    </div>
+                  )}
 
-      
-      <RankDiv>
-          <Card>
-          {mapRank[0]===0?<BottomCard><div>순위데이터없음</div></BottomCard>: 
-          mapRank[0].map((b, index) => (
-                    <BottomCard>
-                      <div>
-                        <span>{index + 1 + "위"}</span>
-                        <Popover
-                          placement="topLeft"
-                          title="Rider"
-                          content={
-                            <div
-                              style={{
-                                display: "flex",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <Avatar src="kurumi.jpg" />
-                              <p>{b.user.name}</p>
-                            </div>
-                          }
-                          trigger="hover"
-                        >
-                          <a>
-                            <span>{b.user.name}</span>
-                          </a>
-                        </Popover>
-                        <span>{b.average_speed}km</span>
-                        <span>{timeChange(b.time)}</span>
-                        <span>{dateFormat(b.created_at)}</span>
+                  <Popover
+                    placement="topLeft"
+                    title="Rider"
+                    content={
+                      <div
+                        style={{
+                          display: "flex",
+                          margin: "0 auto",
+                        }}
+                      >
+                        <Avatar src="kurumi.jpg" />
+                        <p>{b.user.name}</p>
                       </div>
-                    </BottomCard>
-                  ))}
-          
-          </Card>
-
-      </RankDiv>
-     
+                    }
+                    trigger="hover"
+                  >
+                    <div style={{ width: 260 }}>{b.user.name}</div>
+                  </Popover>
+                  <div style={{ width: 250 }}>{b.average_speed}km/h</div>
+                  <div style={{ width: 335 }}>{timeChange(b.time)}</div>
+                  <div style={{ width: 300 }}>{dateFormat(b.created_at)}</div>
+                </div>
+              </BottomCard>
+            ))
+          )}
+        </BottomDiv>
+      </Container>
     </>
   );
 }
@@ -341,33 +380,35 @@ function oneRoute() {
 //   };
 // }
 
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
     // const { query } = context;
-   
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
+
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    console.log("sqqssssssssss", context.query);
+    context.store.dispatch({
+      type: LOAD_MAP_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: LOAD_TRACK_RANK_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: LOAD_TRACK_MYRANK_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
   }
-    console.log('sqqssssssssss',context.query)
-  context.store.dispatch({
-    type: LOAD_MAP_REQUEST,
-    data: context.params.id,
-  });
-
-  context.store.dispatch({
-    type:LOAD_TRACK_RANK_REQUEST,
-    data:context.params.id,
-  })
-
-  context.store.dispatch({
-    type:LOAD_TRACK_MYRANK_REQUEST,
-    data:context.params.id,
-  })
-
-  context.store.dispatch(END);
-  await context.store.sagaTask.toPromise();
-});
+);
 
 export default oneRoute;
 
@@ -382,12 +423,38 @@ const mapContainerStyle = {
 const Container = styled.div`
   width: 100%;
   height: 60%;
-  padding: 0 7% 0 7%;
+  padding: 5% 7%;
+
+  .ant-card {
+    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 10%) !important;
+  }
+
+  .ant-card-hoverable:hover {
+    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 30%) !important;
+    cursor: default !important;
+  }
 `;
 
 const TopDiv = styled.div`
   display: flex;
   width: 100%;
+`;
+
+const BottomDiv = styled.div`
+  display: inline-block;
+  width: 100%;
+  margin-top: 30px;
+
+  .table:hover {
+    background: #fafafa;
+    transition: background 0.3s;
+  }
+
+  .ant-card {
+    width: 100%;
+    border-radius: none !important;
+    box-shadow: none !important;
+  }
 `;
 
 const RankDiv = styled.div`
@@ -418,7 +485,7 @@ const RightDiv = styled.div`
 
   .ant-card {
     width: 100%;
-    box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%);
+    // box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%);
   }
 
   .ant-timeline {
@@ -429,7 +496,7 @@ const RightDiv = styled.div`
 `;
 
 const PDiv = styled.p`
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   margin: 0;
   margin-top: 20px;
@@ -461,9 +528,9 @@ const MouseDiv = styled.div`
 `;
 
 const TitleText = styled(Title)`
-  height: 5%;
-  font-weight: 32px;
-  line-height: 30px;
+  // height: 5%;
+  // font-weight: 32px;
+  // line-height: 30px;
   //   margin: 10px auto;
 `;
 
@@ -480,12 +547,12 @@ const TopCard = styled(Card)`
   font-weight: 530;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
-  background: #1890ff;
+  background: #467ada;
 
   color: #fff;
 
   .ant-card-body {
-    padding: 24px 10px;
+    padding: 24px;
   }
 
   div {
@@ -515,11 +582,34 @@ const TopCard = styled(Card)`
   }
 `;
 
+const BottomTopCard = styled(TopCard)`
+  background: #467ada;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+
+  .span1 {
+    position: relative;
+    right: 3px;
+  }
+
+  // .span2 {
+  //   width: 100px;
+  // }
+`;
+
 const BottomCard = styled(Card)`
   width: 100%;
+  // margin-top: 30px;
 
-  border-bottom-left-radius: 7px;
-  border-bottom-right-radius: 7px;
+  // border-bottom-left-radius: 7px;
+  // border-bottom-right-radius: 7px;
+
+  .ant-card {
+    border-radius: 0 !important;
+    // box-shadow: none !important;
+    // border-bottom: 1px solid #f0f0f0;
+  }
 
   .ant-card-body {
     padding: 24px 10px;
@@ -531,7 +621,6 @@ const BottomCard = styled(Card)`
 
   div {
     width: 100%;
-    display: flex;
   }
 
   a:hover {
@@ -560,12 +649,32 @@ const BottomCard = styled(Card)`
     text-align: left;
     padding-left: 10px;
   }
+
+  // .ant-pagination {
+  //   width: 100%;
+  //   display: inline-block;
+  //   text-align: center;
+  // }
+
+  .table:nth-child(1) {
+    div {
+      width: 260px;
+    }
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    float: left;
+  }
 `;
 
-const OverviewDiv = styled.div`
-  width: 65%;
+const FlexDiv = styled.div`
   display: flex;
-  justify-content: center;
+  width: 60%;
+  justify-content: space-between;
+
+  // margin-left:150px
 
   div {
     display: inline-block;
@@ -583,5 +692,20 @@ const OverviewDiv = styled.div`
   div > .item {
     font-size: 30px;
     font-weight: bold;
+  }
+`;
+
+const OverviewDiv = styled.div`
+  width: 100%;
+  display: inline-block;
+
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    height: 50px;
+    line-height: 15px;
+    position: relative;
+    // right: 9%;
   }
 `;

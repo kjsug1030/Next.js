@@ -285,7 +285,6 @@ const addTrackAPI=async(datas)=>{
             body:JSON.stringify({
                 gpsData:datas
             })
-           
           });
           const data= await res.json()
           console.log('qwwerwertyert',data)
@@ -375,6 +374,7 @@ const trackRankAPI=async(datas)=>{
 function* trackRank(action){
     try{
         const result = yield call(trackRankAPI,action.data)
+        console.log('sadfasgdfgdfsg',result.data.data)
     if(result.status==200){
         yield put({
             type:LOAD_TRACK_RANK_SUCCESS,

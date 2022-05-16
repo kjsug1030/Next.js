@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useSelector,useDispatch } from 'react-redux';
 import { FOLLOWING_REQUEST,UNFOLLOWING_REQUEST } from '../reducers/user';
 
-function FollowButton({post}) {
+function FollowButton({user}) {
 
 
 
@@ -13,7 +13,7 @@ function FollowButton({post}) {
 
   
   
-  const isFollowing=me.followings.find((v)=>v.id===post.id)
+  const isFollowing=me.followings.find((v)=>v.id===user.id)
  
    
 
@@ -34,7 +34,10 @@ function FollowButton({post}) {
   
   return (
     <div>
-        {isFollowing?<Button style={{bottom:30,fontSize:15,position:'relative',left:350,bottom:60}} onClick={follow}>언팔로우</Button>:<Button style={{bottom:30,fontSize:15,position:'relative',left:350,bottom:60}} onClick={follow}>팔로우</Button>}
+        {isFollowing?
+        <Button style={{bottom:30,fontSize:15,position:'relative',left:350,bottom:60}} onClick={follow}>언팔로우</Button>
+        :<Button style={{bottom:30,fontSize:15,position:'relative',left:350,bottom:60}} onClick={follow}>팔로우</Button>
+        }
         </div>
   )
 }

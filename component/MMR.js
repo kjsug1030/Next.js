@@ -1,16 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { Card } from "antd";
+import { Card, PageHeader, Tag } from "antd";
 import MissionCard from "./MissionCard";
 import { useSelector } from "react-redux";
+import Intro from "./Intro";
 
 const MMR = () => {
-  const {me}=useSelector((state)=>state.user)
+  const { me } = useSelector((state) => state.user);
   return (
-    <Container>
-      <Card>
-        <h1>score : {me.mmr}</h1>
-        {/* <p>어제로부터 스코어 변화</p>
+    <div
+      style={{
+        width: "30%",
+        display: "flex",
+        flexDirection: "column",
+        paddingLeft: 20,
+      }}
+    >
+      <Intro className="intro" />
+      <Container>
+        <Card hoverable>
+          <h1>score : {me.mmr}</h1>
+          {/* <p>어제로부터 스코어 변화</p>
         <div>
           <span style={{ color: "#fff" }}>+</span>
           <span>378</span>
@@ -19,14 +29,18 @@ const MMR = () => {
             src="https://cdn-icons.flaticon.com/png/512/45/premium/45958.png?token=exp=1649617196~hmac=25852d553014e72e5ccfad33767dc23c"
           />
         </div> */}
-        <p>보유 뱃지</p>
-        <div>
-          <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
-          <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
-          <img src="https://cdn-icons-png.flaticon.com/512/179/179251.png" />
-        </div>
-      </Card>
-    </Container>
+          <br />
+          <br />
+          <br />
+          <p>보유 뱃지</p>
+          <div>
+            <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
+            <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
+            <img src="https://cdn-icons-png.flaticon.com/512/179/179251.png" />
+          </div>
+        </Card>
+      </Container>
+    </div>
   );
 };
 
@@ -34,9 +48,13 @@ export default MMR;
 
 const Container = styled.div`
   display: inline-block;
-  width: 30%;
+  width: 100%;
+  max-width: 280px;
   margin-left: 3%;
-  margin-top: 1.5%;
+  // margin-top: 2%;
+
+  position: relative;
+  top: 23px;
 
   // overflow: hidden;
   white-space: nowrap;
@@ -51,6 +69,10 @@ const Container = styled.div`
     background: #1b5cff;
     background: linear-gradient(to right, #1890ff, #1b5cff);
     color: #fff;
+    transition: all 0.6s;
+  }
+  .ant-card-hoverable:hover {
+    transform: translateY(-15px);
   }
 
   .ant-card-body {

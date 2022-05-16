@@ -3,8 +3,11 @@ import { LOAD_MY_LOCATION_REQUEST } from './map'
 import Router from 'next/router'
 
 export const initialState={
+  otherProfile:null,
   weathers:null,
   goalpurpose:null,
+  nofication:null,
+  noficationCheckCount:0,
     allPurpose:null,
     purposeProgress:null,
     totalTime:null,
@@ -56,6 +59,30 @@ export const initialState={
 
 
 }
+
+export const CHECK_NOFICATION_REQUEST='CHECK_NOFICATION_REQUEST'
+// export const CHECK_NOFICATION_SUCCESS='CHECK_NOFICATION_SUCCESS'
+
+export const NOFICATION_DELETE_REQUEST='NOFICATION_DELETE_REQUEST'
+export const NOFICATION_DELETE_SUCCESS='NOFICATION_DELETE_SUCCESS'
+export const NOFICATION_DELETE_FAILURE='NOFICATION_DELETE_FAILURE'
+
+export const NOFICATION_REQUEST='NOFICATION_REQUEST'
+export const NOFICATION_SUCCESS='NOFICATION_SUCCESS'
+export const NOFICATION_FAILURE='NOFICATION_FAILURE'
+
+export const FOLLOW_NOFICATION_REQUEST='FOLLOW_NOFICATION_REQUEST'
+export const FOLLOW_NOFICATION_SUCCESS='FOLLOW_NOFICATION_SUCCESS'
+export const FOLLOW_NOFICATION_FAILURE='FOLLOW_NOFICATION_FAILURE'
+
+export const FOLLOW_CANCEL_REQUEST='FOLLOW_CANCEL_REQUEST'
+export const FOLLOW_CANCEL_SUCCESS='FOLLOW_CANCEL_SUCCESS'
+export const FOLLOW_CANCEL_FAILURE='FOLLOW_CANCEL_FAILURE'
+
+export const OTHER_PROFILE_REQUEST='OTHER_PROFILE_REQUEST'
+export const OTHER_PROFILE_SUCCESS='OTHER_PROFILE_SUCCESS'
+export const OTHER_PROFILE_FAILURE='OTHER_PROFILE_FAILURE'
+
 
 export const TOTAL_BIKE_TIME_REQUEST='TOTAL_BIKE_TIME_REQUEST'
 export const TOTAL_BIKE_TIME_SUCCESS='TOTAL_BIKE_TIME_SUCCESS'
@@ -154,6 +181,55 @@ export const DELETE_MYPOST_FAILURE='DELETE_MYPOST_FAILURE'
 const reducer=(state=initialState,action)=>{
     return produce(state,(draft)=>{
         switch(action.type){
+
+          case CHECK_NOFICATION_REQUEST:
+              draft.noficationCheckCount=action.data;
+              break;
+              
+
+          case NOFICATION_DELETE_REQUEST:
+              break;
+          case NOFICATION_DELETE_SUCCESS:
+              draft.nofication.data=draft.nofication.data.filter((v)=>v.not_id!==action.data)
+              break;
+              // draft.me.followings = draft.me.followings.filter((v) => v.id !== action.data);
+
+          case NOFICATION_DELETE_FAILURE:
+            break;
+
+
+          case NOFICATION_REQUEST:
+            break;
+          case NOFICATION_SUCCESS:
+            draft.nofication=action.data
+            break;
+          case NOFICATION_FAILURE:
+            break;
+          case FOLLOW_NOFICATION_REQUEST:
+            break;
+          case FOLLOW_NOFICATION_SUCCESS:
+            draft.otherProfile.followCheck=3
+            break;
+          case FOLLOW_NOFICATION_FAILURE:
+            break;
+          case FOLLOW_CANCEL_REQUEST:
+            break;
+          case FOLLOW_CANCEL_SUCCESS:
+            draft.otherProfile.followCheck=2
+            break;
+          case FOLLOW_CANCEL_FAILURE:
+            break;
+
+          case OTHER_PROFILE_REQUEST:
+            break;
+          case OTHER_PROFILE_SUCCESS:
+           draft.otherProfile=action.data
+            break;
+          case OTHER_PROFILE_FAILURE:
+            break;
+
+
+
           case TOTAL_BIKE_TIME_REQUEST:
             break;
           case TOTAL_BIKE_TIME_SUCCESS:
@@ -344,14 +420,15 @@ const reducer=(state=initialState,action)=>{
                         draft.followDone = false;
                         break;
                     case FOLLOWING_SUCCESS:
-                        draft.followLoading = false;
-                        draft.me.followings.push({ 
-                            id: action.data.id ,
-                            name:action.data.name,
-                            sex:action.data.sex,
-                            profile:action.data.profile,
-                            mmr:action.data.mmr});
+                        draft.followLoading = false;                        draft.followDone = true;
                         draft.followDone = true;
+                        draft.me.followers.push({ 
+                            id: action.data[0].id ,
+                            name:action.data[0].name,
+                            sex:action.data[0].sex,
+                            profile:action.data[0].profile,
+                            mmr:action.data[0].mmr});
+                        // draft.otherProfile.followCheck=1
                         break;
                     case FOLLOWING_FAIL:
                         draft.followLoading = false;
@@ -365,6 +442,7 @@ const reducer=(state=initialState,action)=>{
                     case  UNFOLLOWING_SUCCESS:
                         draft.unfollowLoading = false;
                         draft.me.followings = draft.me.followings.filter((v) => v.id !== action.data);
+                        draft.otherProfile.followCheck=2
                         draft.unfollowDone = true;
                         break;
                     case  UNFOLLOWING_FAIL:

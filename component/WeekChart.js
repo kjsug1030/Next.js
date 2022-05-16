@@ -49,7 +49,8 @@ const WeekChart = ({ weekRecord, weekBikeRecord }) => {
 
   return (
     <Container>
-      <Card>
+      <TitleCard />
+      <Card hoverable>
         <Bar data={data} options={options} height={300} />
       </Card>
     </Container>
@@ -65,10 +66,46 @@ const Container = styled.div`
   .ant-card {
     border-radius: 12px;
     padding: 0 !important;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .ant-card-body {
     width: 100%;
     padding: 12px;
   }
+
+  .title {
+    display: inline-block;
+    width: 100%;
+    max-width: 250px;
+    height: 35px;
+    line-height: 30px;
+    text-align: left;
+    background: #467ada;
+    color: #fff;
+    padding-left: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    clip-path: polygon(65% 0%, 100% 100%, 100% 100%, 0 100%, 0 0);
+    // position: relative;
+    position: absolute;
+    // left: 1px;
+    top: -3%;
+    top: 14px;
+    z-index: 1;
+  }
+`;
+
+const TitleCard = styled(Card)`
+  width: 100% !important;
+  height: 10px;
+  background: #467ada;
+  border-top-left-radius: 9px !important;
+  border-top-right-radius: 9px !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+
+  // box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%) !important;
 `;

@@ -121,12 +121,15 @@ const reducer=(state=initialStates,action)=>{
                 draft.RankDone=false;
                 draft.RankError=null;
             case LOAD_TRACK_RANK_SUCCESS:
-                draft.mapRank=[]
+                // console.log('acttttttt',action.data)
                 draft.mapRank[0]=action.data
-                // draft.mapRank.push(action.data)
+                // console.log('jiiijijijljkju',draft.mapRank[0])
 
                 draft.Rankloading=false;
                 draft.RankDone=true;
+                // draft.mapRank=[]
+                // draft.mapRank.push(action.data)
+
                 
                 // draft.mapRank=action.data
             case LOAD_TRACK_RANK_FAILURE:

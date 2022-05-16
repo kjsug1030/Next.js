@@ -5,12 +5,15 @@ import styled from "styled-components";
 import { END } from "redux-saga";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_SEARCH_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
-import { Card, Input, Avatar } from "antd";
+import { USER_SEARCH_REQUEST, LOAD_MY_INFO_REQUEST, OTHER_PROFILE_REQUEST } from "../reducers/user";
+import { Card, Input, Avatar ,Button} from "antd";
 import FollowButton from "../component/FollowButton";
+import userProfile from "./User/[id]";
+import { useRouter } from "next/router";
 
 function userSearch() {
   const { Search } = Input;
+  const Router=useRouter()
 
   const dispatch = useDispatch();
   const { searchUsers } = useSelector((state) => state.user);
@@ -21,6 +24,20 @@ function userSearch() {
       data: searchName,
     });
   };
+
+  // const userProfiles=(userId)=>{
+  //   if (userId) {
+     
+  //     dispatch({
+  //       type: OTHER_PROFILE_REQUEST,
+  //       data: userId,
+  //     });
+  //     Router.push({
+  //       pathname: "/User/[id]",
+  //       query: { id: userId },
+  //     });
+  //   }
+  // }
 
   return (
     <div style={{ marginTop: 70, padding: "2% 5% 0 5%" }}>
@@ -47,7 +64,8 @@ function userSearch() {
             <br></br>
             {m.mmr}
           </Card>
-          <FollowButton post={m}></FollowButton>
+          <FollowButton user={m}></FollowButton>
+          <Button> <a href={"User/" + m.id}>상세보기</a></Button>
         </>
       ))}
     </div>

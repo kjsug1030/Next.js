@@ -3,10 +3,11 @@ import { all,call,fork,put,takeLatest, take} from 'redux-saga/effects'
 import {LOGIN_FAIL, LOGIN_REQUEST,LOGIN_SUCCESS,LOGOUT_REQUEST, 
     LOGOUT_SUCCESS,LOGOUT_FAIL, SIGNUP_REQUEST,SIGNUP_SUCCESS,SIGNUP_FAIL,
     FOLLOWING_SUCCESS,FOLLOWING_REQUEST,FOLLOWING_FAIL,UNFOLLOWING_REQUEST,
-    UNFOLLOWING_SUCCESS,PROGRESS_FAILURE,UNFOLLOWING_FAIL, LOAD_LOGIN_REQUEST, LOAD_LOGIN_SUCCESS, LOAD_LOGIN_FAILURE, LOAD_MY_INFO_REQUEST, LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE, USER_SEARCH_REQUEST, USER_SEARCH_SUCCESS, USER_SEARCH_FAILURE, WEEKRECORD_REQUEST, WEEKRECORD_SUCCESS, WEEKRECORD_FAILURE, DELETE_MYPOST_REQUEST,DELETE_MYPOST_SUCCESS,DELETE_MYPOST_FAILURE, USER_RATE_REQUEST,USER_RATE_FAILURE,USER_RATE_SUCCESS,WEEKRECORD_BIKE_SUCCESS,WEEKRECORD_BIKE_REQUEST,WEEKRECORD_BIKE_FAILURE, WEATHER_REQUEST, WEATHER_SUCCESS, WEATHER_FAILURE, GOAL_REQUEST, GOAL_SUCCESS, GOAL_FAILURE, ALL_GOAL_REQUEST, ALL_GOAL_SUCCESS, ALL_GOAL_FAILURE, PROGRESS_SUCCESS, PROGRESS_REQUEST, DELETE_GOAL_REQUEST, DELETE_GOAL_SUCCESS, DELETE_GOAL_FAILURE, TOTAL_TIME_REQUEST, TOTAL_CALORIE_REQUEST, TOTAL_TIME_SUCCESS, TOTAL_TIME_FAILURE, TOTAL_CALORIE_SUCCESS, TOTAL_CALORIE_FAILURE, TOTAL_RUN_TIME_REQUEST, TOTAL_BIKE_TIME_REQUEST, TOTAL_RUN_TIME_SUCCESS, TOTAL_RUN_TIME_FAILURE, TOTAL_BIKE_TIME_SUCCESS, TOTAL_BIKE_TIME_FAILURE} from '../reducers/user'
+    UNFOLLOWING_SUCCESS,PROGRESS_FAILURE,UNFOLLOWING_FAIL, LOAD_LOGIN_REQUEST, LOAD_LOGIN_SUCCESS, LOAD_LOGIN_FAILURE, LOAD_MY_INFO_REQUEST, LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE, USER_SEARCH_REQUEST, USER_SEARCH_SUCCESS, USER_SEARCH_FAILURE, WEEKRECORD_REQUEST, WEEKRECORD_SUCCESS, WEEKRECORD_FAILURE, DELETE_MYPOST_REQUEST,DELETE_MYPOST_SUCCESS,DELETE_MYPOST_FAILURE, USER_RATE_REQUEST,USER_RATE_FAILURE,USER_RATE_SUCCESS,WEEKRECORD_BIKE_SUCCESS,WEEKRECORD_BIKE_REQUEST,WEEKRECORD_BIKE_FAILURE, WEATHER_REQUEST, WEATHER_SUCCESS, WEATHER_FAILURE, GOAL_REQUEST, GOAL_SUCCESS, GOAL_FAILURE, ALL_GOAL_REQUEST, ALL_GOAL_SUCCESS, ALL_GOAL_FAILURE, PROGRESS_SUCCESS, PROGRESS_REQUEST, DELETE_GOAL_REQUEST, DELETE_GOAL_SUCCESS, DELETE_GOAL_FAILURE, TOTAL_TIME_REQUEST, TOTAL_CALORIE_REQUEST, TOTAL_TIME_SUCCESS, TOTAL_TIME_FAILURE, TOTAL_CALORIE_SUCCESS, TOTAL_CALORIE_FAILURE, TOTAL_RUN_TIME_REQUEST, TOTAL_BIKE_TIME_REQUEST, TOTAL_RUN_TIME_SUCCESS, TOTAL_RUN_TIME_FAILURE, TOTAL_BIKE_TIME_SUCCESS, TOTAL_BIKE_TIME_FAILURE, OTHER_PROFILE_REQUEST, OTHER_PROFILE_SUCCESS, OTHER_PROFILE_FAILURE, FOLLOW_CANCEL_REQUEST, FOLLOW_CANCEL_SUCCESS, FOLLOW_CANCEL_FAILURE, FOLLOW_NOFICATION_REQUEST, FOLLOW_NOFICATION_SUCCESS, FOLLOW_NOFICATION_FAILURE, NOFICATION_REQUEST, NOFICATION_SUCCESS, NOFICATION_FAILURE, NOFICATION_DELETE_REQUEST, NOFICATION_DELETE_FAILURE,NOFICATION_DELETE_SUCCESS} from '../reducers/user'
 import axios from 'axios'
 import cookie from 'react-cookies'
 import { withCookies, Cookies } from 'react-cookie';
+import { MdVideoSettings } from 'react-icons/md';
 
 var cookies=new Cookies()
 
@@ -126,8 +127,9 @@ function* signup(action){
 
 
 const followAPI=async(datas)=>{
+    console.log('asdfasdgnxnxndn',datas)
     try{
-        const res= await fetch(`https://2yubi.shop/api/follow/${datas.id}`, {
+        const res= await fetch(`https://2yubi.shop/api/follow/${datas}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -138,7 +140,7 @@ const followAPI=async(datas)=>{
           });
           const data= await res.json()
       
-       
+          console.log('fofosdfjnwenewke',data)
           return data
 
     }catch(err){
@@ -150,17 +152,18 @@ const followAPI=async(datas)=>{
     
         try{
             const result=yield call(followAPI,action.data)
-            
+                console.log('qmsdneeje',result[0])
               yield put({
                   type:FOLLOWING_SUCCESS,
-                  data:action.data
+                  data:result
               })
           }catch(err){
-              yield put({
-                  type:FOLLOWING_FAIL,
-                  error:err.response.data,
+            //   yield put({
+            //       type:FOLLOWING_FAIL,
+            //       error:'err.response.data',
                    
-              })
+            //   })
+            console.log(err)
           }
     }
 
@@ -170,7 +173,7 @@ const followAPI=async(datas)=>{
 
     const unfollowAPI=async(datas)=>{
         try{
-            const res= await fetch(`https://2yubi.shop/api/follow/${datas}`, {
+            const res= await fetch(`https://2yubi.shop/api/unFollow/${datas}`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -286,7 +289,7 @@ const loadUserInfoAPI=async()=>{
               }catch(err){
                   yield put({
                       type:LOAD_MY_INFO_FAILURE,
-                      error:err.response.data,
+                      error:'err.response.data',
                        
                   })
               }
@@ -294,32 +297,24 @@ const loadUserInfoAPI=async()=>{
         ////////
 
         const userSearchAPI=async(datas)=>{
-
-
-
             try{
-                const res= await fetch('https://2yubi.shop/api/userSearch', {
-                    method: "POST",
+                const res= await fetch(`https://2yubi.shop/api/userSearch?keyword=${datas}`, {
+                    method: "GET",
                     headers: {
                       "Content-Type": "application/json",
                       Accept: "application/json",
                     },
                     credentials: "include",
-                    body: JSON.stringify({
-                        keyword:datas,
-                       
-                  }),
+                
                   });
                   const data= await res.json()
               
-               
+                  console.log('asdweqrxfsdf',data)
                   return data
         
             }catch(err){
                 console.log(err)
             }
-
-       
     }
     
             function* userSearch(action){
@@ -839,7 +834,203 @@ function* totalBikeTime(action){
 
     }
 }
-                    
+
+
+                  
+
+
+const otherUserAPI=async(datas)=>{
+    try{
+       console.log('asdqewreqwrfdasf',datas)
+    //    http://localhost:8000/api/post/profile?me=1&id=2
+        const res= await fetch(`https://2yubi.shop/api/profile?me=${datas.userId}&id=${datas.profileUserId}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+        
+          });
+          const data= await res.json()
+          console.log('zfddfsdgsfgsssss',data)
+      
+          return data
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function* ohterUser(action){
+    try{
+        const result = yield call(otherUserAPI,action.data)
+        console.log('wefcxvfrwe',result)
+        yield put({
+            type:OTHER_PROFILE_SUCCESS,
+            data:result
+        })
+
+    }catch(err){
+        yield put({
+            type:OTHER_PROFILE_FAILURE,
+            error:'aa',
+        })
+
+    }
+}
+
+
+
+const followCancelAPI=async(datas)=>{
+    try{
+       
+        const res= await fetch(`https://2yubi.shop/api/cancel/${datas}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+        
+          });
+          const data= await res.json()
+      
+          return data
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function* followCancel(action){
+    try{
+        const result = yield call(followCancelAPI,action.data)
+        console.log('wefcxvfrwe',result)
+        yield put({
+            type:FOLLOW_CANCEL_SUCCESS,
+            data:result
+        })
+
+    }catch(err){
+        yield put({
+            type:FOLLOW_CANCEL_FAILURE,
+            error:'aa',
+        })
+
+    }
+}
+                 
+const followNoficationAPI=async(datas)=>{
+    try{
+       
+        const res= await fetch(`https://2yubi.shop/api/followRequest/${datas}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+        
+          });
+          const data= await res.json()
+      
+          return data
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function* followNofication(action){
+    try{
+        const result = yield call(followNoficationAPI,action.data)
+        console.log('wefcxvfrwe',result)
+        yield put({
+            type:FOLLOW_NOFICATION_SUCCESS,
+            data:result
+        })
+
+    }catch(err){
+        yield put({
+            type:FOLLOW_NOFICATION_FAILURE,
+            error:'aa',
+        })
+
+    }
+}           
+
+          
+const NoficationAPI=async()=>{
+    try{
+
+        const res=await axios.get('https://2yubi.shop/api/notification')
+         
+       const data= await res.data          
+        return data
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function* Nofication(){
+    try{
+        const result = yield call(NoficationAPI)
+        yield put({
+            type:NOFICATION_SUCCESS,
+            data:result
+        })
+
+    }catch(err){
+        yield put({
+            type:NOFICATION_FAILURE,
+            error:'aa',
+        })
+
+    }
+}           
+
+
+const noficationDeleteAPI=async(datas)=>{
+    try{
+       
+        const res= await fetch(`https://2yubi.shop/api/notification/delete/${datas}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+        
+          });
+          const data= await res.json()
+      
+          return data
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function* noficationDelete(action){
+    try{
+        const result = yield call(noficationDeleteAPI,action.data)
+        yield put({
+            type:NOFICATION_DELETE_SUCCESS,
+            data:action.data
+        })
+
+    }catch(err){
+        yield put({
+            type:NOFICATION_DELETE_FAILURE,
+            error:err,
+        })
+// console.log(err)
+    }
+}           
+
+
 
 
 
@@ -926,6 +1117,28 @@ function* watchTotalBikeTime(){
     yield takeLatest(TOTAL_BIKE_TIME_REQUEST,totalBikeTime)
 }
 
+function* watchOtherUser(){
+    yield takeLatest(OTHER_PROFILE_REQUEST,ohterUser)
+}
+function* watchFollowCancel(){
+    yield takeLatest(FOLLOW_CANCEL_REQUEST,followCancel)
+}
+
+function* watchFollowNofication(){
+    yield takeLatest(FOLLOW_NOFICATION_REQUEST,followNofication)
+}
+
+
+function* watchNofication(){
+    yield takeLatest(NOFICATION_REQUEST,Nofication)
+}
+
+function* watchnoficationDelete(){
+    yield takeLatest(NOFICATION_DELETE_REQUEST,noficationDelete)
+}
+
+
+
 
 
 
@@ -961,7 +1174,11 @@ export default function* rootSaga(){
         fork(watchTotalCarlorie),
         fork(watchTotalRunTime),
         fork(watchTotalBikeTime),
-
+        fork(watchOtherUser),
+        fork(watchFollowCancel),
+        fork(watchFollowNofication),
+        fork(watchNofication),
+        fork(watchnoficationDelete),
     ])
 
 }

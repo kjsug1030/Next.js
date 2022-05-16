@@ -36,12 +36,17 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
     const {goalpurpose}=useSelector((state)=>state.user)
 
     useEffect(()=>{
-        if(goalpurpose?goalpurpose.message:goalpurpose){
-            error()
-        }else if(goalpurpose?goalpurpose.goal:goalpurpose){
-    window.location.href='/musclePurpose'
+    //     if(goalpurpose?goalpurpose.message:goalpurpose){
+    //         error()
+    //     }else if(goalpurpose?goalpurpose.goal:goalpurpose){
+    // window.location.href='/musclePurpose'
 
-        }
+    //     }
+    if(goalpurpose?goalpurpose.goal:goalpurpose){
+      window.location.href='/musclePurpose'
+
+    }
+
     },[goalpurpose])
   const [form] = Form.useForm();
 
@@ -138,9 +143,7 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
       type: GOAL_REQUEST,
       data: body,
     });
-    // dispatch({
-    //     type:ALL_GOAL_REQUEST
-    // })
+    
   };
 
 //   useEffect(()=>{
@@ -158,6 +161,8 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
         <Form onFinish={onSubmit} layout="horizontal" form={form} size="large">
        
           <MaleFemale>
+          
+    종목
             <Select placeholder="종목" onChange={onChangeEvent}>
               <Option value="B">자전거</Option>
               <Option value="R">러닝</Option>

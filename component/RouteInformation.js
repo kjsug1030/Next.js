@@ -52,7 +52,6 @@ export default RouteInformation;
 //   width: 100%;
 
 // `;
-
 const Container = styled.div`
   width: 100%;
 
@@ -65,7 +64,7 @@ const Container = styled.div`
   .ant-card-head {
     min-height: 45px;
     line-height: 45px;
-    background: #1890ff;
+    background: #467ada;
     font-size: 20px;
     // font-weight: bold;
     color: #fff;

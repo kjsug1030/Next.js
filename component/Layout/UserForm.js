@@ -35,7 +35,7 @@ const UserForm = () => {
                 size={48}
                 style={{ background: "#00a2ae" }}
               >
-                Image
+                
               </Avatar>
             }
           />

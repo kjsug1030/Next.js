@@ -211,24 +211,11 @@ window.location.href='/myRecord'
     // window.location.href = "/myRecord";
   };
 
-  const Calculation = (data) => {
-    return data / 1000;
-  };
+  
 
   return (
     <Container>
-      {/* <h1 style={{ fontSize: 40, marginLeft: 70 }}>경북대학교 한바퀴</h1> */}
-      {/* <Row>
-        <Col span={12}>
-          <LeftDiv> */}
-      {/* <div style={{ marginLeft: 40 }}>
-          <Slider
-            range
-            defaultValue={number}
-            max={createMap.gps.coordinates.length - 1}
-            onChange={change}
-          />
-        </div> */}
+      
       <div style={{ position: "relative" }}></div>
       <LoadScript googleMapsApiKey="AIzaSyCyttJXmotwzGJhLd0hnVDQ0TxOG-Uonwg">
         <GoogleMap
@@ -288,20 +275,7 @@ window.location.href='/myRecord'
             : null}
         </GoogleMap>
       </LoadScript>
-      {/* <SliderDiv>
-        <Slider
-          range
-          defaultValue={number}
-          max={createMap.gpsData.gps.coordinates.length - 1}
-          onChange={change}
-          style={{ marginTop: 40 }}
-          tipFormatter={null}
-        />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p>출발</p>
-          <p>도착</p>
-        </div>
-      </SliderDiv> */}
+      
       <RightDiv>
         <div>
           <TitleCard />

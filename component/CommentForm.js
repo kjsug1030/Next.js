@@ -5,7 +5,7 @@ import useInput from '../hooks/useInput';
 import { useSelector,useDispatch } from 'react-redux';
 import {ADD_COMMENT_REQUEST} from '../reducers/post'
 
-function CommetForm({post}) {
+function CommetForm({comment,postId}) {
 
     const dispatch =useDispatch();
     const {addCommentDone,addCommentLoading}=useSelector((state)=>state.post)
@@ -22,18 +22,16 @@ function CommetForm({post}) {
             type:ADD_COMMENT_REQUEST,
             data: {
                 contents:{
-                    'content':commentText,
+                    content:commentText,
                 },
-                postId:post.id,
-            //    userId:me.id,
-            //     nickname:me.nickname
-               
+                postId,
+           
             }
     
         })
 
     }
-    // commentText,me
+  
 
     useEffect(()=>{
         if(addCommentDone){
@@ -58,7 +56,7 @@ function CommetForm({post}) {
 }
 
 CommetForm.PropTypes={
-    post:PropTypes.object.isRequired,
+    comment:PropTypes.object.isRequired,
 };
 
 
