@@ -25,20 +25,18 @@ import { ADD_TRACK_REQUEST, LOAD_CREATEMAP_REQUEST } from "../../reducers/map";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 
-import { LOAD_LOGIN_REQUEST } from "../../reducers/user";
+import { LOAD_LOGIN_REQUEST, LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import styled from "styled-components"; // 추가
 
 function createPath() {
-
   function error() {
     Modal.error({
-      title: '운동코스제작실패',
-      content: '비슷한 트랙이있습니다.',
+      title: "운동코스제작실패",
+      content: "비슷한 트랙이있습니다.",
     });
   }
 
-
-  const { createMap,addMap } = useSelector((state) => state.map);
+  const { createMap, addMap } = useSelector((state) => state.map);
 
   const [createDistance, setCreateDistance] = useState(
     createMap.gpsData.distance[createMap.gpsData.distance.length - 1]
@@ -76,14 +74,14 @@ function createPath() {
     });
   }, []);
 
-  useEffect(()=>{
-    if(addMap?addMap.message:addMap){
-      error()
-  }else if(addMap?addMap.trackId:addMap){
-    createSuccess()
-window.location.href='/myRecord'
-  }
-  },[addMap])
+  useEffect(() => {
+    if (addMap ? addMap.message : addMap) {
+      error();
+    } else if (addMap ? addMap.trackId : addMap) {
+      createSuccess();
+      window.location.href = "/myRecord";
+    }
+  }, [addMap]);
 
   useEffect(() => {
     setLeftPath({
@@ -211,11 +209,8 @@ window.location.href='/myRecord'
     // window.location.href = "/myRecord";
   };
 
-  
-
   return (
     <Container>
-      
       <div style={{ position: "relative" }}></div>
       <LoadScript googleMapsApiKey="AIzaSyCyttJXmotwzGJhLd0hnVDQ0TxOG-Uonwg">
         <GoogleMap
@@ -237,10 +232,12 @@ window.location.href='/myRecord'
               url: " http://maps.google.com/mapfiles/ms/icons/blue.png",
             }}
           ></Marker>
-          <Marker  icon={{
+          <Marker
+            icon={{
               url: " http://maps.google.com/mapfiles/ms/icons/blue.png",
             }}
-            position={rightPath}></Marker>
+            position={rightPath}
+          ></Marker>
 
           <Polyline
             options={options}
@@ -275,7 +272,7 @@ window.location.href='/myRecord'
             : null}
         </GoogleMap>
       </LoadScript>
-      
+
       <RightDiv>
         <div>
           <TitleCard />
@@ -287,11 +284,31 @@ window.location.href='/myRecord'
           >
             <FormWrapper>
               <div>
-               <span style={{fontWeight:'bold'}}> 현재 측정중인 코스거리 :{" "}
-                {createDistance.toFixed(2)}km
-                {/* {Calculation(createDistance).toFixed(2)} km */}
-               </span>
-               <span style={{marginLeft:100,display:'float',fontWeight:'bold'}}>만드는 코스: <a style={{backgroundColor:'red',color:'red',width:30,height:5,marginLeft:20}}>sssssssss</a></span>
+                <span style={{ fontWeight: "bold" }}>
+                  {" "}
+                  현재 측정중인 코스거리 : {createDistance.toFixed(2)}km
+                  {/* {Calculation(createDistance).toFixed(2)} km */}
+                </span>
+                <span
+                  style={{
+                    marginLeft: 100,
+                    display: "float",
+                    fontWeight: "bold",
+                  }}
+                >
+                  만드는 코스:{" "}
+                  <a
+                    style={{
+                      backgroundColor: "red",
+                      color: "red",
+                      width: 30,
+                      height: 5,
+                      marginLeft: 20,
+                    }}
+                  >
+                    sssssssss
+                  </a>
+                </span>
               </div>
               <Form.Item>
                 <Input
@@ -320,7 +337,7 @@ window.location.href='/myRecord'
                 defaultValue={number}
                 max={createMap.gpsData.gps.coordinates.length - 1}
                 onChange={change}
-                style={{ marginTop: 40}}
+                style={{ marginTop: 40 }}
                 tipFormatter={null}
               />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -331,7 +348,6 @@ window.location.href='/myRecord'
           </Card>
         </div>
       </RightDiv>
-     
     </Container>
   );
 }
@@ -358,9 +374,14 @@ export const getStaticProps = wrapper.getStaticProps(async (context) => {
   }
 
   context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+
+  context.store.dispatch({
     type: LOAD_CREATEMAP_REQUEST,
     data: context.params.id,
   });
+
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });

@@ -28,8 +28,10 @@ const ImageCarousel = ({ post }) => {
             onClick={() => setVisible(true)}
             className="imgimg"
             width="100%"
-            // height={500}
+            // width={600}
+            // height={400}
             height={330}
+            // height="100%"
             alt="지도사진"
             src={
               post.img

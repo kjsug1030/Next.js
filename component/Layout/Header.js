@@ -1,62 +1,72 @@
 import React, { useState } from "react";
 import Link from "next/link";
-// import {
-//   HeaderWrapper,
-//   Logo,
-//   SearchWrapper,
-//   IconList,
-// } from "../../styles/styles";
 import { LOGOUT_REQUEST, SIGNUP_REQUEST } from "../../reducers/user";
 
 import { Avatar, Input, Layout, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
 const { Header, Sider } = Layout;
-import {
-  CommentOutlined,
-  BellOutlined,
-  UserOutlined,
-} from "@ant-design/icons/lib/icons";
+
 import styled from "styled-components";
+import ProfileEdit from "../ProfileEdit";
+import Notification from "../../component/Notification";
 
 const { Search } = Input;
 
 const header = () => {
+  const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const logout = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
   };
 
+  const [visible, setVisible] = useState(false);
+
+  const showEditProfile = () => {
+    setVisible((prev) => !prev);
+    console.log(visible);
+  };
+
+  const openDrawer = () => {
+    setVisible(true);
+    console.log(visible);
+  };
+
   return (
     <HeaderWrapper>
-      {/* <SearchWrapper>
-        <Search placeholder="Search" enterButton="Writer" />
-      </SearchWrapper> */}
       <Title>Pace-Maker</Title>
-      {/* <Title>
-        <img src="logo3.png" />
-      </Title> */}
+
       <IconList>
-        {/* <ul>
-          <li>
-            <a>
-              <CommentOutlined />
-            </a>
-          </li>
-          <li>
-            <a>
-              <BellOutlined />
-            </a>
-          </li>
-        </ul> */}
+        {/* 알림 */}
+        {/* <Notification /> */}
+
         <Button type="primary" onClick={() => logout()}>
           LogOut
         </Button>
         <AvatarDiv>
           <a>
-            <Avatar src="kurumi.jpg" size={40}></Avatar>
+            {/* <Avatar onClick={openDrawer} src="kurumi.jpg" size={40}></Avatar> */}
+            {me.profile ? (
+              <Avatar
+                onClick={openDrawer}
+                src={me.profile}
+                size={40}
+                style={{ background: "#fff" }}
+              />
+            ) : (
+              <Avatar
+                onClick={openDrawer}
+                // src={me.profile}
+                size={40}
+                style={{ background: "#fff", opacity: "0.0" }}
+              >
+                {/* 천 */}
+              </Avatar>
+            )}
+            <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
           </a>
         </AvatarDiv>
       </IconList>
@@ -86,7 +96,7 @@ const AvatarDiv = styled.div`
     font-size: 20px;
   }
   .ant-avatar {
-    background: #00a2ae;
+    // background: #00a2ae;
   }
 `;
 
@@ -164,19 +174,34 @@ export const IconList = styled.div`
   position: fixed;
   right: 2%;
 
-  // ul {
-  //   display: flex;
-  //   margin: 0;
-  //   padding: 0;
-  // }
+  .noti {
+    margin-right: 24px;
 
-  // li {
-  //   list-style: none;
-  //   padding-right: 20px;
-  // }
+    a {
+      font-size: 30px;
+    }
+
+    a:hover {
+      color: #467ada;
+    }
+  }
 
   a {
     font-size: 25px;
+  }
+
+  .notibox {
+    background: blue;
+    width: 200px;
+    height: 500px;
+    position: relative;
+    right: 160px;
+  }
+
+  .noti:hover {
+    .notibox {
+      background: red !important;
+    }
   }
 
   .ant-btn {

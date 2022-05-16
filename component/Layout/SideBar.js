@@ -38,11 +38,6 @@ const SideBar = ({ isSide, showSide }) => {
       <LogoWrapper>
         <div>
           <Logo>
-            {/* <SideLogo>
-              <Link href="/">
-                <a><img src="rider.png" /></a>
-              </Link>
-            </SideLogo> */}
             {!isSide && (
               <Link href="/" style={{ display: "none" }}>
                 <a>{/* <p>ペースメーカー</p> */}</a>
@@ -56,11 +51,22 @@ const SideBar = ({ isSide, showSide }) => {
       {isSide ? (
         session ? (
           <SpaceDiv>
-            <Avatar size={44} src="kurumi.jpg"  />
+            <Avatar size={44} src={session.user.image} />
           </SpaceDiv>
         ) : (
           <SpaceDiv>
-            <Avatar size={44} src="kurumi.jpg" />
+            {/* <Avatar size={44} src="kurumi.jpg" /> */}
+            {me.profile ? (
+              <Avatar size={44} src={me.profile} />
+            ) : (
+              <Avatar
+                size={44}
+                src={me.profile}
+                style={{ background: "#fff", opacity: "0.0" }}
+                active={false}
+                shape="circle"
+              />
+            )}
           </SpaceDiv>
         )
       ) : (
@@ -72,19 +78,20 @@ const SideBar = ({ isSide, showSide }) => {
         <LogoutBtn>
           {session ? (
             <button onClick={() => logout()}>
-              <img src="logout.png" /> 로그아웃
+              <img src="/logout.png" /> 로그아웃
             </button>
           ) : (
-            <button onClick={()=>logout()}>
-              <img src="logout.png" /> 로그아웃
+            <button onClick={() => logout()}>
+              <img src="/logout.png" /> 로그아웃
             </button>
           )}
         </LogoutBtn>
       ) : null}
-      {/* 여기까지 */}
     </SiderWrapper>
   );
 };
+
+export default SideBar;
 
 const LogoutBtn = styled.div`
   position: absolute;
@@ -124,10 +131,18 @@ const SpaceDiv = styled.div`
   .ant-avatar {
     display: block;
     position: relative;
-    top: 20%;
+    top: 20% !important;
     margin: 0 auto;
     text-align: center;
-    background: #00a2ae;
+    background: #fff;
+  }
+
+  .ant-skeleton .ant-skeleton-avatar {
+    display: block !important;
+    position: relative;
+    top: 40% !important;
+    // margin: 0 auto;
+    margin-top: 50px;
   }
 `;
 
@@ -244,5 +259,3 @@ const SideLogo = styled.div`
     white-space: nowrap;
   }
 `;
-
-export default SideBar;

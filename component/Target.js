@@ -114,11 +114,12 @@ const WeatherWrapper = styled.div`
 const Container = styled.div`
   display: inline-block;
   width: 30%;
-  max-width: 340px;
+  // max-width: 340px;
   // overflow: auto;
   text-overflow: clip;
   white-space: nowrap;
-  margin-top: 39px;
+  // margin-top: 39px;
+  margin-top: 60px;
 
   .ant-card {
     width: 100%;

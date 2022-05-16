@@ -9,6 +9,10 @@ import {
   LOAD_TRACK_RANK_REQUEST,
   LOAD_TRACK_RANK_SUCCESS,
 } from "../../reducers/map";
+import {
+  LOAD_MY_INFO_REQUEST,
+  NOTIFICATION_REQUEST,
+} from "../../reducers/user";
 import wrapper from "../../store/configureStore";
 import { END } from "redux-saga";
 import axios from "axios";
@@ -279,7 +283,7 @@ function oneRoute() {
           </RightDiv>
         </TopDiv>
         <BottomDiv>
-        <div style={{fontWeight:'bold',fontSize:30}}>전체순위</div>
+          <div style={{ fontWeight: "bold", fontSize: 30 }}>전체순위</div>
           <BottomTopCard>
             <div>
               <span className="span1">순위</span>
@@ -289,7 +293,7 @@ function oneRoute() {
               <span>날짜</span>
             </div>
           </BottomTopCard>
-                 
+
           {mapRank[0] == 0 ? (
             <BottomCard>
               <div>순위데이터없음</div>
@@ -403,6 +407,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch({
       type: LOAD_TRACK_MYRANK_REQUEST,
       data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
     });
 
     context.store.dispatch(END);

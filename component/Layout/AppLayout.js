@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout } from "antd";
 import SideBar from "./SideBar";
 import styled, { createGlobalStyle } from "styled-components";
 import Header from "./Header";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const [isSide, setIsSide] = useState(false);
@@ -35,9 +35,7 @@ const AppLayout = ({ children }) => {
           <Content
             style={{
               paddingTop: "2%",
-              //"2% 5%"
               background: "#fff",
-              // marginTop: 70,
             }}
           >
             {children}

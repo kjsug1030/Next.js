@@ -21,11 +21,6 @@ const MenuMenu = () => {
       link: "/",
       icon: <HomeOutlined />,
     },
-    // {
-    //   title: "내 프로필",
-    //   link: "/dashboard",
-    //   icon: <UserOutlined />,
-    // },
     {
       title: "종합 운동기록",
       link: "/myRecord",
@@ -46,25 +41,16 @@ const MenuMenu = () => {
       link: "/userSearch",
       icon: <UserOutlined />,
     },
-    {
-      title: "설정",
-      link: "/profileEdit",
-      icon: <SettingOutlined />,
-    },
   ];
 
   return (
     <MenuWrapper mode="inline">
-     
-      
-    {category.map((menu, index) => (
-      <Menu.Item key={index} icon={menu.icon}>
-        
-         <a href={menu.link}>{menu.title}</a>
-        
-      </Menu.Item>
-    ))}
-  </MenuWrapper>
+      {category.map((menu, index) => (
+        <Menu.Item key={index} icon={menu.icon}>
+          <a href={menu.link}>{menu.title}</a>
+        </Menu.Item>
+      ))}
+    </MenuWrapper>
   );
 };
 

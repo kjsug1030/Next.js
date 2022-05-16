@@ -31,16 +31,14 @@ const UserForm = () => {
           <CardMetaWrapper
             avatar={
               <Avatar
-                src="kurumi.jpg"
+                // src="kurumi.jpg"
+                src={me.profile}
                 size={48}
-                style={{ background: "#00a2ae" }}
-              >
-                
-              </Avatar>
+                style={{ background: "#fff" }}
+              />
             }
           />
           <DescriptionWrapper title={me.name} />
-          {/* <Global /> */}
         </CardWrapper>
       )}
     </Container>
@@ -55,7 +53,6 @@ const Container = styled.div`
   top: 20px;
 
   .ant-card {
-    // width: 200px;
     margin: 0 15px;
     margin-top: 20px;
   }
@@ -84,7 +81,6 @@ const DescriptionWrapper = styled(Descriptions)`
 `;
 
 const CardWrapper = styled(Card)`
-  // z-index: 1;
   border-radius: 12px;
 
   box-shadow: 0px 8px 24px rgb(13 13 18 / 4%);
@@ -101,18 +97,5 @@ const CardWrapper = styled(Card)`
 
   div {
     text-align: center;
-    // padding-top: 3px;
   }
-`;
-
-const Global = createGlobalStyle`
-.ant-card {
-  width: 200px;
-  margin: 0 10px;
-  margin-top: 20px;
-  position: relative;
-}
-.ant-card-body {
-  padding-bottom:17px;
-}
 `;

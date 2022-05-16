@@ -3,7 +3,12 @@ import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_CREATEMAP_REQUEST } from "../reducers/map";
 import Link from "next/link";
-import { LOAD_MY_INFO_REQUEST, TOTAL_CALORIE_REQUEST, TOTAL_RUN_TIME_REQUEST, TOTAL_TIME_REQUEST } from "../reducers/user";
+import {
+  LOAD_MY_INFO_REQUEST,
+  TOTAL_CALORIE_REQUEST,
+  TOTAL_RUN_TIME_REQUEST,
+  TOTAL_TIME_REQUEST,
+} from "../reducers/user";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import axios from "axios";
@@ -11,13 +16,18 @@ import { Card, Button, Table, Select, Modal, Row, Col } from "antd";
 import styled from "styled-components";
 const { Column } = Table;
 import moment from "moment";
-import { DELETE_MYPOST_REQUEST, LOAD_LOGIN_REQUEST ,TOTAL_BIKE_TIME_REQUEST} from "../reducers/user";
+import {
+  DELETE_MYPOST_REQUEST,
+  LOAD_LOGIN_REQUEST,
+  TOTAL_BIKE_TIME_REQUEST,
+} from "../reducers/user";
 const { Option } = Select;
-import {NotificationOutlined} from '@ant-design/icons'
+import { NotificationOutlined } from "@ant-design/icons";
 
 function myRecord() {
-
-  const {totalCalorie,totalTime,totalRunTime,totalBikeTime}=useSelector((state)=>state.user)
+  const { totalCalorie, totalTime, totalRunTime, totalBikeTime } = useSelector(
+    (state) => state.user
+  );
   const dateFormat = (d) => {
     let date = moment(d);
     return date.format("YYYY년 MM월 DD일");
@@ -115,15 +125,19 @@ function myRecord() {
     },
     {
       title: "총 소모 칼로리",
-      distance: totalCalorie+'Kcal',
+      distance: totalCalorie + "Kcal",
     },
     {
       title: "총 라이딩 거리",
-      distance: totalBikeTime.distance?totalBikeTime.distance+'km':0+'km',
+      distance: totalBikeTime.distance
+        ? totalBikeTime.distance + "km"
+        : 0 + "km",
     },
     {
       title: "총 러닝 거리",
-      distance: totalRunTime.distance?totalRunTime.distance.toFixed(2)+'km':0+'km',
+      distance: totalRunTime.distance
+        ? totalRunTime.distance.toFixed(2) + "km"
+        : 0 + "km",
     },
   ];
 
@@ -145,37 +159,29 @@ function myRecord() {
               ))}
             </Row>
           </ScoreDiv>
-          <div style={{marginTop:20,fontSize:25}}><NotificationOutlined  style={{color:'#467ada'}}/>  자유운동만 코스만들기가능</div>
+          <div style={{ marginTop: 20, fontSize: 25 }}>
+            <NotificationOutlined style={{ color: "#467ada" }} /> 자유운동만
+            코스만들기가능
+          </div>
           <Table
             style={{
               marginTop: "30px",
             }}
             dataSource={me.posts}
-            // pagination={{
-            //   // defaultPageSize: 5,
-            //   // showSizeChanger: true,
-            //   // pageSizeOptions: ["10", "20", "30"],
-            //   HideOnSinglePage: false,
-            // }}
           >
             <Column
               title="유형"
               dataIndex="kind"
               key="kind"
-
-
               render={(e) => {
                 if (e === "자유") {
                   return <p>자유운동</p>;
-                }else if(e==='싱글'){
+                } else if (e === "싱글") {
                   return <p>코스운동(싱글)</p>;
-
-                }else if(e==='친선'){
+                } else if (e === "친선") {
                   return <p>코스운동(친선)</p>;
-
-                }else if(e==='랭크'){
+                } else if (e === "랭크") {
                   return <p>코스운동(랭크)</p>;
-
                 }
               }}
               filters={[
@@ -197,13 +203,8 @@ function myRecord() {
                 },
               ]}
               onFilter={(value, record) => record.kind.indexOf(value) === 0}
-
-
-
-
-            
             />
-             <Column
+            <Column
               title="종목"
               dataIndex="event"
               key="event"
@@ -224,7 +225,6 @@ function myRecord() {
                 },
               ]}
               onFilter={(value, record) => record.event.indexOf(value) === 0}
-
             />
             <Column
               title="이름"
@@ -262,13 +262,7 @@ function myRecord() {
               sortOrder="ascend"
             />
             <Column
-              title={
-                <p onClick={onChangeDelete}>수정</p>
-                // <Select defaultValue="종목 선택">
-                //   <Option>달리기</Option>
-                //   <Option>라이딩</Option>
-                // </Select>
-              }
+              title={<p onClick={onChangeDelete}>수정</p>}
               width="200px"
               align="right"
               dataIndex={["id", "kind"]}
@@ -276,15 +270,19 @@ function myRecord() {
               render={(v, record) => (
                 <>
                   {record.kind === "자유" ? (
-                    <Button type="success" style={{backgroundColor:'#467ada',color:'white',right:30}} onClick={() => createLink(record)}>
+                    <Button
+                      type="success"
+                      // style={{
+                      //   backgroundColor: "#467ada",
+                      //   color: "white",
+                      //   right: 30,
+                      // }}
+                      onClick={() => createLink(record)}
+                    >
                       코스만들기
                     </Button>
-                  ) :null}
-                  {/* {deleteBtn ? (
-                    <Button type="danger" style={{ translate: "all 0.2" }}>
-                      삭제
-                    </Button>
-                  ) : null} */}
+                  ) : null}
+
                   <Button
                     type="danger"
                     onClick={() => deleteModal(record.id)}
@@ -319,17 +317,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: LOAD_MY_INFO_REQUEST,
     });
     context.store.dispatch({
-      type:TOTAL_CALORIE_REQUEST
-    })
+      type: TOTAL_CALORIE_REQUEST,
+    });
     context.store.dispatch({
-      type:TOTAL_TIME_REQUEST
-    })
+      type: TOTAL_TIME_REQUEST,
+    });
     context.store.dispatch({
-      type:TOTAL_RUN_TIME_REQUEST
-    })
+      type: TOTAL_RUN_TIME_REQUEST,
+    });
     context.store.dispatch({
-      type:TOTAL_BIKE_TIME_REQUEST
-    })
+      type: TOTAL_BIKE_TIME_REQUEST,
+    });
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();

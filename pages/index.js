@@ -1,19 +1,6 @@
-import React, { useEffect,useState } from "react";
-import {
-  Menu,
-  Button,
-  Row,
-  Col,
-  Card,
-  Divider,
-  Modal,
-  Empty,
-  Timeline,
-  Statistic,
-  modal,
-  Badge
-} from "antd";
-import {LoadingOutlined} from '@ant-design/icons'
+import React, { useEffect, useState } from "react";
+import { Button, Card, Modal, Empty, BackTop } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "../component/LoginForm";
@@ -43,7 +30,6 @@ import Rank from "../component/Rank";
 import Goal from "../component/goal";
 import styled from "styled-components";
 import MyNoteNote from "../component/MyNoteNote";
-import Guild from "../component/Guild";
 
 import MissionCard from "../component/MissionCard";
 import WeekChart from "../component/WeekChart";
@@ -56,13 +42,11 @@ import Progress from "../component/Progress";
 // import { disableCursor } from "@fullcalendar/common";
 
 function index() {
-
   const followAcceptSuccess = () => {
     Modal.success({
       content: "팔로우수락을 했습니다!",
     });
   };
-
 
   const { weekRecord, userRate, weekBikeRecord, purposeProgress } = useSelector(
     (state) => state.user
@@ -72,56 +56,59 @@ function index() {
     Modal.destroyAll();
   });
 
-
   const { searchMap } = useSelector((state) => state.map);
-  const { me,nofication ,noficationCheckCount} = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, loadMorePostLoading,loadMorePostErrorBolean,loadMorePostNumberError } = useSelector(
-    (state) => state.post
+  const { me, nofication, noficationCheckCount } = useSelector(
+    (state) => state.user
   );
+  const {
+    mainPosts,
+    hasMorePosts,
+    loadMorePostLoading,
+    loadMorePostErrorBolean,
+    loadMorePostNumberError,
+  } = useSelector((state) => state.post);
 
-  const [noficationCount,setNoficationCount]=useState(0)
+  const [noficationCount, setNoficationCount] = useState(0);
 
   // const [checkNoficationCount, setCheckNoficationCount]=useState(0)
 
-  const [noficationLength,setNoficationLength]=useState(nofication.data.length)
-    const originalNoficationLength=nofication.data.length
+  // const [noficationLength, setNoficationLength] = useState(
+  //   nofication.data.length
+  // );
+  // const originalNoficationLength = nofication.data.length;
   const dispatch = useDispatch();
 
-  const checkNoficationCountfunction=()=>{
+  const checkNoficationCountfunction = () => {
     // dispatch({
     //   type:CHECK_NOFICATION_REQUEST,
     //   data:nofication.data.length
     // })
-    
-    localStorage.setItem(me.name, nofication.data.length)
 
+    localStorage.setItem(me.name, nofication.data.length);
 
     // localStorage[me.name]=nofication.data.length
     // setCheckNoficationCount(nofication.data.length)//새로고침하면저장이안됨
-    setNoficationCount(0)
-  }
+    setNoficationCount(0);
+  };
 
   // nickName=me.name
 
-  useEffect(()=>{
-   
-    if(!localStorage.getItem(me.name)){
-      localStorage.setItem(me.name,0)
+  // useEffect(() => {
+  //   if (!localStorage.getItem(me.name)) {
+  //     localStorage.setItem(me.name, 0);
+  //   }
 
-    }
-   
-    console.log('fd',localStorage)
-    console.log('length',nofication.data.length)
-    console.log('check',localStorage.originalCount)
-   
-      if(nofication.data.length-localStorage.getItem(me.name)>0){
-        setNoficationCount(noficationCount+(nofication.data.length-localStorage.getItem(me.name)))
-      }
-    
-  
-  },[])
+  //   console.log("fd", localStorage);
+  //   console.log("length", nofication.data.length);
+  //   console.log("check", localStorage.originalCount);
 
-
+  //   if (nofication.data.length - localStorage.getItem(me.name) > 0) {
+  //     setNoficationCount(
+  //       noficationCount +
+  //         (nofication.data.length - localStorage.getItem(me.name))
+  //     );
+  //   }
+  // }, []);
 
   useEffect(() => {
     function onScroll() {
@@ -129,7 +116,7 @@ function index() {
         window.scrollY + document.documentElement.clientHeight >
         document.documentElement.scrollHeight - 300
       ) {
-        if (hasMorePosts && !loadMorePostLoading&&!loadMorePostErrorBolean) {
+        if (hasMorePosts && !loadMorePostLoading && !loadMorePostErrorBolean) {
           dispatch({
             type: LOAD_MORE_POST_REQUEST,
             data: mainPosts.nextPage,
@@ -143,48 +130,45 @@ function index() {
     };
   }, [hasMorePosts, loadMorePostLoading]);
 
-  const followAccept=(id)=>{
-    followAcceptSuccess()
+  const followAccept = (id) => {
+    followAcceptSuccess();
 
-    console.log('qwresadasd',id)
+    console.log("qwresadasd", id);
     dispatch({
-      type:FOLLOWING_REQUEST,
-      data:id
-    })
-  }
+      type: FOLLOWING_REQUEST,
+      data: id,
+    });
+  };
 
-  const noficationDelete=(id)=>{
+  const noficationDelete = (id) => {
     dispatch({
-      type:NOFICATION_DELETE_REQUEST,
-      data:id
-    })
-  }
+      type: NOFICATION_DELETE_REQUEST,
+      data: id,
+    });
+  };
 
   return (
     <Container>
       <LeftDiv>
         {/* <GreyLine /> */}
         <PostDiv>
-          {mainPosts.length === 0 ? (
-            <>
-              <Empty description="포스트가 존재하지 않습니다" />
-            </>
-          ) : (
-            mainPosts.data.map((post,i) => (
+          <BackTop />
+          {mainPosts.length !== 0 ? (
+            mainPosts.data.map((post) => (
               <>
-                              <span className="title">Post</span>
-
-              {<PostCard post={post} key={post.id} />}
-                
+                <span className="title">Post</span>
+                <PostCard post={post} key={post.id} />
               </>
             ))
+          ) : (
+            <Empty description="포스트가 존재하지 않습니다" />
           )}
           {/* <Empty description="포스트가 존재하지 않습니다" /> */}
-          {
-            loadMorePostErrorBolean?null:<LoadingOutlined style={{zIndex:'5',fontSize:40,marginLeft:250}}/>
-          }
-          
-
+          {loadMorePostErrorBolean ? null : (
+            <LoadingOutlined
+              style={{ zIndex: "5", fontSize: 40, marginLeft: 250 }}
+            />
+          )}
         </PostDiv>
 
         <GreyRightLine />
@@ -196,30 +180,44 @@ function index() {
             width: "100%",
             position: "sticky",
             top: "15%",
-            right: 0,
-            padding: 12,
+            // right: 0,
+            // padding: 12,
           }}
         >
           <TopDiv>
-            <WeekChart weekRecord={weekRecord} weekBikeRecord={weekBikeRecord} />
-            {/* <MMR />
-             */}
-               <Badge count={noficationCount}>
-                 <Button onClick={()=>checkNoficationCountfunction()}>알림확인하기</Button>
-               </Badge>
-               {nofication?nofication.data.map((m)=>(
-               <>
-               <Card>
-                 {m.not_message} 
-               {m.not_type==='followRequest'? <Button primary onClick={()=>followAccept(m.target_mem_id)}>요청수락</Button>:null}
-              
-                <Button danger onClick={()=>noficationDelete(m.not_id)}>삭제</Button>
-                </Card>
-                <br></br>
-                </>
-             )):null}
-    
-            
+            <WeekChart
+              weekRecord={weekRecord}
+              weekBikeRecord={weekBikeRecord}
+            />
+
+            {/* <Badge count={noficationCount}>
+              <Button onClick={() => checkNoficationCountfunction()}>
+                알림확인하기
+              </Button>
+            </Badge> */}
+            {/* {nofication
+              ? nofication.data.map((m) => (
+                  <>
+                    <Card>
+                      {m.not_message}
+                      {m.not_type === "followRequest" ? (
+                        <Button
+                          primary
+                          onClick={() => followAccept(m.target_mem_id)}
+                        >
+                          요청수락
+                        </Button>
+                      ) : null}
+
+                      <Button danger onClick={() => noficationDelete(m.not_id)}>
+                        삭제
+                      </Button>
+                    </Card>
+                    <br></br>
+                  </>
+                ))
+              : null} */}
+            <MMR />
           </TopDiv>
 
           <BottomDiv>
@@ -238,7 +236,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
     if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;  
+      axios.defaults.headers.Cookie = cookie;
     }
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
@@ -262,8 +260,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: PROGRESS_REQUEST,
     });
     context.store.dispatch({
-      type:NOFICATION_REQUEST,
-    })
+      type: NOFICATION_REQUEST,
+    });
 
     console.log("getssr", new Date().toTimeString());
 
@@ -291,6 +289,10 @@ const Container = styled.div`
     // border-radius: 7px;
     box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%);
     margin: 0 !important;
+  }
+
+  .ant-back-top-icon {
+    background: #467ada;
   }
 `;
 
@@ -324,13 +326,7 @@ const RightDiv = styled.div`
   width: 53%;
   height: 100%;
   margin: 0 auto;
-
-  // background: #ebedf3;
-
   border-radius: 55px;
-  // position: sticky;
-  // top: 15%;
-  // padding: 12px;
 `;
 
 const PostDiv = styled.div`
@@ -387,7 +383,7 @@ const TopDiv = styled.div`
 `;
 
 const BottomDiv = styled.div`
-  margin-top: 3%;
+  margin-top: 8%;
   display: flex;
   justify-content: space-between;
   width: 100%;

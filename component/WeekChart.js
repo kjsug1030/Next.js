@@ -37,11 +37,28 @@ const WeekChart = ({ weekRecord, weekBikeRecord }) => {
     datasets: [
       {
         label: "라이딩",
-        data: [weekBikeRecord.sixDayAgo, weekBikeRecord.fiveDayAgo, weekBikeRecord.fourDayAgo, weekBikeRecord.threeDayAgo,weekBikeRecord.twoDayAgo,weekBikeRecord.oneDayAgo, weekBikeRecord.today],        backgroundColor: "rgb(53, 162, 235,0.8)",
+        data: [
+          weekBikeRecord.sixDayAgo,
+          weekBikeRecord.fiveDayAgo,
+          weekBikeRecord.fourDayAgo,
+          weekBikeRecord.threeDayAgo,
+          weekBikeRecord.twoDayAgo,
+          weekBikeRecord.oneDayAgo,
+          weekBikeRecord.today,
+        ],
+        backgroundColor: "rgb(53, 162, 235,0.8)",
       },
       {
         label: "러닝",
-        data: [weekRecord.sixDayAgo, weekRecord.fiveDayAgo, weekRecord.fourDayAgo, weekRecord.threeDayAgo,weekRecord.twoDayAgo,weekRecord.oneDayAgo, weekRecord.today],
+        data: [
+          weekRecord.sixDayAgo,
+          weekRecord.fiveDayAgo,
+          weekRecord.fourDayAgo,
+          weekRecord.threeDayAgo,
+          weekRecord.twoDayAgo,
+          weekRecord.oneDayAgo,
+          weekRecord.today,
+        ],
         backgroundColor: "rgb(75, 192, 192,0.8)",
       },
     ],

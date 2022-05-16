@@ -15,26 +15,25 @@ import {
 import useInput from "../hooks/useInputTest";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { GOAL_REQUEST, SIGNUP_REQUEST ,ALL_GOAL_REQUEST} from "../reducers/user";
+import {
+  GOAL_REQUEST,
+  SIGNUP_REQUEST,
+  ALL_GOAL_REQUEST,
+} from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 const { Option } = Select;
 
-const badgeModal = ({ isModal, openModal,setIsModal }) => {
-
-  
-
-      
-
-
-
+const badgeModal = ({ isModal, openModal, setIsModal }) => {
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
       <TitleDiv>
         <div>뱃지</div>
       </TitleDiv>
-      <Button danger onClick={openModal}>닫기</Button>
+      <Button danger onClick={openModal}>
+        닫기
+      </Button>
     </ModalWrapper>
   );
 };

@@ -16,7 +16,7 @@ const MMR = () => {
         paddingLeft: 20,
       }}
     >
-      <Intro className="intro" />
+      {/* <Intro className="intro" /> */}
       <Container>
         <Card hoverable>
           <h1>score : {me.mmr}</h1>
@@ -54,7 +54,7 @@ const Container = styled.div`
   // margin-top: 2%;
 
   position: relative;
-  top: 23px;
+  top: 24px;
 
   // overflow: hidden;
   white-space: nowrap;
