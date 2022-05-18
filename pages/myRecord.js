@@ -388,6 +388,8 @@ const ScoreDiv = styled.div`
     padding: 10px;
     padding-top: 30px;
     text-align: center;
+    position: relative;
+    z-index: 3;
   }
 `;
 
@@ -470,9 +472,4 @@ const DivLine = styled.div`
   left: 0;
   top: 0;
   z-index: 1;
-
-  h3,
-  p {
-    z-index: 5;
-  }
 `;

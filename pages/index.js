@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Modal, Empty, BackTop } from "antd";
+import { Button, Card, Modal, Empty, BackTop, Badge } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -16,11 +16,12 @@ import {
   WEEKRECORD_BIKE_REQUEST,
   WEATHER_REQUEST,
   PROGRESS_REQUEST,
-  NOFICATION_SUCCESS,
-  NOFICATION_REQUEST,
+  NOTIFICATION_SUCCESS,
+  NOTIFICATION_REQUEST,
   FOLLOWING_REQUEST,
-  NOFICATION_DELETE_REQUEST,
-  CHECK_NOFICATION_REQUEST,
+  NOTIFICATION_DELETE_REQUEST,
+  CHECK_NOTIFICATION_REQUEST,
+  BADGE_REQUEST,
 } from "../reducers/user";
 import { LOAD_MORE_POST_REQUEST, LOAD_POSTS_REQUEST } from "../reducers/post";
 
@@ -57,7 +58,7 @@ function index() {
   });
 
   const { searchMap } = useSelector((state) => state.map);
-  const { me, nofication, noficationCheckCount } = useSelector(
+  const { me, notification, notificationCheckCount } = useSelector(
     (state) => state.user
   );
   const {
@@ -68,27 +69,27 @@ function index() {
     loadMorePostNumberError,
   } = useSelector((state) => state.post);
 
-  const [noficationCount, setNoficationCount] = useState(0);
+  // const [notificationCount, setNotificationCount] = useState(0);
 
-  // const [checkNoficationCount, setCheckNoficationCount]=useState(0)
+  // const [checkNotificationCount, setCheckNotificationCount] = useState(0);
 
-  // const [noficationLength, setNoficationLength] = useState(
-  //   nofication.data.length
+  // const [notificationLength, setNotificationLength] = useState(
+  //   notification.data.length
   // );
-  // const originalNoficationLength = nofication.data.length;
+  // const originalNotificationLength = notification.data.length;
   const dispatch = useDispatch();
 
-  const checkNoficationCountfunction = () => {
+  const checkNotificationCountfunction = () => {
     // dispatch({
-    //   type:CHECK_NOFICATION_REQUEST,
-    //   data:nofication.data.length
+    //   type:CHECK_NOTIFICATION_REQUEST,
+    //   data:notification.data.length
     // })
 
-    localStorage.setItem(me.name, nofication.data.length);
+    localStorage.setItem(me.name, notification.data.length);
 
-    // localStorage[me.name]=nofication.data.length
-    // setCheckNoficationCount(nofication.data.length)//새로고침하면저장이안됨
-    setNoficationCount(0);
+    // localStorage[me.name]=notification.data.length
+    // setCheckNotificationCount(notification.data.length)//새로고침하면저장이안됨
+    setNotificationCount(0);
   };
 
   // nickName=me.name
@@ -99,13 +100,13 @@ function index() {
   //   }
 
   //   console.log("fd", localStorage);
-  //   console.log("length", nofication.data.length);
+  //   console.log("length", notification.data.length);
   //   console.log("check", localStorage.originalCount);
 
-  //   if (nofication.data.length - localStorage.getItem(me.name) > 0) {
-  //     setNoficationCount(
-  //       noficationCount +
-  //         (nofication.data.length - localStorage.getItem(me.name))
+  //   if (notification.data.length - localStorage.getItem(me.name) > 0) {
+  //     setNotificationCount(
+  //       notificationCount +
+  //         (notification.data.length - localStorage.getItem(me.name))
   //     );
   //   }
   // }, []);
@@ -140,9 +141,9 @@ function index() {
     });
   };
 
-  const noficationDelete = (id) => {
+  const notificationDelete = (id) => {
     dispatch({
-      type: NOFICATION_DELETE_REQUEST,
+      type: NOTIFICATION_DELETE_REQUEST,
       data: id,
     });
   };
@@ -153,7 +154,7 @@ function index() {
         {/* <GreyLine /> */}
         <PostDiv>
           <BackTop />
-          {mainPosts.length !== 0 ? (
+          {mainPosts.data.length !== 0 ? (
             mainPosts.data.map((post) => (
               <>
                 <span className="title">Post</span>
@@ -163,7 +164,6 @@ function index() {
           ) : (
             <Empty description="포스트가 존재하지 않습니다" />
           )}
-          {/* <Empty description="포스트가 존재하지 않습니다" /> */}
           {loadMorePostErrorBolean ? null : (
             <LoadingOutlined
               style={{ zIndex: "5", fontSize: 40, marginLeft: 250 }}
@@ -190,13 +190,13 @@ function index() {
               weekBikeRecord={weekBikeRecord}
             />
 
-            {/* <Badge count={noficationCount}>
-              <Button onClick={() => checkNoficationCountfunction()}>
+            {/* <Badge count={notificationCount}>
+              <Button onClick={() => checkNotificationCountfunction()}>
                 알림확인하기
               </Button>
-            </Badge> */}
-            {/* {nofication
-              ? nofication.data.map((m) => (
+            </Badge>
+            {notification
+              ? notification.data.map((m) => (
                   <>
                     <Card>
                       {m.not_message}
@@ -209,7 +209,10 @@ function index() {
                         </Button>
                       ) : null}
 
-                      <Button danger onClick={() => noficationDelete(m.not_id)}>
+                      <Button
+                        danger
+                        onClick={() => notificationDelete(m.not_id)}
+                      >
                         삭제
                       </Button>
                     </Card>
@@ -260,7 +263,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       type: PROGRESS_REQUEST,
     });
     context.store.dispatch({
-      type: NOFICATION_REQUEST,
+      type: NOTIFICATION_REQUEST,
     });
 
     console.log("getssr", new Date().toTimeString());
@@ -347,7 +350,7 @@ const PostDiv = styled.div`
 
   .ant-empty {
     position: relative;
-    top: 10%;
+    top: 30%;
   }
 
   h2 {
@@ -383,7 +386,7 @@ const TopDiv = styled.div`
 `;
 
 const BottomDiv = styled.div`
-  margin-top: 8%;
+  margin-top: 7%;
   display: flex;
   justify-content: space-between;
   width: 100%;

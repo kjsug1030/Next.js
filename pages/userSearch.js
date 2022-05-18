@@ -73,10 +73,15 @@ function userSearch() {
                     <h2 className="user_name">{m.name}</h2>
                     <ProfileText className="profile_text">
                       <p>자기소개 : {m.introduce}</p>
-                      <p>활동지역 : {m.location}</p>
+                      {/* <p>생일 : {m.birth}</p> */}
+                      {/* <p>활동지역 : {m.location}</p> */}
                       <div className="follow">
-                        <p className="follower">팔로워 : 220</p>
-                        <p>팔로잉 : 300</p>
+                        <p className="follower">생일 : {m.birth}</p>
+                        <p>성별 : {m.sex}</p>
+                      </div>
+                      <div className="follow">
+                        <p className="follower">활동지역 : {m.location}</p>
+                        <p>MMR : {m.mmr}</p>
                       </div>
                     </ProfileText>
                   </ProfileDiv>
@@ -174,6 +179,45 @@ const Container = styled.div`
       //   bottom: 5px !important;
       // }
     }
+  }
+
+  .ant-input {
+    border-radius: 15px;
+    border-radius: 1px solid #467ada;
+  }
+
+  .ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button {
+    border-radius: 0 !important;
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+    border-radius: 1px solid #467ada;
+    background: #467ada;
+  }
+
+  .ant-input-group-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .ant-input-group {
+    width: 90%;
+    width: 100%;
+    // margin: 0 auto;
+  }
+
+  .ant-input-search {
+    border-radius: 9px !important;
+    // position: relative;
+    // right: 15px;
+    // z-index: 1;
+  }
+
+  .ant-input-search-button {
+    // border-radius: 55% !important;
+    // border-top-right-radius: 9px !important;
+    // border-bottom-right-radius: 9px !important;
   }
 `;
 

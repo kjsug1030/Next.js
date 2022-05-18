@@ -4,12 +4,14 @@ import { LOGOUT_REQUEST, SIGNUP_REQUEST } from "../../reducers/user";
 
 import { Avatar, Input, Layout, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 
 const { Header, Sider } = Layout;
 
 import styled from "styled-components";
 import ProfileEdit from "../ProfileEdit";
 import Notification from "../../component/Notification";
+import BadgeBook from "../BadgeBook";
 
 const { Search } = Input;
 
@@ -21,18 +23,6 @@ const header = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-  };
-
-  const [visible, setVisible] = useState(false);
-
-  const showEditProfile = () => {
-    setVisible((prev) => !prev);
-    console.log(visible);
-  };
-
-  const openDrawer = () => {
-    setVisible(true);
-    console.log(visible);
   };
 
   return (
@@ -51,22 +41,17 @@ const header = () => {
             {/* <Avatar onClick={openDrawer} src="kurumi.jpg" size={40}></Avatar> */}
             {me.profile ? (
               <Avatar
-                onClick={openDrawer}
                 src={me.profile}
                 size={40}
                 style={{ background: "#fff" }}
               />
             ) : (
               <Avatar
-                onClick={openDrawer}
                 // src={me.profile}
                 size={40}
                 style={{ background: "#fff", opacity: "0.0" }}
-              >
-                {/* 천 */}
-              </Avatar>
+              />
             )}
-            <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
           </a>
         </AvatarDiv>
       </IconList>

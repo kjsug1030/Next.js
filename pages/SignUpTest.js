@@ -81,15 +81,15 @@ const Signup = ({ isModal, openModal }) => {
 
   const onSubmit = () => {
     let body = {
-      name:firstName + lastName,
-      email:email,
-      password:password,
-      sex:sex,
-      profile:'img',
-      introduce:'가입',
-      weight:70,
-      location:"대구",
-      birth:birth.birth + "-" + birth.month + "-" + birth.day,
+      name: firstName + lastName,
+      email: email,
+      password: password,
+      sex: sex,
+      profile: "",
+      introduce: "",
+      weight: "",
+      location: "",
+      birth: birth.birth + "-" + birth.month + "-" + birth.day,
     };
 
     console.log(body);
@@ -98,6 +98,7 @@ const Signup = ({ isModal, openModal }) => {
       type: SIGNUP_REQUEST,
       data: body,
     });
+    openModal(false);
   };
 
   return (
@@ -124,8 +125,10 @@ const Signup = ({ isModal, openModal }) => {
           </SecondName>
           <MaleFemale>
             <Select placeholder="성별" onChange={onChangeSex}>
-              <Option value="여">여성</Option>
-              <Option value="남">남성</Option>
+              <Option value="F">여성</Option>
+              <Option value="M">남성</Option>
+              <Option value="T">트랜스젠더</Option>
+              <Option value="N">알리고 싶지 않음</Option>
             </Select>
           </MaleFemale>
           {/* 여기까지 */}

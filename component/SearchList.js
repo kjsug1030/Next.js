@@ -37,7 +37,7 @@ function SearchList({
     });
     setPropsId(positionData._id);
     // (positionData)
-    setTrackName(positionData.trackName)
+    setTrackName(positionData.trackName);
     setTarget(true);
   };
 
@@ -52,8 +52,8 @@ function SearchList({
     <Container>
       <Card hoverable>
         <DivDiv>
-        <LeftDiv>
-            {searchMap.event === "B" ? (
+          <LeftDiv>
+            {list.event == "B" ? (
               <MdDirectionsBike size={90} />
             ) : (
               <FaRunning size={90} />
@@ -68,18 +68,11 @@ function SearchList({
             >
               {list.trackName}
             </h1>
-            <p>Bike</p>
+            {list.event === "B" ? <p>Bike</p> : <p>Running</p>}
             <p>{list.description}</p>
             <p>{dateFormat(list.createdAt)}</p>
           </RightDiv>
         </DivDiv>
-
-        {/* <Card.Meta
-      
-      description={list.name}
-      >
-          
-      </Card.Meta> */}
       </Card>
     </Container>
   );

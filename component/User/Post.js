@@ -31,6 +31,7 @@ import ImageCarousel from "../ImageCarousel";
 import "moment/locale/ko";
 
 const FollowerPost = ({ post, user }) => {
+  const { me } = useSelector((state) => state.user);
   const { comment, likeRequest } = useSelector((state) => state.post);
   // const { like, setLike } = useState(post.likes.length);
 
@@ -138,8 +139,7 @@ const FollowerPost = ({ post, user }) => {
                         onClick={() => onToggleComment(post.id)}
                       />
                     )}
-                    Like
-                    {post.likes.length}
+                    Like {post.likes.length}
                   </Button>
                   <Button
                     style={{ width: 160, marginLeft: 10, borderRadius: 15 }}

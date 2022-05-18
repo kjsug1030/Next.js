@@ -13,61 +13,7 @@ import { END } from "redux-saga";
 const Notification = () => {
   const { notification } = useSelector((state) => state.user);
 
-  const [noti, setNoti] = useState([
-    {
-      not_id: 1,
-      mem_id: 2,
-      target_mem_id: 3,
-      not_type: "follow",
-      not_message: "ヨン君님이 회원님을 팔로우 하기 시작했습니다",
-      read: 1,
-      created_at: "2022-05-02T04:31:09.000000Z",
-      updated_at: "2022-05-02T04:31:09.000000Z",
-    },
-    {
-      not_id: 2,
-      mem_id: 2,
-      target_mem_id: 3,
-      not_type: "like",
-      not_message: "ヨン君님이 회원님의폼데이터테스트 게시물을 좋아합니다",
-      read: 0,
-      created_at: "2022-05-02T04:32:03.000000Z",
-      updated_at: "2022-05-02T04:32:03.000000Z",
-    },
-    {
-      not_id: 3,
-      mem_id: 2,
-      target_mem_id: 1,
-      not_type: "comment",
-      not_message: "서민성님이 댓글을 남겼습니다: 민성이 댓글입니다",
-      read: 0,
-      created_at: "2022-05-02T04:36:35.000000Z",
-      updated_at: "2022-05-02T04:36:35.000000Z",
-    },
-    {
-      not_id: 4,
-      mem_id: 2,
-      target_mem_id: 1,
-      not_type: "like",
-      not_message: "서민성님이 회원님의폼데이터테스트 게시물을 좋아합니다",
-      read: 1,
-      created_at: "2022-05-02T04:39:22.000000Z",
-      updated_at: "2022-05-02T04:39:22.000000Z",
-    },
-  ]);
-
   const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  const deleteNotification = () => {
-    setNoti([]);
-  };
 
   const dateFormat = (d) => {
     let date = moment(d);

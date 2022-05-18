@@ -7,14 +7,21 @@ export const initialState = {
   otherProfile: null,
   weathers: null,
   goalpurpose: null,
-  nofication: null,
-  noficationCheckCount: 0,
+  notification: null,
+  notificationCheckCount: 0,
   allPurpose: null,
   purposeProgress: null,
   totalTime: null,
   totalCalorie: null,
   totalRunTime: null,
   totalBikeTime: null,
+
+  /////////////////
+  otherUserTotalTime: null,
+  otherUserTotalCalorie: null,
+  otherUserTotalRunTime: null,
+  otherUserTotalBikeTime: null,
+  ///////////////
 
   me: null,
   searchUsers: [],
@@ -65,20 +72,20 @@ export const PROFILE_EDIT_REQUEST = "PROFILE_EDIT_REQUEST";
 export const PROFILE_EDIT_SUCCESS = "PROFILE_EDIT_SUCCESS";
 export const PROFILE_EDIT_FAILURE = "PROFILE_EDIT_FAILURE";
 
-export const CHECK_NOFICATION_REQUEST = "CHECK_NOFICATION_REQUEST";
+export const CHECK_NOTIFICATION_REQUEST = "CHECK_NOTIFICATION_REQUEST";
 // export const CHECK_NOFICATION_SUCCESS='CHECK_NOFICATION_SUCCESS'
 
-export const NOFICATION_DELETE_REQUEST = "NOFICATION_DELETE_REQUEST";
-export const NOFICATION_DELETE_SUCCESS = "NOFICATION_DELETE_SUCCESS";
-export const NOFICATION_DELETE_FAILURE = "NOFICATION_DELETE_FAILURE";
+export const NOTIFICATION_DELETE_REQUEST = "NOTIFICATION_DELETE_REQUEST";
+export const NOTIFICATION_DELETE_SUCCESS = "NOTIFICATION_DELETE_SUCCESS";
+export const NOTIFICATION_DELETE_FAILURE = "NOTIFICATION_DELETE_FAILURE";
 
-export const NOFICATION_REQUEST = "NOFICATION_REQUEST";
-export const NOFICATION_SUCCESS = "NOFICATION_SUCCESS";
-export const NOFICATION_FAILURE = "NOFICATION_FAILURE";
+export const NOTIFICATION_REQUEST = "NOTIFICATION_REQUEST";
+export const NOTIFICATION_SUCCESS = "NOTIFICATION_SUCCESS";
+export const NOTIFICATION_FAILURE = "NOTIFICATION_FAILURE";
 
-export const FOLLOW_NOFICATION_REQUEST = "FOLLOW_NOFICATION_REQUEST";
-export const FOLLOW_NOFICATION_SUCCESS = "FOLLOW_NOFICATION_SUCCESS";
-export const FOLLOW_NOFICATION_FAILURE = "FOLLOW_NOFICATION_FAILURE";
+export const FOLLOW_NOTIFICATION_REQUEST = "FOLLOW_NOTIFICATION_REQUEST";
+export const FOLLOW_NOTIFICATION_SUCCESS = "FOLLOW_NOTIFICATION_SUCCESS";
+export const FOLLOW_NOTIFICATION_FAILURE = "FOLLOW_NOTIFICATION_FAILURE";
 
 export const FOLLOW_CANCEL_REQUEST = "FOLLOW_CANCEL_REQUEST";
 export const FOLLOW_CANCEL_SUCCESS = "FOLLOW_CANCEL_SUCCESS";
@@ -172,38 +179,63 @@ export const DELETE_MYPOST_REQUEST = "DELETE_MYPOST_REQUEST";
 export const DELETE_MYPOST_SUCCESS = "DELETE_MYPOST_SUCCESS";
 export const DELETE_MYPOST_FAILURE = "DELETE_MYPOST_FAILURE";
 
+export const OTHER_USER_TOTAL_RUN_TIME_REQUEST =
+  "OTHER_USER_TOTAL_RUN_TIME_REQUEST";
+export const OTHER_USER_TOTAL_RUN_TIME_SUCCESS =
+  "OTHER_USER_TOTAL_RUN_TIME_SUCCESS";
+export const OTHER_USER_TOTAL_RUN_TIME_FAILURE =
+  "OTHER_USER_TOTAL_RUN_TIME_FAILURE";
+
+export const OTHER_USER_TOTAL_CALORIE_REQUEST =
+  "OTHER_USER_TOTAL_CALORIE_REQUEST";
+export const OTHER_USER_TOTAL_CALORIE_SUCCESS =
+  "OTHER_USER_TOTAL_CALORIE_SUCCESS";
+export const OTHER_USER_TOTAL_CALORIE_FAILURE =
+  "OTHER_USER_TOTAL_CALORIE_FAILURE";
+
+export const OTHER_USER_TOTAL_BIKE_TIME_REQUEST =
+  "OTHER_USER_TOTAL_BIKE_TIME_REQUEST";
+export const OTHER_USER_TOTAL_BIKE_TIME_SUCCESS =
+  "OTHER_USER_TOTAL_BIKE_TIME_SUCCESS";
+export const OTHER_USER_TOTAL_BIKE_TIME_FAILURE =
+  "OTHER_USER_TOTAL_BIKE_TIME_FAILURE";
+
+export const OTHER_USER_TOTAL_TIME_REQUEST = "OTHER_USER_TOTAL_TIME_REQUEST";
+export const OTHER_USER_TOTAL_TIME_SUCCESS = "OTHER_USER_TOTAL_TIME_SUCCESS";
+export const OTHER_USER_TOTAL_TIME_FAILURE = "OTHER_USER_TOTAL_TIME_FAILURE";
+
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case CHECK_NOFICATION_REQUEST:
-        draft.noficationCheckCount = action.data;
+      case CHECK_NOTIFICATION_REQUEST:
+        draft.notificationCheckCount = action.data;
         break;
 
-      case NOFICATION_DELETE_REQUEST:
+      case NOTIFICATION_DELETE_REQUEST:
         break;
-      case NOFICATION_DELETE_SUCCESS:
-        draft.nofication.data = draft.nofication.data.filter(
+      case NOTIFICATION_DELETE_SUCCESS:
+        draft.notification.data = draft.notification.data.filter(
           (v) => v.not_id !== action.data
         );
         break;
       // draft.me.followings = draft.me.followings.filter((v) => v.id !== action.data);
 
-      case NOFICATION_DELETE_FAILURE:
+      case NOTIFICATION_DELETE_FAILURE:
         break;
 
-      case NOFICATION_REQUEST:
+      case NOTIFICATION_REQUEST:
         break;
-      case NOFICATION_SUCCESS:
-        draft.nofication = action.data;
+      case NOTIFICATION_SUCCESS:
+        draft.notification = action.data;
         break;
-      case NOFICATION_FAILURE:
+      case NOTIFICATION_FAILURE:
         break;
-      case FOLLOW_NOFICATION_REQUEST:
+      case FOLLOW_NOTIFICATION_REQUEST:
         break;
-      case FOLLOW_NOFICATION_SUCCESS:
+      case FOLLOW_NOTIFICATION_SUCCESS:
         draft.otherProfile.followCheck = 3;
         break;
-      case FOLLOW_NOFICATION_FAILURE:
+      case FOLLOW_NOTIFICATION_FAILURE:
         break;
       case FOLLOW_CANCEL_REQUEST:
         break;
@@ -242,6 +274,42 @@ const reducer = (state = initialState, action) => {
         draft.profileEditLoading = false;
         draft.profileEditError = action.error;
         break;
+
+      /////////////////////////////////
+
+      case OTHER_USER_TOTAL_BIKE_TIME_REQUEST:
+        break;
+      case OTHER_USER_TOTAL_BIKE_TIME_SUCCESS:
+        draft.otherUserTotalBikeTime = action.data;
+        break;
+      case OTHER_USER_TOTAL_BIKE_TIME_FAILURE:
+        break;
+
+      case OTHER_USER_TOTAL_RUN_TIME_REQUEST:
+        break;
+      case OTHER_USER_TOTAL_RUN_TIME_SUCCESS:
+        draft.otherUserTotalRunTime = action.data;
+        break;
+      case OTHER_USER_TOTAL_RUN_TIME_FAILURE:
+        break;
+
+      case OTHER_USER_TOTAL_CALORIE_REQUEST:
+        break;
+      case OTHER_USER_TOTAL_CALORIE_SUCCESS:
+        draft.otherUserTotalCalorie = action.data;
+        break;
+      case OTHER_USER_TOTAL_CALORIE_FAILURE:
+        break;
+
+      case OTHER_USER_TOTAL_TIME_REQUEST:
+        break;
+      case OTHER_USER_TOTAL_TIME_SUCCESS:
+        draft.otherUserTotalTime = action.data;
+        break;
+      case OTHER_USER_TOTAL_TIME_FAILURE:
+        break;
+
+      /////////////////////////////////
 
       case TOTAL_BIKE_TIME_REQUEST:
         break;

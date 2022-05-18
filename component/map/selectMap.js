@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import { UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  SolutionOutlined,
+  LoadingOutlined,
+  SmileOutlined,
+} from "@ant-design/icons";
 import {
   Polyline,
   Marker,
@@ -22,7 +27,7 @@ import {
   SEARCH_MAP_REQUEST,
   LOAD_MY_LOCATION_REQUEST,
 } from "../../reducers/map";
-import { Input, Button, Row, Col, Card, Pagination,Modal } from "antd";
+import { Input, Button, Row, Col, Card, Pagination, Modal } from "antd";
 import GeomHandle from "../GoogleMap";
 import SearchList from "../SearchList";
 import Link from "next/link";
@@ -36,10 +41,11 @@ var lng = 2;
 function selectMap({}) {
   function success() {
     Modal.success({
-      content: '현재위치검색중...',centered:true,icon:<LoadingOutlined />
+      content: "현재위치검색중...",
+      centered: true,
+      icon: <LoadingOutlined />,
     });
   }
-  
 
   const { myLocation } = useSelector((state) => state.map);
 
@@ -48,15 +54,15 @@ function selectMap({}) {
   const { Search } = Input;
 
   const [loadMap, setLoadMap] = useState(false);
-  useEffect(()=>{
-    success()
-  },[])
+  useEffect(() => {
+    success();
+  }, []);
 
-  useEffect(()=>{
-    if(loadMap===true){
-     Modal.destroyAll()
+  useEffect(() => {
+    if (loadMap === true) {
+      Modal.destroyAll();
     }
-  },[loadMap])
+  }, [loadMap]);
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -200,7 +206,7 @@ function selectMap({}) {
   });
 
   const [target, setTarget] = useState(false);
-  const [trackName,setTrackName]=useState('')
+  const [trackName, setTrackName] = useState("");
 
   const [strokeWeight, setStrokeWeight] = useState(
     Array.from({ length: searchMap.length }, () => 3)
@@ -214,7 +220,7 @@ function selectMap({}) {
     });
     console.log("qqq", positionData);
     setPropsId(positionData._id);
-    setTrackName(positionData.trackName)
+    setTrackName(positionData.trackName);
     // setPropsPosition(positionData)
     setTarget(true);
   };
@@ -241,8 +247,6 @@ function selectMap({}) {
     border: `1px solid #ccc`,
     padding: 15,
   };
-
- 
 
   //infoWindow
 
@@ -315,7 +319,7 @@ function selectMap({}) {
                   size="large"
                 />
                 <Buttons>
-                {mapState === "B" ? (
+                  {mapState === "B" ? (
                     <>
                       <Button
                         className="btn1"
@@ -342,12 +346,6 @@ function selectMap({}) {
                       </Button>
                     </>
                   ) : null}
-                  {/* <Button className="btn1" onClick={bikeSelectMap}>
-                    자전거
-                  </Button>
-                  <Button className="btn2" onClick={runningSelectMap}>
-                    달리기
-                  </Button> */}
                 </Buttons>
               </div>
               {/* <RowDiv gutter={[0, 16]}> */}
@@ -363,7 +361,7 @@ function selectMap({}) {
               >
                 {searchMap.map((p, index) => (
                   <SearchList
-                  setTrackName={setTrackName}
+                    setTrackName={setTrackName}
                     setInfoPosition={setInfoPosition}
                     setPropsId={setPropsId}
                     setTarget={setTarget}
@@ -371,7 +369,7 @@ function selectMap({}) {
                     setStrokeWeight={setStrokeWeight}
                     list={p}
                     key={p.id}
-                  ></SearchList>
+                  />
                 ))}
               </div>
             </LeftDiv>
@@ -476,6 +474,17 @@ const Container = styled.div`
     background: #467ada;
     border-color: #467ada;
     color: #fff;
+  }
+
+  .ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button {
+    border-radius: 0 !important;
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+    border-radius: 1px solid #467ada;
+    background: #467ada;
   }
 
   .ant-input {

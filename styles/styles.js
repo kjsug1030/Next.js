@@ -37,4 +37,19 @@ a {
 }
 
 padding-top: 70px;
+
+.ant-back-top-content {
+  width:70px;
+  height:50px;
+  border-radius:50%;
+}
+
+.ant-back-top-icon {
+  line-height:50px;
+}
+
+.ant-back-top {
+  right:55px;
+  bottom:35px;
+}
 `;

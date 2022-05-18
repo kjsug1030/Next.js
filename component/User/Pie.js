@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { Card, Empty } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
-const FollowerPie = ({ userRate }) => {
-  const userRateRidding = userRate.R ? userRate.R : 0;
-  const userRateRunning = userRate.B ? userRate.B : 0;
+const FollowerPie = ({ bikePercentage, runPercentage }) => {
+  const userRateRidding = bikePercentage ? bikePercentage : 0;
+  const userRateRunning = runPercentage ? runPercentage : 0;
 
   const options = {
     plugins: {
@@ -41,7 +41,7 @@ const FollowerPie = ({ userRate }) => {
       <TitleCard />
       <CardWrapper hoverable>
         <h3>운동비율</h3>
-        {userRate ? (
+        {bikePercentage || runPercentage ? (
           <Doughnut
             data={data}
             options={options}
@@ -86,7 +86,9 @@ const PieDiv = styled.div`
     padding: 0 !important;
   }
 
-  // padding: 0 37px;
+  .ant-empty-description {
+    padding-bottom: 15px;
+  }
 `;
 
 const CardWrapper = styled(Card)`

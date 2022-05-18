@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             <Head>
               <meta charset="UTF-8" />
               <title>ペースメーカー</title>
-              <link rel="icon" href="riderFavicon.png" />
+              <link rel="icon" href="/riderFavicon.png" />
             </Head>
             {page}
           </AppLayout>
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <Head>
           <meta charset="UTF-8" />
           <title>ペースメーカー</title>
-          <link rel="icon" href="riderFavicon.png" />
+          <link rel="icon" href="/riderFavicon.png" />
         </Head>
 
         <Component {...pageProps} />

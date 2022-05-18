@@ -109,6 +109,10 @@ const WeatherWrapper = styled.div`
   div {
     margin-top: 20px;
   }
+
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
 `;
 
 const Container = styled.div`
@@ -119,7 +123,7 @@ const Container = styled.div`
   text-overflow: clip;
   white-space: nowrap;
   // margin-top: 39px;
-  margin-top: 60px;
+  margin-top: 40px;
 
   .ant-card {
     width: 100%;

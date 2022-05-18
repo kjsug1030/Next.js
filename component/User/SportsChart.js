@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import { Card, Badge } from "antd";
 
-const SportsChart = () => {
+const SportsChart = ({ runWeekRecord, bikeWeekRecord }) => {
   const options = {
     plugins: {
       title: {
@@ -38,12 +38,28 @@ const SportsChart = () => {
     datasets: [
       {
         label: "라이딩",
-        data: [300, 400, 500, 600, 700, 800, 900],
+        data: [
+          bikeWeekRecord.sixDayAgo,
+          bikeWeekRecord.fiveDayAgo,
+          bikeWeekRecord.fourDayAgo,
+          bikeWeekRecord.threeDayAgo,
+          bikeWeekRecord.twoDayAgo,
+          bikeWeekRecord.oneDayAgo,
+          bikeWeekRecord.today,
+        ],
         backgroundColor: "rgb(53, 162, 235,0.8)",
       },
       {
         label: "러닝",
-        data: [100, 800, 200, 400, 200, 200, 100],
+        data: [
+          runWeekRecord.sixDayAgo,
+          runWeekRecord.fiveDayAgo,
+          runWeekRecord.fourDayAgo,
+          runWeekRecord.threeDayAgo,
+          runWeekRecord.twoDayAgo,
+          runWeekRecord.oneDayAgo,
+          runWeekRecord.today,
+        ],
         backgroundColor: "rgb(75, 192, 192,0.8)",
       },
     ],

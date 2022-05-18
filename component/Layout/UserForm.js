@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Avatar, Descriptions } from "antd";
 import styled, { createGlobalStyle } from "styled-components";
 import { useSelector } from "react-redux";
+import { SettingOutlined } from "@ant-design/icons";
+import ProfileEdit from "../ProfileEdit";
 
 const UserForm = () => {
   const { me } = useSelector((state) => state.user);
+
+  const [visible, setVisible] = useState(false);
+
+  const showEditProfile = () => {
+    setVisible((prev) => !prev);
+    console.log(visible);
+  };
+
+  const openDrawer = () => {
+    setVisible(true);
+    console.log(visible);
+  };
+
   return (
     <Container>
       {me && (
@@ -38,9 +53,11 @@ const UserForm = () => {
               />
             }
           />
+          <SettingOutlined className="icon" onClick={openDrawer} />
           <DescriptionWrapper title={me.name} />
         </CardWrapper>
       )}
+      <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
     </Container>
   );
 };
@@ -59,6 +76,17 @@ const Container = styled.div`
 
   .ant-card-body {
     padding-bottom: 17px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 5%;
+    right: 7%;
+    font-size: 17px;
+  }
+
+  .icon:hover {
+    cursor: pointer;
   }
 `;
 

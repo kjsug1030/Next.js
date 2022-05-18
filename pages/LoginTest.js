@@ -85,7 +85,7 @@ const signin = () => {
 
   return (
     <Layout>
-      <HeaderWrapper>ペースメーカー</HeaderWrapper>
+      <HeaderWrapper>Pace-Maker</HeaderWrapper>
       <ContentWrapper>
         <CardStyle>
           <MetaDiv>

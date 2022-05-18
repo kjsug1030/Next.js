@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Card, PageHeader, Tag } from "antd";
 import MissionCard from "./MissionCard";
 import { useSelector } from "react-redux";
 import Intro from "./Intro";
+import BadgeBook from "./BadgeBook";
+import BadgeModal from "./badgeModal";
 
 const MMR = () => {
   const { me } = useSelector((state) => state.user);
+
   return (
     <div
       style={{
@@ -20,24 +23,17 @@ const MMR = () => {
       <Container>
         <Card hoverable>
           <h1>score : {me.mmr}</h1>
-          {/* <p>어제로부터 스코어 변화</p>
-        <div>
-          <span style={{ color: "#fff" }}>+</span>
-          <span>378</span>
-          <img
-            className="img1"
-            src="https://cdn-icons.flaticon.com/png/512/45/premium/45958.png?token=exp=1649617196~hmac=25852d553014e72e5ccfad33767dc23c"
-          />
-        </div> */}
+
           <br />
           <br />
           <br />
           <p>보유 뱃지</p>
-          <div>
+          {/* <div>
             <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/179/179251.png" />
-          </div>
+          </div> */}
+          <BadgeBook />
         </Card>
       </Container>
     </div>
@@ -72,7 +68,7 @@ const Container = styled.div`
     transition: all 0.6s;
   }
   .ant-card-hoverable:hover {
-    transform: translateY(-15px);
+    // transform: translateY(-15px);
   }
 
   .ant-card-body {
@@ -107,8 +103,8 @@ const Container = styled.div`
     bottom: 5px;
   }
 
-  img {
-    width: 50px;
-    height: 50px;
-  }
+  // img {
+  //   width: 50px;
+  //   height: 50px;
+  // }
 `;

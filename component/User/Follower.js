@@ -3,57 +3,7 @@ import { Card, Avatar, Image, Badge, List } from "antd";
 import { MdCircle } from "react-icons/md";
 import styled from "styled-components";
 
-function Guild() {
-  const user = [
-    {
-      userId: 1,
-      userName: "동영",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 2,
-      userName: "재현",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 3,
-      userName: "현종",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 4,
-      userName: "새별",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 5,
-      userName: "세준",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 6,
-      userName: "대영",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 6,
-      userName: "대영",
-      userImage: "",
-      location: "대구",
-    },
-    {
-      userId: 6,
-      userName: "대영",
-      userImage: "",
-      location: "대구",
-    },
-  ];
+function Guild({ follower }) {
   return (
     <CardWrapper>
       {/* <span className="title">Follower</span> */}
@@ -61,7 +11,7 @@ function Guild() {
         <List
           className="list"
           itemLayout="horizontal"
-          dataSource={user}
+          dataSource={follower}
           renderItem={(v) => (
             <List.Item>
               <List.Item.Meta
@@ -69,13 +19,13 @@ function Guild() {
                   <Badge dot color={"green"}>
                     <Avatar
                       className="avatar1"
-                      src="https://joeschmoe.io/api/v1/random"
+                      src={v.profile}
 
                       // style={{ width: 50 }}
                     />
                   </Badge>
                 }
-                title={<a>{v.userName}</a>}
+                title={<a>{v.name}</a>}
                 description={v.location}
               />
             </List.Item>

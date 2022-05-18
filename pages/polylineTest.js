@@ -32,11 +32,9 @@ import styled from "styled-components";
 
 function polylineTest() {
   return (
-    <div>
-      <Container>
-        <SelectMap />
-      </Container>
-    </div>
+    <Container>
+      <SelectMap />
+    </Container>
   );
 }
 
@@ -59,5 +57,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 export default React.memo(polylineTest);
 
 const Container = styled.div`
-  padding: 2% 3%;
+  padding: 0 3%;
+  padding-top: 60px;
 `;

@@ -69,18 +69,33 @@ import {
   FOLLOW_CANCEL_REQUEST,
   FOLLOW_CANCEL_SUCCESS,
   FOLLOW_CANCEL_FAILURE,
-  FOLLOW_NOFICATION_REQUEST,
-  FOLLOW_NOFICATION_SUCCESS,
-  FOLLOW_NOFICATION_FAILURE,
-  NOFICATION_REQUEST,
-  NOFICATION_SUCCESS,
-  NOFICATION_FAILURE,
-  NOFICATION_DELETE_REQUEST,
-  NOFICATION_DELETE_FAILURE,
-  NOFICATION_DELETE_SUCCESS,
+  FOLLOW_NOTIFICATION_REQUEST,
+  FOLLOW_NOTIFICATION_SUCCESS,
+  FOLLOW_NOTIFICATION_FAILURE,
+  NOTIFICATION_REQUEST,
+  NOTIFICATION_SUCCESS,
+  NOTIFICATION_FAILURE,
+  NOTIFICATION_DELETE_REQUEST,
+  NOTIFICATION_DELETE_FAILURE,
+  NOTIFICATION_DELETE_SUCCESS,
   PROFILE_EDIT_REQUEST, // 프로필수정
   PROFILE_EDIT_SUCCESS,
   PROFILE_EDIT_FAILURE,
+  BADGE_REQUEST, // 뱃지달성확인
+  BADGE_SUCCESS,
+  BADGE_FAILURE,
+  OTHER_USER_TOTAL_CALORIE_REQUEST,
+  OTHER_USER_TOTAL_CALORIE_SUCCESS,
+  OTHER_USER_TOTAL_CALORIE_FAILURE,
+  OTHER_USER_TOTAL_RUN_TIME_REQUEST,
+  OTHER_USER_TOTAL_RUN_TIME_SUCCESS,
+  OTHER_USER_TOTAL_RUN_TIME_FAILURE,
+  OTHER_USER_TOTAL_TIME_REQUEST,
+  OTHER_USER_TOTAL_TIME_SUCCESS,
+  OTHER_USER_TOTAL_TIME_FAILURE,
+  OTHER_USER_TOTAL_BIKE_TIME_REQUEST,
+  OTHER_USER_TOTAL_BIKE_TIME_SUCCESS,
+  OTHER_USER_TOTAL_BIKE_TIME_FAILURE,
 } from "../reducers/user";
 import axios from "axios";
 import cookie from "react-cookies";
@@ -620,6 +635,117 @@ function* deleteGoal(action) {
   }
 }
 
+//////////////////////////////////////////////
+
+const otherUser_totalTimeAPI = async (datas) => {
+  const res = await axios.get(`https://2yubi.shop/api/record/totalTime`, {
+    // params를 보내주면 totalTime?id=3 이런식으로 만들어준다.
+    params: { id: datas },
+  });
+
+  const data = await res.data;
+  return data;
+};
+
+function* otherUser_totalTime(action) {
+  try {
+    console.log("action", action.data);
+    const result = yield call(otherUser_totalTimeAPI);
+    yield put({
+      type: OTHER_USER_TOTAL_TIME_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: OTHER_USER_TOTAL_TIME_FAILURE,
+      error: "aa",
+    });
+  }
+}
+
+const otherUser_totalCalorieAPI = async (datas) => {
+  const res = await axios.get(`https://2yubi.shop/api/record/totalCalorie`, {
+    params: { id: datas },
+  });
+
+  const data = await res.data;
+  return data;
+};
+
+function* otherUser_totalCalorie(action) {
+  try {
+    console.log("action", action.data);
+    const result = yield call(otherUser_totalCalorieAPI);
+    yield put({
+      type: OTHER_USER_TOTAL_CALORIE_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: OTHER_USER_TOTAL_CALORIE_FAILURE,
+      error: "aa",
+    });
+  }
+}
+
+const otherUser_totalRunTimeAPI = async (datas) => {
+  const res = await axios.get(
+    `https://2yubi.shop/api/record/distance?event=R`,
+    {
+      params: { id: datas },
+    }
+  );
+
+  const data = await res.data;
+  return data;
+};
+
+function* otherUser_totalRunTime(action) {
+  try {
+    console.log("action", action.data);
+    const result = yield call(otherUser_totalRunTimeAPI);
+    yield put({
+      type: OTHER_USER_TOTAL_RUN_TIME_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: OTHER_USER_TOTAL_RUN_TIME_FAILURE,
+      error: "aa",
+    });
+  }
+}
+
+const otherUser_totalBikeTimeAPI = async (datas) => {
+  const res = await axios.get(
+    `https://2yubi.shop/api/record/distance?event=B`,
+    {
+      params: { id: datas },
+    }
+  );
+
+  const data = await res.data;
+  return data;
+};
+
+function* otherUser_totalBikeTime(action) {
+  try {
+    console.log("action", action.data);
+    const result = yield call(otherUser_totalBikeTimeAPI);
+    yield put({
+      type: OTHER_USER_TOTAL_BIKE_TIME_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: OTHER_USER_TOTAL_BIKE_TIME_FAILURE,
+      error: "aa",
+    });
+  }
+}
+
+////////////////////////////////////////
+
 const totalTimeAPI = async () => {
   const res = await axios.get("https://2yubi.shop/api/record/totalTime");
 
@@ -818,7 +944,7 @@ function* followCancel(action) {
   }
 }
 
-const followNoficationAPI = async (datas) => {
+const followNotificationAPI = async (datas) => {
   try {
     const res = await fetch(`https://2yubi.shop/api/followRequest/${datas}`, {
       method: "POST",
@@ -836,23 +962,23 @@ const followNoficationAPI = async (datas) => {
   }
 };
 
-function* followNofication(action) {
+function* followNotification(action) {
   try {
-    const result = yield call(followNoficationAPI, action.data);
+    const result = yield call(followNotificationAPI, action.data);
     console.log("wefcxvfrwe", result);
     yield put({
-      type: FOLLOW_NOFICATION_SUCCESS,
+      type: FOLLOW_NOTIFICATION_SUCCESS,
       data: result,
     });
   } catch (err) {
     yield put({
-      type: FOLLOW_NOFICATION_FAILURE,
+      type: FOLLOW_NOTIFICATION_FAILURE,
       error: "aa",
     });
   }
 }
 
-const NoficationAPI = async () => {
+const NotificationAPI = async () => {
   try {
     const res = await axios.get("https://2yubi.shop/api/notification");
 
@@ -863,22 +989,22 @@ const NoficationAPI = async () => {
   }
 };
 
-function* Nofication() {
+function* Notification() {
   try {
-    const result = yield call(NoficationAPI);
+    const result = yield call(NotificationAPI);
     yield put({
-      type: NOFICATION_SUCCESS,
+      type: NOTIFICATION_SUCCESS,
       data: result,
     });
   } catch (err) {
     yield put({
-      type: NOFICATION_FAILURE,
+      type: NOTIFICATION_FAILURE,
       error: "aa",
     });
   }
 }
 
-const noficationDeleteAPI = async (datas) => {
+const notificationDeleteAPI = async (datas) => {
   try {
     const res = await fetch(
       `https://2yubi.shop/api/notification/delete/${datas}`,
@@ -899,16 +1025,16 @@ const noficationDeleteAPI = async (datas) => {
   }
 };
 
-function* noficationDelete(action) {
+function* notificationDelete(action) {
   try {
-    const result = yield call(noficationDeleteAPI, action.data);
+    const result = yield call(notificationDeleteAPI, action.data);
     yield put({
-      type: NOFICATION_DELETE_SUCCESS,
+      type: NOTIFICATION_DELETE_SUCCESS,
       data: action.data,
     });
   } catch (err) {
     yield put({
-      type: NOFICATION_DELETE_FAILURE,
+      type: NOTIFICATION_DELETE_FAILURE,
       error: err,
     });
     // console.log(err)
@@ -972,6 +1098,23 @@ function* watchDeleteGoal() {
   yield takeLatest(DELETE_GOAL_REQUEST, deleteGoal);
 }
 
+//////////////////////////////
+
+function* watchOtherUserTotalTime() {
+  yield takeLatest(OTHER_USER_TOTAL_TIME_REQUEST, otherUser_totalTime);
+}
+function* watchOtherUserCarlorie() {
+  yield takeLatest(OTHER_USER_TOTAL_CALORIE_REQUEST, otherUser_totalCalorie);
+}
+function* watchOtherUserRunTime() {
+  yield takeLatest(OTHER_USER_TOTAL_RUN_TIME_REQUEST, otherUser_totalRunTime);
+}
+function* watchOtherUserBikeTime() {
+  yield takeLatest(OTHER_USER_TOTAL_BIKE_TIME_REQUEST, otherUser_totalBikeTime);
+}
+
+//////////////////////////////
+
 function* watchTotalTime() {
   yield takeLatest(TOTAL_TIME_REQUEST, totalTime);
 }
@@ -995,16 +1138,16 @@ function* watchFollowCancel() {
   yield takeLatest(FOLLOW_CANCEL_REQUEST, followCancel);
 }
 
-function* watchFollowNofication() {
-  yield takeLatest(FOLLOW_NOFICATION_REQUEST, followNofication);
+function* watchFollowNotification() {
+  yield takeLatest(FOLLOW_NOTIFICATION_REQUEST, followNotification);
 }
 
-function* watchNofication() {
-  yield takeLatest(NOFICATION_REQUEST, Nofication);
+function* watchNotification() {
+  yield takeLatest(NOTIFICATION_REQUEST, Notification);
 }
 
-function* watchnoficationDelete() {
-  yield takeLatest(NOFICATION_DELETE_REQUEST, noficationDelete);
+function* watchNotificationDelete() {
+  yield takeLatest(NOTIFICATION_DELETE_REQUEST, notificationDelete);
 }
 
 function* watchProfileEdit() {
@@ -1036,9 +1179,14 @@ export default function* rootSaga() {
     fork(watchTotalBikeTime),
     fork(watchOtherUser),
     fork(watchFollowCancel),
-    fork(watchFollowNofication),
-    fork(watchNofication),
-    fork(watchnoficationDelete),
+    fork(watchFollowNotification),
+    fork(watchNotification),
+    fork(watchNotificationDelete),
     fork(watchProfileEdit), // 프로필수정
+
+    fork(watchOtherUserTotalTime),
+    fork(watchOtherUserCarlorie),
+    fork(watchOtherUserRunTime),
+    fork(watchOtherUserBikeTime),
   ]);
 }

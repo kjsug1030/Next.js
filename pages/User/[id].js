@@ -13,6 +13,8 @@ import {
   Input,
   Modal,
   Avatar,
+  Spin,
+  Alert,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
@@ -27,8 +29,17 @@ import {
   UNFOLLOWING_REQUEST,
   FOLLOW_CANCEL_REQUEST,
   FOLLOW_NOFICATION_REQUEST,
+  OTHER_USER_TOTAL_BIKE_TIME_REQUEST,
+  OTHER_USER_TOTAL_CALORIE_REQUEST,
+  OTHER_USER_TOTAL_RUN_TIME_REQUEST,
+  OTHER_USER_TOTAL_TIME_REQUEST,
+  OTHER_USER_BADGE_REQUEST,
 } from "../../reducers/user";
-import BadgeModal from "../badgeModal";
+import {
+  LOAD_MORE_POST_REQUEST,
+  LOAD_POSTS_REQUEST,
+} from "../../reducers/post";
+import BadgeModal from "../../component/badgeModal";
 import SportsChart from "../../component/User/SportsChart";
 import FollowerPost from "../../component/User/Post";
 import FollowerMMR from "../../component/User/MMR";
@@ -37,6 +48,21 @@ import FollowerPie from "../../component/User/Pie";
 
 function userProfile() {
   const [isModal, setIsModal] = useState(false);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   if (isFollowing === false) {
+  //     <Spin spinning={loading}>
+  //       <Alert
+  //         message="Alert message title"
+  //         description="Further details about the context of this alert."
+  //         type="info"
+  //       />
+  //     </Spin>;
+  //     setLoading(true);
+  //   }
+  //   setLoading(false);
+  // }, []);
 
   const showModal = () => {
     setIsModal(true);
@@ -47,13 +73,16 @@ function userProfile() {
     console.log(isModal);
   };
 
-  const userRate = { R: 30, B: 70 };
-
-  const { otherProfile } = useSelector((state) => state.user);
+  const {
+    otherProfile,
+    otherUserTotalTime,
+    otherUserTotalCalorie,
+    otherUserTotalRunTime,
+    otherUserTotalBikeTime,
+  } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const { me, follower, totalCalorie, totalTime, totalRunTime, totalBikeTime } =
-    useSelector((state) => state.user);
+  const { me, follower } = useSelector((state) => state.user);
 
   const isFollowing = me.followings.find((v) => v.id === otherProfile.id);
 
@@ -95,29 +124,28 @@ function userProfile() {
     return value;
   }
 
-  // const cardScore = [
-  //   // 차트그래프 옆 카드 더미데이터
-  //   {
-  //     title: "총 운동 시간",
-  //     distance: timeChange(otherProfile.totalTime),
-  //   },
-  //   {
-  //     title: "총 소모 칼로리",
-  //     distance: otherProfile.totalCalorie + "Kcal",
-  //   },
-  //   {
-  //     title: "총 라이딩 거리",
-  //     distance: otherProfile.totalBikeTime.distance
-  //       ? otherProfile.totalBikeTime.distance + "km"
-  //       : 0 + "km",
-  //   },
-  //   {
-  //     title: "총 러닝 거리",
-  //     distance: otherProfile.totalRunTime.distance
-  //       ? otherProfile.totalRunTime.distance.toFixed(2) + "km"
-  //       : 0 + "km",
-  //   },
-  // ];
+  const cardScore = [
+    {
+      title: "총 운동 시간",
+      distance: timeChange(otherUserTotalTime),
+    },
+    {
+      title: "총 소모 칼로리",
+      distance: otherUserTotalCalorie + "Kcal",
+    },
+    {
+      title: "총 라이딩 거리",
+      distance: otherUserTotalRunTime.distance
+        ? otherUserTotalRunTime.distance + "km"
+        : 0 + "km",
+    },
+    {
+      title: "총 러닝 거리",
+      distance: otherUserTotalBikeTime.distance
+        ? otherUserTotalBikeTime.distance.toFixed(2) + "km"
+        : 0 + "km",
+    },
+  ];
 
   return (
     <Container>
@@ -163,7 +191,7 @@ function userProfile() {
             </h2>
           </div>
           <h2>자기소개 : {otherProfile.introduce}</h2>
-          <Button onClick={showModal}>도감</Button>
+          {/* <Button onClick={showModal}>도감</Button> */}
         </div>
 
         {otherProfile.followCheck === 1 && (
@@ -175,13 +203,14 @@ function userProfile() {
             <BadgeModal isModal={isModal} openModal={openModal} />
             {/* <FollowerPie className="follow_pie" userRate={userRate} /> */}
             {/* <BadgeBook /> */}
-            <SportsChart />
+            <SportsChart
+              runWeekRecord={otherProfile.runWeekData}
+              bikeWeekRecord={otherProfile.bikeWeekData}
+            />
             {/* <Pie userRate={userRate} /> */}
           </div>
         )}
       </div>
-
-      {/* ////////////////////////////////// */}
 
       {otherProfile.followCheck === 1 ? (
         <div className="div_wrapper">
@@ -189,24 +218,27 @@ function userProfile() {
           <LeftDiv>
             <div className="follow_list">
               <span className="follow_title">Follower</span>
-              <Follower />
+              <Follower follower={otherProfile.followers} />
             </div>
             <GreyRightLine />
           </LeftDiv>
           <MidDiv>
             <PostDiv>
               {otherProfile.posts.length > 0 ? (
-                otherProfile.posts.map((post) => (
-                  <>
-                    <span className="post_title">Post</span>
-                    <FollowerPost
-                      post={post}
-                      key={post.id}
-                      user={otherProfile}
-                      className="follow_post"
-                    />
-                  </>
-                ))
+                otherProfile.posts
+                  .slice(0)
+                  .reverse()
+                  .map((post) => (
+                    <>
+                      <span className="post_title">Post</span>
+                      <FollowerPost
+                        post={post}
+                        key={post.id}
+                        user={otherProfile}
+                        className="follow_post"
+                      />
+                    </>
+                  ))
               ) : (
                 <Empty description="포스트가 존재하지 않습니다" />
               )}
@@ -219,21 +251,24 @@ function userProfile() {
                 <p>5</p>
               </div>
             </div> */}
-            <FollowerMMR />
+            {/* <FollowerMMR mmr={otherProfile.mmr} /> */}
             <ScoreDiv>
-              {/* <Row gutter={[16, 16]}>
+              <Row gutter={[16, 16]}>
                 {cardScore.map((card, index) => (
                   <Col xs={24} xl={12}>
                     <DivLine />
                     <Card key={index} hoverable>
                       <h3>{card.title}</h3>
-                      <p>{card.distance.toFixed(2)}</p>
+                      <p>{card.distance}</p>
                     </Card>
                   </Col>
                 ))}
-              </Row> */}
+              </Row>
             </ScoreDiv>
-            <FollowerPie userRate={userRate} />
+            <FollowerPie
+              bikePercentage={otherProfile.bikePercentage}
+              runPercentage={otherProfile.runPercentage}
+            />
             {/* <BadgeBook /> */}
           </RightDiv>
         </div>
@@ -308,6 +343,35 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: LOAD_POSTS_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: OTHER_USER_TOTAL_CALORIE_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: OTHER_USER_TOTAL_BIKE_TIME_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: OTHER_USER_TOTAL_RUN_TIME_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: OTHER_USER_TOTAL_TIME_REQUEST,
+      data: context.params.id,
     });
 
     context.store.dispatch(END);

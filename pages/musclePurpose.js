@@ -16,9 +16,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRef } from "react";
 import Information from "./purposeInformation";
 
-
-
-
 function onPanelChange(value, mode) {
   console.log(value.format("YYYY-MM-DD"), mode);
 }
@@ -101,13 +98,39 @@ const musclePurpose = () => {
       <Title>나의 운동목표</Title>
       <Card>
         {/* <Calendar onPanelChange={onPanelChange} /> */}
-        <div>러닝<a style={{width:300,marginLeft:23,backgroundColor:'#008000',color:'#008000'}}>ㅇㅇㅇㅇ</a></div>
-        <div>자전거<a style={{width:300,marginLeft:10,backgroundColor:'#0000FF',color:'#0000FF'}}>ㅇㅇㅇㅇ</a></div>
-        <Button type="primary" onClick={showModal} ghost >
-          운동목표설정
-        </Button>
+        <div>
+          러닝
+          <a
+            style={{
+              width: 300,
+              marginLeft: 23,
+              backgroundColor: "#008000",
+              color: "#008000",
+            }}
+          >
+            ㅇㅇㅇㅇ
+          </a>
+        </div>
+        <div>
+          자전거
+          <a
+            style={{
+              width: 300,
+              marginLeft: 10,
+              backgroundColor: "#0000FF",
+              color: "#0000FF",
+            }}
+          >
+            ㅇㅇㅇㅇ
+          </a>
+        </div>
+        <span>
+          <Button type="primary" onClick={showModal} ghost>
+            운동목표설정
+          </Button>
+        </span>
         <FullCalendar
-        displayEventTime={false}
+          displayEventTime={false}
           eventClick={asd}
           events={calendarEvent}
           innerRef={calendarRef}
@@ -158,8 +181,9 @@ const Title = styled.h1`
 `;
 
 const Container = styled.div`
-  padding: 3% 5% 1% 5%;
-
+  padding: 0 5%;
+  padding-top: 55px;
+  // position: relative;
   .ant-btn {
     // float: right;
     // position: relative;
@@ -217,9 +241,13 @@ const Container = styled.div`
     color: #fff;
     height: 34px;
     // line-height: 34px;
-    position: relative;
-    left: 82.8%;
-    bottom: -36px;
+    position: absolute;
+    // position: relative;
+    // float: right;
+    // left: 82.8%;
+    // left: 100%;
+    right: 160px;
+    // bottom: -36px;
     border-radius: 4px !important;
   }
 `;
