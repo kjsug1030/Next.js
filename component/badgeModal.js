@@ -42,116 +42,306 @@ const badgeModal = ({ isModal, openModal }) => {
         <div>뱃지</div>
       </TitleDiv>
       <div className="grid">
-        {me.badges && 
-        <Row gutter={[16, 16]}>
-          {/* 첫번째 줄 */}
-          <Col span={8} />
-          <Col span={8}>
-            {me.badges.first_exercise == 0 ? (
-              <img src={start[0]} />
-            ) : (
-              <img src={start[1]} />
-            )}
-          </Col>
-          <Col span={8} />
+        {me.badges && (
+          <Row gutter={[16, 16]}>
+            {/* 첫번째 줄 */}
+            <Col span={8} />
+            <Col span={8}>
+              {me.badges.first_exercise == 0 ? (
+                <div className="badge">
+                  <img src={start[0]} />
 
-          {/* 두번째 줄 */}
-          <Col span={8}>
-            {me.badges.altitude == 0 ? (
-              <img src={altitude[0][0]} />
-            ) : (
-              <img src={altitude[0][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.altitude2 == 0 ? (
-              <img src={altitude[1][0]} />
-            ) : (
-              <img src={altitude[1][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.altitude3 == 0 ? (
-              <img src={altitude[2][0]} />
-            ) : (
-              <img src={altitude[2][1]} />
-            )}
-          </Col>
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">첫운동 실시</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={start[1]} />
+                  <img
+                    // src="https://cdn-icons-png.flaticon.com/512/7079/7079989.png"
+                    src="/check.png"
+                    className="check"
+                  />
+                  <div className="mission">
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">첫운동 실시</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8} />
 
-          {/* 세번째 줄 */}
-          <Col span={8}>
-            {me.badges.bike_distance == 0 ? (
-              <img src={bike[0][0]} />
-            ) : (
-              <img src={bike[0][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.bike_distance2 == 0 ? (
-              <img src={bike[1][0]} />
-            ) : (
-              <img src={bike[1][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.bike_distance3 == 0 ? (
-              <img src={bike[2][0]} />
-            ) : (
-              <img src={bike[2][1]} />
-            )}
-          </Col>
+            {/* 두번째 줄 */}
+            <Col span={8}>
+              {me.badges.altitude == 0 ? (
+                <div className="badge">
+                  <img src={altitude[0][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">고도 10000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={altitude[0][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>고도 10000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.altitude2 == 0 ? (
+                <div className="badge">
+                  <img src={altitude[1][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">고도 20000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={altitude[1][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>고도 20000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.altitude3 == 0 ? (
+                <div className="badge">
+                  <img src={altitude[2][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">고도 30000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={altitude[2][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>고도 30000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
 
-          {/* 네번째 줄 */}
-          <Col span={8}>
-            {me.badges.run_distance == 0 ? (
-              <img src={running[0][0]} />
-            ) : (
-              <img src={running[0][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.run_distance2 == 0 ? (
-              <img src={running[1][0]} />
-            ) : (
-              <img src={running[1][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.run_distance3 == 0 ? (
-              <img src={running[2][0]} />
-            ) : (
-              <img src={running[2][1]} />
-            )}
-          </Col>
+            {/* 세번째 줄 */}
+            <Col span={8}>
+              {me.badges.bike_distance == 0 ? (
+                <div className="badge">
+                  <img src={bike[0][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">라이딩 1000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={bike[0][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>라이딩 1000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.bike_distance2 == 0 ? (
+                <div className="badge">
+                  <img src={bike[1][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">라이딩 5000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={bike[1][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>라이딩 5000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.bike_distance3 == 0 ? (
+                <div className="badge">
+                  <img src={bike[2][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">라이딩 10000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={bike[2][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>라이딩 10000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
 
-          {/* 다섯번째 줄 */}
-          <Col span={8}>
-            {me.badges.make_track == 0 ? (
-              <img src={track[0][0]} />
-            ) : (
-              <img src={track[0][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.make_track2 == 0 ? (
-              <img src={track[1][0]} />
-            ) : (
-              <img src={track[1][1]} />
-            )}
-          </Col>
-          <Col span={8}>
-            {me.badges.make_track3 == 0 ? (
-              <img src={track[2][0]} />
-            ) : (
-              <img src={track[2][1]} />
-            )}
-          </Col>
-        </Row>
-        }
+            {/* 네번째 줄 */}
+            <Col span={8}>
+              {me.badges.run_distance == 0 ? (
+                <div className="badge">
+                  <img src={running[0][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">달리기 100km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={running[0][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>달리기 100km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.run_distance2 == 0 ? (
+                <div className="badge">
+                  <img src={running[1][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">달리기 500km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={running[1][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>달리기 500km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.run_distance3 == 0 ? (
+                <div className="badge">
+                  <img src={running[2][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">달리기 1000km</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={running[2][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>달리기 1000km</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+
+            {/* 다섯번째 줄 */}
+            <Col span={8}>
+              {me.badges.make_track == 0 ? (
+                <div className="badge">
+                  <img src={track[0][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">코스생성 3개</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={track[0][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>코스생성 3개</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.make_track2 == 0 ? (
+                <div className="badge">
+                  <img src={track[1][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">코스생성 20개</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={track[1][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>코스생성 20개</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+            <Col span={8}>
+              {me.badges.make_track3 == 0 ? (
+                <div className="badge">
+                  <img src={track[2][0]} />
+                  <div className="mission">
+                    <span>
+                      <h3>달성조건</h3>
+                    </span>
+                    <span className="text">코스생성 50개</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="badge">
+                  <img src={track[2][1]} />
+                  <div className="mission">
+                    <span>달성조건</span>
+                    <span>코스생성 50개</span>
+                  </div>
+                </div>
+              )}
+            </Col>
+          </Row>
+        )}
       </div>
-      <Button danger onClick={openModal}>
+      {/* <Button danger onClick={openModal}>
         닫기
-      </Button>
+      </Button> */}
     </ModalWrapper>
   );
 };
@@ -208,8 +398,13 @@ const ModalWrapper = styled(Modal)`
     border-radius: 50%;
   }
 
-  img:hover {
-    filter: opacity(0.5) drop-shadow(0 0 0 #eff1f2);
+  .check {
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    top: -22px;
+    right: 6px;
+    color: red;
   }
 
   .grid {
@@ -218,11 +413,53 @@ const ModalWrapper = styled(Modal)`
     text-align: center;
     overflow-y: scroll;
     scrollbar-width: none;
+    // border: 3px solid #467ada;
 
     -ms-overflow-style: none;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .badge {
+    h3 {
+      background: #fff;
+      // border: 2px solid #467ada;
+      border: 1px solid red;
+      margin: 0;
+      font-weight: bold;
+      // border-radius: 12px;
+    }
+    span {
+      display: block;
+      font-weight: bold;
+    }
+    .text {
+      width: 120px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .mission {
+      width: 100px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: all 0.5s;
+    }
+
+    &:hover {
+      .mission {
+        opacity: 1;
+        bottom: 50%;
+        left: 50%;
+      }
+      img {
+        filter: opacity(0.5) drop-shadow(0 0 0 #eff1f2);
+      }
     }
   }
 `;

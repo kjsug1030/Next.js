@@ -34,9 +34,9 @@ function FollowButton({ post }) {
       ) : (
         <Button className="follow_btn">팔로우</Button>
       )}
-      <Link href={"User/" + post.id}>
+      <a href={"User/" + post.id}>
         <Button>프로필</Button>
-      </Link>
+      </a>
     </Container>
   );
 }
