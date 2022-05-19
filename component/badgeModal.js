@@ -61,11 +61,7 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={start[1]} />
-                  <img
-                    // src="https://cdn-icons-png.flaticon.com/512/7079/7079989.png"
-                    src="/check.png"
-                    className="check"
-                  />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
                       <h3>목표달성</h3>
@@ -92,9 +88,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={altitude[0][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>고도 10000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">고도 10000km</span>
                   </div>
                 </div>
               )}
@@ -113,9 +112,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={altitude[1][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>고도 20000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">고도 20000km</span>
                   </div>
                 </div>
               )}
@@ -134,9 +136,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={altitude[2][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>고도 30000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">고도 30000km</span>
                   </div>
                 </div>
               )}
@@ -157,9 +162,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={bike[0][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>라이딩 1000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">라이딩 1000km</span>
                   </div>
                 </div>
               )}
@@ -178,9 +186,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={bike[1][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>라이딩 5000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">라이딩 5000km</span>
                   </div>
                 </div>
               )}
@@ -199,9 +210,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={bike[2][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>라이딩 10000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">라이딩 10000km</span>
                   </div>
                 </div>
               )}
@@ -222,9 +236,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={running[0][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>달리기 100km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">달리기 100km</span>
                   </div>
                 </div>
               )}
@@ -243,9 +260,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={running[1][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>달리기 500km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">달리기 500km</span>
                   </div>
                 </div>
               )}
@@ -264,9 +284,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={running[2][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>달리기 1000km</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">달리기 1000km</span>
                   </div>
                 </div>
               )}
@@ -287,9 +310,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={track[0][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>코스생성 3개</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">코스생성 3개</span>
                   </div>
                 </div>
               )}
@@ -308,9 +334,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={track[1][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>코스생성 20개</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">코스생성 20개</span>
                   </div>
                 </div>
               )}
@@ -329,9 +358,12 @@ const badgeModal = ({ isModal, openModal }) => {
               ) : (
                 <div className="badge">
                   <img src={track[2][1]} />
+                  <img src="/check.png" className="check" />
                   <div className="mission">
-                    <span>달성조건</span>
-                    <span>코스생성 50개</span>
+                    <span>
+                      <h3>목표달성</h3>
+                    </span>
+                    <span className="text">코스생성 50개</span>
                   </div>
                 </div>
               )}
