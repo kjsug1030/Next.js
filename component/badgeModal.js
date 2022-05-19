@@ -494,6 +494,10 @@ const ModalWrapper = styled(Modal)`
       }
     }
   }
+
+  .ant-modal-close-x {
+    color: #fff;
+  }
 `;
 
 const TitleDiv = styled.div`
@@ -501,6 +505,11 @@ const TitleDiv = styled.div`
   // text-align: center;
   border-bottom: solid 1px #dadde1;
   padding: 10px 15px 9px 15px;
+  // background: #467ada;
+  background: linear-gradient(to right, #1890ff, #1b5cff);
+  color: #fff;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 
   div {
     margin-bottom: 0;
