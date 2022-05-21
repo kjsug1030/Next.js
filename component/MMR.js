@@ -11,32 +11,22 @@ const MMR = () => {
   const { me } = useSelector((state) => state.user);
 
   return (
-    <div
-      style={{
-        width: "30%",
-        display: "flex",
-        flexDirection: "column",
-        paddingLeft: 20,
-      }}
-    >
-      {/* <Intro className="intro" /> */}
-      <Container>
-        <Card hoverable>
-          <h1>score : {me.mmr}</h1>
-
+    <Container>
+      <Card hoverable>
+        <h1>MMR : {me.mmr}</h1>
+        {/* 
           <br />
           <br />
           <br />
-          <p>보유 뱃지</p>
-          {/* <div>
+          <p>보유 뱃지</p> */}
+        {/* <div>
             <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/179/179251.png" />
           </div> */}
-          <BadgeBook />
-        </Card>
-      </Container>
-    </div>
+        {/* <BadgeBook /> */}
+      </Card>
+    </Container>
   );
 };
 
@@ -47,10 +37,9 @@ const Container = styled.div`
   width: 100%;
   max-width: 280px;
   margin-left: 3%;
-  // margin-top: 2%;
 
-  position: relative;
-  top: 24px;
+  // position: relative;
+  // top: 24px;
 
   // overflow: hidden;
   white-space: nowrap;
@@ -58,8 +47,9 @@ const Container = styled.div`
 
   .ant-card {
     width: 100%;
-    // max-width: 300px;
+    height: 50px;
     border-radius: 32px;
+    line-height: 47px;
     padding: 0;
     margin: 0;
     background: #1b5cff;
@@ -73,14 +63,11 @@ const Container = styled.div`
 
   .ant-card-body {
     width: 100%;
-    padding: 24px;
-    padding-bottom: 6px;
-    // min-width: 200px;
-    min-height: 300px;
+    padding: 0 24px;
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: bold;
     color: #fff;
   }
@@ -102,9 +89,4 @@ const Container = styled.div`
     left: 10px;
     bottom: 5px;
   }
-
-  // img {
-  //   width: 50px;
-  //   height: 50px;
-  // }
 `;

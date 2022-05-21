@@ -80,9 +80,13 @@ const profileEdit = ({ visible, showEditProfile }) => {
     setSex(v);
   };
 
-  const year = me.birth.substring(0, 4);
-  const month = me.birth.substring(5, 7);
-  const day = me.birth.substring(8, 10);
+  // const year = "" + me.birth.substring(0, 4);
+  // const month = "" + me.birth.substring(5, 7);
+  // const day = "" + me.birth.substring(8, 10);
+
+  const year = me.birth ? me.birth.substring(0, 4) : "";
+  const month = me.birth ? me.birth.substring(5, 7) : "";
+  const day = me.birth ? me.birth.substring(8, 10) : "";
 
   const [birth, setBirth] = useState({
     year: year,
@@ -171,10 +175,10 @@ const profileEdit = ({ visible, showEditProfile }) => {
   };
 
   const timer = () => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      window.location.reload(); // 현재 페이지 새로고침
-    }, 2000);
+    // const timer = setTimeout(() => {
+    setIsLoading(false);
+    window.location.reload(); // 현재 페이지 새로고침
+    // }, 2000);
     return () => clearTimeout(timer);
   };
 
@@ -264,7 +268,11 @@ const profileEdit = ({ visible, showEditProfile }) => {
               </a>
             </ImageDiv>
             <FormWrapper>
-              <Form onFinish={onSubmit} form={form}>
+              <Form
+                onFinish={onSubmit}
+                form={form}
+                encType="multipart/form-data"
+              >
                 <FormDiv>
                   <TextDiv>이름</TextDiv>
                   <Input

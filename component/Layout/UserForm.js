@@ -22,7 +22,7 @@ const UserForm = () => {
 
   return (
     <Container>
-      {me && (
+      {me ? (
         <CardWrapper
           bordered={true}
           actions={[
@@ -56,8 +56,10 @@ const UserForm = () => {
           <SettingOutlined className="icon" onClick={openDrawer} />
           <DescriptionWrapper title={me.name} />
         </CardWrapper>
-      )}
-      <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
+      ) : null}
+      {me ? (
+        <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
+      ) : null}
     </Container>
   );
 };

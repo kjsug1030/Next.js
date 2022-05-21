@@ -21,7 +21,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import wrapper from "../../store/configureStore";
-import { ADD_TRACK_REQUEST, LOAD_CREATEMAP_REQUEST } from "../../reducers/map";
+import {
+  ADD_TRACK_REQUEST,
+  LOAD_CREATEMAP_REQUEST,
+  LOAD_MAP_REQUEST,
+} from "../../reducers/map";
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 
@@ -353,7 +357,7 @@ function createPath() {
 }
 
 export async function getStaticPaths() {
-  const posts = await axios.get("http://13.124.24.179/api/gpsdata");
+  const posts = await axios.get("http://15.165.229.120/api/gpsdata");
 
   var paths1 = posts.data.map((id) => ({
     params: { id: id._id },
@@ -397,7 +401,8 @@ const mapContainerStyle = {
 };
 
 const Container = styled.div`
-  padding: 3% 5% 0 5%;
+  padding: 0 5%;
+  padding-top: 70px;
   width: 100%;
   // position: relative;
 `;

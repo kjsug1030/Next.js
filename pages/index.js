@@ -69,6 +69,16 @@ function index() {
     loadMorePostNumberError,
   } = useSelector((state) => state.post);
 
+  const [isModal, setIsModal] = useState(false);
+  const showModal = () => {
+    setIsModal(true);
+  };
+
+  const openModal = () => {
+    setIsModal((prev) => !prev);
+    console.log(isModal);
+  };
+
   // const [notificationCount, setNotificationCount] = useState(0);
 
   // const [checkNotificationCount, setCheckNotificationCount] = useState(0);
@@ -220,7 +230,16 @@ function index() {
                   </>
                 ))
               : null} */}
-            <MMR />
+
+            <div className="mmr">
+              <MMR />
+              <div className="follow_chart">
+                <img src="/badgeBook2.png" onClick={showModal} />
+                <p className="badge" onClick={showModal}>
+                  Badge
+                </p>
+              </div>
+            </div>
           </TopDiv>
 
           <BottomDiv>
@@ -383,6 +402,41 @@ const PostDiv = styled.div`
 const TopDiv = styled.div`
   display: flex;
   width: 100%;
+
+  .follow_chart {
+    // display: flex;
+
+    position: relative;
+
+    img {
+      width: 165px;
+      height: 165px;
+      margin-right: 10%;
+    }
+
+    img:hover {
+      // border: 4px solid #467ada;
+      cursor: pointer;
+    }
+
+    p {
+      position: absolute;
+      bottom: -5%;
+      left: 52px;
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    p:hover {
+      cursor: pointer;
+    }
+  }
+
+  .mmr {
+    display: inline-block;
+    margin-left:
+  }
 `;
 
 const BottomDiv = styled.div`

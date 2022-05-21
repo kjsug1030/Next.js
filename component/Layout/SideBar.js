@@ -56,12 +56,12 @@ const SideBar = ({ isSide, showSide }) => {
         ) : (
           <SpaceDiv>
             {/* <Avatar size={44} src="kurumi.jpg" /> */}
-            {me.profile ? (
+            {me ? (
               <Avatar size={44} src={me.profile} />
             ) : (
               <Avatar
                 size={44}
-                src={me.profile}
+                // src={me.profile}
                 style={{ background: "#fff", opacity: "0.0" }}
                 active={false}
                 shape="circle"

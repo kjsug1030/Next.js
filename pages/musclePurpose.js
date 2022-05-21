@@ -242,12 +242,9 @@ const Container = styled.div`
     height: 34px;
     // line-height: 34px;
     position: absolute;
-    // position: relative;
-    // float: right;
-    // left: 82.8%;
-    // left: 100%;
-    right: 160px;
-    // bottom: -36px;
+
+    right: 182px;
+    top: 70px;
     border-radius: 4px !important;
   }
 `;

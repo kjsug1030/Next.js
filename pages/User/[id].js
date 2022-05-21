@@ -251,7 +251,7 @@ function userProfile() {
                 <p>5</p>
               </div>
             </div> */}
-            {/* <FollowerMMR mmr={otherProfile.mmr} /> */}
+            <FollowerMMR mmr={otherProfile.mmr} />
             <ScoreDiv>
               <Row gutter={[16, 16]}>
                 {cardScore.map((card, index) => (

@@ -39,7 +39,7 @@ const header = () => {
         <AvatarDiv>
           <a>
             {/* <Avatar onClick={openDrawer} src="kurumi.jpg" size={40}></Avatar> */}
-            {me.profile ? (
+            {me ? (
               <Avatar
                 src={me.profile}
                 size={40}

@@ -78,6 +78,10 @@ function* searchMap(action) {
 const loadMapAPI = async (datas) => {
   const { data } = await axios.get(
     `https://2yubi.shop/api/tracks?track_id=${datas}`
+    // `https://2yubi.shop/api/tracks`,
+    // {
+    //   params: { id: datas },
+    // }
   );
 
   return data;
