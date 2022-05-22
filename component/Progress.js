@@ -1,8 +1,25 @@
 import React, { useState } from "react";
-import { Card, Tabs, Progress, Affix, Button, Tag, Empty,Radio } from "antd";
+import {
+  Card,
+  Tabs,
+  Progress,
+  Affix,
+  Button,
+  Tag,
+  Empty,
+  Radio,
+  Menu,
+  Space,
+  Badge,
+  Dropdown,
+} from "antd";
 import RunningChart from "./RunningChart";
 import BikeChart from "./BikeChart";
-import { AppleOutlined, AndroidOutlined } from "@ant-design/icons";
+import {
+  AppleOutlined,
+  AndroidOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { FaRunning } from "react-icons/fa";
 import { MdDirectionsBike } from "react-icons/md";
 
@@ -17,41 +34,52 @@ import LoginForm from "./LoginForm";
 const { Meta } = Card;
 
 function MyNote() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const { purposeProgress } = useSelector((state) => state.user);
 
+  const run = purposeProgress.run;
+  const bike = purposeProgress.bike;
+
   ////running
-  const [percent,setPercent]=useState(purposeProgress.run[0]?purposeProgress.run[0].progress:0)
-  const[goalDistance,setGoalDistance]=useState(purposeProgress.run[0]?purposeProgress.run[0].goalDistance:0)
-  const [firstDate,setFirstDate]=useState(purposeProgress.run[0]?purposeProgress.run[0].firstDate:0)
-  const [lastDate,setLastDate]=useState(purposeProgress.run[0]?purposeProgress.run[0].lastDate:0)
+  const [percent, setPercent] = useState(run[0] ? run[0].progress : 0);
+  const [goalDistance, setGoalDistance] = useState(
+    run[0] ? run[0].goalDistance : 0
+  );
+  const [firstDate, setFirstDate] = useState(run[0] ? run[0].firstDate : 0);
+  const [lastDate, setLastDate] = useState(run[0] ? run[0].lastDate : 0);
   ///
 
-///ridding
-const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgress.bike[0].progress:0)
-  const[bikegoalDistance,setBikeGoalDistance]=useState(purposeProgress.bike[0]?purposeProgress.bike[0].goalDistance:0)
-  const [bikefirstDate,setBikeFirstDate]=useState(purposeProgress.bike[0]?purposeProgress.bike[0].firstDate:0)
-  const [bikelastDate,setBikeLastDate]=useState(purposeProgress.bike[0]?purposeProgress.bike[0].lastDate:0)
-///
+  ///ridding
+  const [bikepercent, setBikePercent] = useState(
+    bike[value] ? bike[value].progress : 0
+  );
+  const [bikegoalDistance, setBikeGoalDistance] = useState(
+    bike[value] ? bike[value].goalDistance : 0
+  );
+  const [bikefirstDate, setBikeFirstDate] = useState(
+    bike[value] ? bike[value].firstDate : 0
+  );
+  const [bikelastDate, setBikeLastDate] = useState(
+    bike[value] ? bike[value].lastDate : 0
+  );
+  ///
 
-
-
-  const runChange = e => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-    setPercent(purposeProgress.run[e.target.value].progress)
-    setGoalDistance(purposeProgress.run[e.target.value].goalDistance)
-    setFirstDate(purposeProgress.run[e.target.value].firstDate)
-    setLastDate(purposeProgress.run[e.target.value].lastDate)
+  const runChange = (e) => {
+    const value = e.target.value;
+    console.log("run checked", e.target.value);
+    setPercent(run[value].progress);
+    setGoalDistance(run[value].goalDistance);
+    setFirstDate(run[value].firstDate);
+    setLastDate(run[value].lastDate);
   };
 
-  const bikeChange = e => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-    setBikePercent(purposeProgress.bike[e.target.value].progress)
-    setBikeGoalDistance(purposeProgress.bike[e.target.value].goalDistance)
-    setBikeFirstDate(purposeProgress.bike[e.target.value].firstDate)
-    setBikeLastDate(purposeProgress.bike[e.target.value].lastDate)
+  const bikeChange = (e) => {
+    const value = e.target.value;
+    console.log("bike checked", value);
+    setBikePercent(bike[value].progress);
+    setBikeGoalDistance(bike[value].goalDistance);
+    setBikeFirstDate(bike[value].firstDate);
+    setBikeLastDate(bike[value].lastDate);
   };
 
   const [top, setTop] = useState(100);
@@ -97,23 +125,49 @@ const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgr
     tab1: (
       <div style={{ textAlign: "center" }}>
         <h2>라이딩목표율</h2>
-        <Radio.Group onChange={bikeChange}  defaultValue={0}>
-        {
-          purposeProgress.bike.map((v,i)=>(
-           <Radio value={i}>{v.title}</Radio>
-          ))
-        }
-        </Radio.Group>
 
-        {purposeProgress.bike[0] ? (
+        {/* <Radio.Group onChange={bikeChange} defaultValue={0}>
+          {purposeProgress.bike.map((v, i) => (
+            <Radio value={i}>{v.title}</Radio>
+          ))}
+        </Radio.Group> */}
+
+        <Dropdown
+          overlay={
+            <Menu mode="horizontal">
+              {purposeProgress.bike.map((v, i) => (
+                <Menu.Item value={i} onClick={() => setValue(i)}>
+                  {v.title}
+                </Menu.Item>
+              ))}
+            </Menu>
+          }
+        >
+          <Button className="btn">
+            <DownOutlined />
+          </Button>
+        </Dropdown>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Badge status="processing" />
+          <p className="title">
+            {/* {purposeProgress.bike[value]
+              ? purposeProgress.bike[value].title
+              : null} */}
+            {purposeProgress.bike[value] && purposeProgress.bike[value].title}
+          </p>
+        </div>
+
+        {purposeProgress.bike[value] ? (
           <div>
             <Progress
               type="circle"
-              percent={bikepercent}
+              // percent={bikepercent}
+              percent={bike[value].progress}
               style={{ paddingBottom: "10px", paddingTop: "5px" }}
               width={120}
             />
-            <div style={{ textAlign: "left", paddingLeft: 40 }}>
+            <div>
               <h4>
                 <Tag
                   color="blue"
@@ -126,10 +180,10 @@ const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgr
                 >
                   목표
                 </Tag>
-                {bikegoalDistance}km
+                {bike[value].goalDistance}km
               </h4>
-              <h4>시작일 : {bikefirstDate}</h4>
-              <h4>종료일 : {bikelastDate}</h4>
+              <h4>시작일 : {bike[value].firstDate}</h4>
+              <h4>종료일 : {bike[value].lastDate}</h4>
             </div>
           </div>
         ) : (
@@ -141,11 +195,6 @@ const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgr
               width={120}
               // status="exception"
               format={() => "0%"}
-              // style={{
-              //   paddingTop: 10,
-              //   marginBottom: 30,
-              //   color: "#1890ff",
-              // }}
               style={{ marginBottom: "25px", paddingTop: "5px" }}
             />
             <h4>등록된 목표가 없습니다</h4>
@@ -157,27 +206,42 @@ const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgr
     tab2: (
       <div>
         <h2>러닝목표율</h2>
-        <Radio.Group onChange={runChange}  defaultValue={0}>
-        {
-          purposeProgress.run.map((v,i)=>(
-           <Radio value={i}>{v.title}</Radio>
-          ))
-        }
-        </Radio.Group>
 
-    
-        {purposeProgress.run[0] ? (
+        <Dropdown
+          overlay={
+            <Menu mode="horizontal">
+              {purposeProgress.run.map((v, i) => (
+                <Menu.Item value={i} onClick={() => setValue(i)}>
+                  {v.title}
+                </Menu.Item>
+              ))}
+            </Menu>
+          }
+        >
+          <Button className="btn">
+            <DownOutlined />
+          </Button>
+        </Dropdown>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Badge status="processing" />
+          <p className="title">
+            {/* {purposeProgress.run[value]
+              ? purposeProgress.run[value].title
+              : null} */}
+            {purposeProgress.run[value] && purposeProgress.run[value].title}
+          </p>
+        </div>
+
+        {purposeProgress.run[value] ? (
           <div>
             <Progress
               type="circle"
-              // percent={purposeProgress.run[0].progress}
-              percent={percent}
+              percent={run[value].progress}
               style={{ paddingBottom: "10px", paddingTop: "5px" }}
               width={120}
-            ></Progress>
-            <div
-            // style={{ textAlign: "center", paddingLeft: 40 }}
-            >
+            />
+            <div>
               <h4>
                 <Tag
                   color="blue"
@@ -190,10 +254,10 @@ const [bikepercent,setBikePercent]=useState(purposeProgress.bike[0]?purposeProgr
                 >
                   목표
                 </Tag>
-                {goalDistance}km
+                {run[value].goalDistance}km
               </h4>
-              <h4>시작일 : {firstDate}</h4>
-              <h4>종료일 : {lastDate}</h4>
+              <h4>시작일 : {run[value].firstDate}</h4>
+              <h4>종료일 : {run[value].lastDate}</h4>
             </div>
           </div>
         ) : (
@@ -339,4 +403,19 @@ const Container = styled.div`
   // .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   //   color: #fff;
   // }
+
+  .title {
+    // color: red;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    position: absolute;
+    top: 72px;
+    right: 26px;
+    border-radius: 24px;
+    // border-radius: 50%;
+  }
 `;
