@@ -174,11 +174,11 @@ function index() {
           ) : (
             <Empty description="포스트가 존재하지 않습니다" />
           )}
-          {loadMorePostErrorBolean ? null : (
+          {/* {loadMorePostErrorBolean ? null : (
             <LoadingOutlined
               style={{ zIndex: "5", fontSize: 40, marginLeft: 250 }}
             />
-          )}
+          )} */}
         </PostDiv>
 
         <GreyRightLine />
@@ -231,15 +231,7 @@ function index() {
                 ))
               : null} */}
 
-            <div className="mmr">
-              <MMR />
-              <div className="follow_chart">
-                <img src="/badgeBook2.png" onClick={showModal} />
-                <p className="badge" onClick={showModal}>
-                  Badge
-                </p>
-              </div>
-            </div>
+            <MMR />
           </TopDiv>
 
           <BottomDiv>
@@ -403,40 +395,40 @@ const TopDiv = styled.div`
   display: flex;
   width: 100%;
 
-  .follow_chart {
-    // display: flex;
+  // .follow_chart {
+  //   // display: flex;
 
-    position: relative;
+  //   position: relative;
 
-    img {
-      width: 165px;
-      height: 165px;
-      margin-right: 10%;
-    }
+  //   img {
+  //     width: 165px;
+  //     height: 165px;
+  //     margin-right: 10%;
+  //   }
 
-    img:hover {
-      // border: 4px solid #467ada;
-      cursor: pointer;
-    }
+  //   img:hover {
+  //     // border: 4px solid #467ada;
+  //     cursor: pointer;
+  //   }
 
-    p {
-      position: absolute;
-      bottom: -5%;
-      left: 52px;
-      color: #fff;
-      font-size: 22px;
-      font-weight: bold;
-    }
+  //   p {
+  //     position: absolute;
+  //     bottom: -5%;
+  //     left: 52px;
+  //     color: #fff;
+  //     font-size: 22px;
+  //     font-weight: bold;
+  //   }
 
-    p:hover {
-      cursor: pointer;
-    }
-  }
+  //   p:hover {
+  //     cursor: pointer;
+  //   }
+  // }
 
-  .mmr {
-    display: inline-block;
-    margin-left:
-  }
+  // .mmr {
+  //   display: inline-block;
+  //   margin-left: ;
+  // }
 `;
 
 const BottomDiv = styled.div`

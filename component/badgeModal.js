@@ -8,11 +8,20 @@ import {
   GOAL_REQUEST,
   SIGNUP_REQUEST,
   ALL_GOAL_REQUEST,
+  PROFILE_BADGE_REQUEST,
 } from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
 
 const badgeModal = ({ isModal, openModal }) => {
   const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const profileBadge = (badge) => {
+    dispatch({ type: PROFILE_BADGE_REQUEST, data: badge });
+    console.log(badge);
+
+    // window.location.href = "/";
+  };
 
   const altitude = [
     ["/badge_g/altitude1_g.png", "/badge/altitude1.png"],
@@ -34,7 +43,7 @@ const badgeModal = ({ isModal, openModal }) => {
     ["/badge_g/running2_g.png", "/badge/running2.png"],
     ["/badge_g/running3_g.png", "/badge/running3.png"],
   ];
-  const start = ["/badge_g/start_g.png", "/badge/start_exer.png"];
+  const start = ["/badge_g/start_g.png", "/badge/first_exercise.png"];
 
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
@@ -42,7 +51,7 @@ const badgeModal = ({ isModal, openModal }) => {
         <div>뱃지</div>
       </TitleDiv>
       <div className="grid">
-        {me.badges && (
+        {me && (
           <Row gutter={[16, 16]}>
             {/* 첫번째 줄 */}
             <Col span={8} />
@@ -67,6 +76,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">첫운동 실시</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("first_exercise")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -94,6 +109,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">고도 10000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("altitude")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -118,6 +139,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">고도 20000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("altitude2")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -142,6 +169,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">고도 30000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("altitude3")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -168,6 +201,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">라이딩 1000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("bike_distance")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -192,6 +231,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">라이딩 5000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("bike_distance2")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -216,6 +261,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">라이딩 10000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("bike_distance3")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -242,6 +293,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">달리기 100km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("run_distance")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -266,6 +323,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">달리기 500km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("run_distance2")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -290,6 +353,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">달리기 1000km</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("run_distance3")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -316,6 +385,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">코스생성 3개</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("make_track")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -340,6 +415,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">코스생성 20개</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("make_track2")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -364,6 +445,12 @@ const badgeModal = ({ isModal, openModal }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">코스생성 50개</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("make_track3")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}
@@ -473,6 +560,15 @@ const ModalWrapper = styled(Modal)`
       left: 50%;
       transform: translateX(-50%);
     }
+    .profile_badge {
+      width: 120px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 50px;
+      cursor: pointer;
+    }
+
     .mission {
       width: 100px;
       position: absolute;

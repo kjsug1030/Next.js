@@ -177,7 +177,7 @@ const profileEdit = ({ visible, showEditProfile }) => {
   const timer = () => {
     // const timer = setTimeout(() => {
     setIsLoading(false);
-    window.location.reload(); // 현재 페이지 새로고침
+    // window.location.reload(); // 현재 페이지 새로고침
     // }, 2000);
     return () => clearTimeout(timer);
   };
@@ -211,6 +211,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
       type: PROFILE_EDIT_REQUEST,
       data: formData,
     });
+
+    // window.location.href = "/";
 
     // console.log(body);
   };

@@ -46,33 +46,67 @@ const Target = () => {
     return todayLabel;
   };
 
+  const selectIcon = () => {
+    let iconId =
+      weathers.weather[0].id === 800
+        ? 0
+        : (parseInt(weathers.weather[0].id) / 100).toFixed(0);
+    switch (iconId) {
+      case "0":
+        return <img className="icon" src="/weather/day_clear.png" />;
+      case "2":
+        return <TiWeatherStormy size="6rem" color="black" />;
+      case "3":
+        return <TiWeatherShower size="6rem" color="blue" />;
+      case "5":
+        return <TiWeatherDownpour size="6rem" color="navy" />;
+      case "6":
+        return <TiWeatherSnow size="6rem" color="white" />;
+      case "7":
+        return <BsCloudFog size="6rem" color="white" />;
+      case "8":
+        return <TiWeatherCloudy size="6rem" color="white" />;
+    }
+  };
+
   return (
     <Container>
       <Card hoverable>
-        <div className="date">
-          <DateCard className="date1" title={getToday(nowDay)}>
-            {day}
-          </DateCard>
-          {weathers.name === "Daegu" ? <h1>대구의 현재날씨</h1> : null}
-        </div>
-
-        {/* <TitleCard className="titleCard">
-          <p>Weather</p>
-        </TitleCard> */}
+        <DateCard className="date1" title={getToday(nowDay)}>
+          {day}
+        </DateCard>
+        {weathers.weather[0].id === 800 &&
+        weathers.weather[0].icon === "01d" ? (
+          <img className="img_icon" src="/sunny.png" />
+        ) : weathers.weather[0].icon === "01n" ? (
+          <img className="img_icon" src="/moon.png" />
+        ) : (
+          <img src={weatherIcon} className="icon" />
+        )}
+        <p className="wind_speed">풍속 : {weathers.wind.speed}</p>
 
         <WeatherWrapper>
-          <img src={weatherIcon} alt="" width="50%" height="130px" />
-          {/* <p>{weathers.weather[0].description}</p> */}
+          <p className="main_temp">
+            {(weathers.main.temp - 273.15).toFixed(0)}
+          </p>
+          <img
+            className="temp_img"
+            src="https://cdn-icons-png.flaticon.com/512/808/808569.png"
+          />
+          <div className="right_div">
+            <p className="des">{weathers.weather[0].description}</p>
+            {weathers.name === "Daegu" ? <p>대구광역시</p> : null}
+            {/* {weathers.name} */}
+          </div>
 
-          <div style={{ paddingLeft: 5 }}>
-            <p>현재기온 : {(weathers.main.temp - 273.15).toFixed(1)}</p>
+          {/* <div style={{ paddingLeft: 5 }}>
 
             <p>최저기온 : {(weathers.main.temp_min - 273.15).toFixed(1)}</p>
             <p>최고기온 : {(weathers.main.temp_max - 273.15).toFixed(1)}</p>
-            <p>풍속 : {weathers.wind.speed}</p>
+            
 
-            <p className="des">{weathers.weather[0].description}</p>
-          </div>
+            
+          </div> */}
         </WeatherWrapper>
       </Card>
     </Container>
@@ -83,51 +117,83 @@ export default Target;
 
 const WeatherWrapper = styled.div`
   display: flex;
-  position: relative;
-  bottom: 5px;
+  width: 100%;
+  height: 60px;
+  // background: skyblue;
+  border-top: 1px solid #467ada;
+  border-bottom: 1px solid #467ada;
+  // border-bottom: 2px solid #f2f7fe;
+  margin-top: 100px;
+  // position: relative;
+  // bottom: 5px;
+
+  position: absolute;
+  bottom: 25px;
+
+  padding: 0 20px;
+
+  .main_temp {
+    font-size: 40px;
+    line-height: 55px;
+  }
 
   p {
     font-size: 16px;
     margin-bottom: 3px;
-    font-weight: bold;
+    // font-weight: bold;
   }
 
-  .des {
+  .temp_img {
+    width: 10px;
+    height: 10px;
     position: relative;
-    right: 95%;
-    bottom: 17%;
-    overflow: hidden;
-    text-overflow: clip;
-    white-space: nowrap;
-  }
-
-  // img {
-  //   position: relative;
-  //   bottom: 20%;
-  // }
-
-  div {
-    margin-top: 20px;
+    // left: 2%;
+    top: 5px;
   }
 
   overflow: hidden;
   text-overflow: clip;
   white-space: nowrap;
+
+  .right_div {
+    display: block;
+    margin-left: 10px;
+    // margin: 0 10px;
+  }
 `;
 
 const Container = styled.div`
   display: inline-block;
-  width: 30%;
+  width: 28%;
   // max-width: 340px;
   // overflow: auto;
   text-overflow: clip;
   white-space: nowrap;
-  // margin-top: 39px;
   margin-top: 40px;
+  margin-bottom: 10px;
+
+  .icon {
+    width: 190px;
+    height: 190px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20%;
+  }
+
+  .img_icon {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    left: 50%;
+    top: 35px;
+    transform: translateX(-50%);
+  }
 
   .ant-card {
     width: 100%;
-    height: 290px;
+    height: 300px;
+    // height: 340px;
     border-radius: 30px;
     padding: 0;
     margin: 0;
@@ -160,11 +226,11 @@ const Container = styled.div`
     }
   }
 
-  .date > .date1 {
+  .date1 {
     background: #467ada !important;
     color: #fff;
-    margin-right: 10px !important;
-    margin-left: 10px !important;
+    // margin-right: 10px !important;
+    // margin-left: 10px !important;
 
     .ant-card-head {
       color: #fff;
@@ -178,6 +244,12 @@ const Container = styled.div`
       border-top-right-radius: 0;
       border-bottom-right-radius: 30px;
     }
+  }
+
+  .wind_speed {
+    position: absolute;
+    right: 17px;
+    top: 5px;
   }
 `;
 
@@ -221,12 +293,11 @@ const DateCard = styled(Card)`
   font-size: 35px;
   font-weight: bold;
   text-align: left;
-  position: relative;
-  bottom: 5px;
+  position: absolute;
+  top: -15px;
+  left: 10px;
 
   color: #c4c7cf;
-
-  //   box-shadow: none;
 
   .ant-card-head {
     min-height: 35px;

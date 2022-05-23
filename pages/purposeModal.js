@@ -15,39 +15,37 @@ import {
 import useInput from "../hooks/useInputTest";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { GOAL_REQUEST, SIGNUP_REQUEST ,ALL_GOAL_REQUEST} from "../reducers/user";
+import {
+  GOAL_REQUEST,
+  SIGNUP_REQUEST,
+  ALL_GOAL_REQUEST,
+} from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 const { Option } = Select;
 
-const Signup = ({ isModal, openModal,setIsModal }) => {
+const Signup = ({ isModal, openModal, setIsModal }) => {
+  function error() {
+    Modal.error({
+      title: "목표설정실패",
+      content: "지정된 날짜에 목표가 이미설정되어있습니다.",
+    });
+  }
 
-    function error() {
-        Modal.error({
-          title: '목표설정실패',
-          content: '지정된 날짜에 목표가 이미설정되어있습니다.',
-        });
-      }
+  const { goalpurpose } = useSelector((state) => state.user);
 
-
-      
-
-    const {goalpurpose}=useSelector((state)=>state.user)
-
-    useEffect(()=>{
+  useEffect(() => {
     //     if(goalpurpose?goalpurpose.message:goalpurpose){
     //         error()
     //     }else if(goalpurpose?goalpurpose.goal:goalpurpose){
     // window.location.href='/musclePurpose'
 
     //     }
-    if(goalpurpose?goalpurpose.goal:goalpurpose){
-      window.location.href='/musclePurpose'
-
+    if (goalpurpose ? goalpurpose.goal : goalpurpose) {
+      window.location.href = "/musclePurpose";
     }
-
-    },[goalpurpose])
+  }, [goalpurpose]);
   const [form] = Form.useForm();
 
   const [btnValue, setBtnValue] = useState(null);
@@ -72,7 +70,6 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
     days.push(i);
   }
 
-  
   const [title, onChangeTitle] = useInput("");
   const [purpose, onChangePurpose] = useInput("");
 
@@ -82,14 +79,16 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
     setEvent(v);
   };
 
+  const nowYear = moment();
+
   const [start, setStart] = useState({
-    year: "",
+    year: nowYear,
     month: "",
     day: "",
   });
 
   const onChangeStartYear = (date) => {
-    const dateString = moment(date).format("YYYY");
+    const dateString = moment(date);
     setStart({ ...start, year: dateString });
   };
 
@@ -100,7 +99,6 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
   const onChangeStartDay = (e) => {
     setStart({ ...start, day: e });
   };
-
 
   const [end, setEnd] = useState({
     year: "",
@@ -121,8 +119,6 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
     setEnd({ ...end, day: e });
   };
 
-
-
   // 여기까지
 
   const dispatch = useDispatch();
@@ -132,9 +128,9 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
       title,
       event,
       purpose,
-     
-     start:start.year + "-" + start.month + "-" + start.day,
-     end:end.year + "-" + end.month + "-" + end.day,
+
+      start: start.year + "-" + start.month + "-" + start.day,
+      end: end.year + "-" + end.month + "-" + end.day,
     };
 
     console.log(body);
@@ -143,13 +139,19 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
       type: GOAL_REQUEST,
       data: body,
     });
-    
   };
 
-//   useEffect(()=>{
-//       setIsModal(false)
+  // const disabledYear = (current) => {
+  //   const nowYear = moment().subtract(1, "years").format("YYYY");
+  //   return current && current < nowYear;
+  // };
 
-//   },[goalpurpose])
+  // const nowYear = moment().format("YYYY");
+
+  //   useEffect(()=>{
+  //       setIsModal(false)
+
+  //   },[goalpurpose])
 
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
@@ -159,10 +161,8 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
       </TitleDiv>
       <FormWrapper>
         <Form onFinish={onSubmit} layout="horizontal" form={form} size="large">
-       
           <MaleFemale>
-          
-    종목
+            종목
             <Select placeholder="종목" onChange={onChangeEvent}>
               <Option value="B">자전거</Option>
               <Option value="R">러닝</Option>
@@ -171,11 +171,7 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
           {/* 여기까지 */}
           <SmallTitle>제목</SmallTitle>
           <Form.Item rules={[{ required: true }]}>
-            <Input
-              value={title}
-              onChange={onChangeTitle}
-              placeholder="제목"
-            />
+            <Input value={title} onChange={onChangeTitle} placeholder="제목" />
           </Form.Item>
           <SmallTitle>운동목표</SmallTitle>
           <Form.Item rules={[{ required: true }]}>
@@ -185,14 +181,18 @@ const Signup = ({ isModal, openModal,setIsModal }) => {
               placeholder="목표km"
             />
           </Form.Item>
-         
+
           <SmallTitle>시작날짜</SmallTitle>
           <SpaceWrapper>
             <DatePicker
               picker="year"
               onChange={onChangeStartYear}
               placeholder="년도"
+              value={start.year}
             />
+            {/* <Select name="year" placeholder="년도">
+              <Option>{nowYear}</Option>
+            </Select> */}
 
             <Select name="month" placeholder="월" onChange={onChangeStartMonth}>
               {months.map((month, index) => (
@@ -354,7 +354,7 @@ const MaleFemale = styled(SecondName)`
   width: 74px;
 
   .ant-select-single {
-    width: 75px;
+    width: 92px;
     border-radius: 5px;
     // color: rgba(0, 0, 0, 0.4);
   }

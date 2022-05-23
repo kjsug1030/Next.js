@@ -5,8 +5,8 @@ import { Card, Empty } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
 const Pie = ({ userRate }) => {
-  const userRateRidding = userRate.R ? userRate.R : 0;
-  const userRateRunning = userRate.B ? userRate.B : 0;
+  const userRateRidding = userRate.B ? userRate.B : 0;
+  const userRateRunning = userRate.R ? userRate.R : 0;
 
   const options = {
     plugins: {

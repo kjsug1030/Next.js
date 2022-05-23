@@ -35,6 +35,7 @@ const { Meta } = Card;
 
 function MyNote() {
   const [value, setValue] = useState(0);
+  const [runValue, setRunValue] = useState(0);
   const { purposeProgress } = useSelector((state) => state.user);
 
   const run = purposeProgress.run;
@@ -67,10 +68,10 @@ function MyNote() {
   const runChange = (e) => {
     const value = e.target.value;
     console.log("run checked", e.target.value);
-    setPercent(run[value].progress);
-    setGoalDistance(run[value].goalDistance);
-    setFirstDate(run[value].firstDate);
-    setLastDate(run[value].lastDate);
+    setPercent(run[runValue].progress);
+    setGoalDistance(run[runValue].goalDistance);
+    setFirstDate(run[runValue].firstDate);
+    setLastDate(run[runValue].lastDate);
   };
 
   const bikeChange = (e) => {
@@ -149,7 +150,7 @@ function MyNote() {
         </Dropdown>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Badge status="processing" />
+          {purposeProgress.bike[value] && <Badge status="processing" />}
           <p className="title">
             {/* {purposeProgress.bike[value]
               ? purposeProgress.bike[value].title
@@ -224,20 +225,21 @@ function MyNote() {
         </Dropdown>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Badge status="processing" />
+          {purposeProgress.run[runValue] && <Badge status="processing" />}
           <p className="title">
-            {/* {purposeProgress.run[value]
-              ? purposeProgress.run[value].title
+            {/* {purposeProgress.run[runValue]
+              ? purposeProgress.run[runValue].title
               : null} */}
-            {purposeProgress.run[value] && purposeProgress.run[value].title}
+            {purposeProgress.run[runValue] &&
+              purposeProgress.run[runValue].title}
           </p>
         </div>
 
-        {purposeProgress.run[value] ? (
+        {purposeProgress.run[runValue] ? (
           <div>
             <Progress
               type="circle"
-              percent={run[value].progress}
+              percent={run[runValue].progress}
               style={{ paddingBottom: "10px", paddingTop: "5px" }}
               width={120}
             />
@@ -254,10 +256,10 @@ function MyNote() {
                 >
                   목표
                 </Tag>
-                {run[value].goalDistance}km
+                {run[runValue].goalDistance}km
               </h4>
-              <h4>시작일 : {run[value].firstDate}</h4>
-              <h4>종료일 : {run[value].lastDate}</h4>
+              <h4>시작일 : {run[runValue].firstDate}</h4>
+              <h4>종료일 : {run[runValue].lastDate}</h4>
             </div>
           </div>
         ) : (
@@ -373,6 +375,10 @@ const Container = styled.div`
     font-weight: bold;
   }
 
+  h4 {
+    margin-bottom: 0.1em;
+  }
+
   .pro {
     .ant-progress-text {
       // color: #1890ff !important;
@@ -407,14 +413,15 @@ const Container = styled.div`
   .title {
     // color: red;
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     font-size: 14px;
   }
 
   .btn {
     position: absolute;
-    top: 72px;
-    right: 26px;
+    top: 70px;
+    // right: 26px;
+    right: 6%;
     border-radius: 24px;
     // border-radius: 50%;
   }

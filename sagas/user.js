@@ -96,6 +96,9 @@ import {
   OTHER_USER_TOTAL_BIKE_TIME_REQUEST,
   OTHER_USER_TOTAL_BIKE_TIME_SUCCESS,
   OTHER_USER_TOTAL_BIKE_TIME_FAILURE,
+  PROFILE_BADGE_REQUEST,
+  PROFILE_BADGE_SUCCESS,
+  PROFILE_BADGE_FAILURE,
 } from "../reducers/user";
 import axios from "axios";
 import cookie from "react-cookies";
@@ -1041,6 +1044,43 @@ function* notificationDelete(action) {
   }
 }
 
+const profileBadgeAPI = async (data) => {
+  try {
+    const res = await axios.put(
+      `https://2yubi.shop/api/profileBadge`,
+      {
+        badge: data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json`",
+        },
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+function* profileBadge(action) {
+  try {
+    console.log("profileBadge");
+    const result = yield call(profileBadgeAPI, action.data);
+    yield put({
+      type: PROFILE_BADGE_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: PROFILE_BADGE_FAILURE,
+      error: err,
+    });
+  }
+}
+
 function* watchLogin() {
   yield takeLatest(LOGIN_REQUEST, login);
 }
@@ -1111,6 +1151,12 @@ function* watchOtherUserRunTime() {
 }
 function* watchOtherUserBikeTime() {
   yield takeLatest(OTHER_USER_TOTAL_BIKE_TIME_REQUEST, otherUser_totalBikeTime);
+}
+
+//////////////////////////////
+
+function* watchProfileBadge() {
+  yield takeLatest(PROFILE_BADGE_REQUEST, profileBadge);
 }
 
 //////////////////////////////
@@ -1188,5 +1234,7 @@ export default function* rootSaga() {
     fork(watchOtherUserCarlorie),
     fork(watchOtherUserRunTime),
     fork(watchOtherUserBikeTime),
+
+    fork(watchProfileBadge), // 대표뱃지설정
   ]);
 }

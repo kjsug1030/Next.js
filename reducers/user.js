@@ -3,6 +3,7 @@ import { LOAD_MY_LOCATION_REQUEST } from "./map";
 import Router from "next/router";
 
 export const initialState = {
+  // profileBadge: null,
   profile: null,
   otherProfile: null,
   weathers: null,
@@ -66,7 +67,15 @@ export const initialState = {
   profileEditLoading: false,
   profileEditDone: false,
   profileEditError: null,
+
+  profileBadgeLoading: false,
+  profileBadgeDone: false,
+  profileBadgeError: null,
 };
+
+export const PROFILE_BADGE_REQUEST = "PROFILE_BADGE_REQUEST";
+export const PROFILE_BADGE_SUCCESS = "PROFILE_BADGE_SUCCESS";
+export const PROFILE_BADGE_FAILURE = "PROFILE_BADGE_FAILURE";
 
 export const PROFILE_EDIT_REQUEST = "PROFILE_EDIT_REQUEST";
 export const PROFILE_EDIT_SUCCESS = "PROFILE_EDIT_SUCCESS";
@@ -207,6 +216,21 @@ export const OTHER_USER_TOTAL_TIME_FAILURE = "OTHER_USER_TOTAL_TIME_FAILURE";
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case PROFILE_BADGE_REQUEST:
+        draft.profileBadgeLoading = true;
+        draft.profileBadgeDone = false;
+
+        break;
+      case PROFILE_BADGE_SUCCESS:
+        draft.profileBadgeLoading = false;
+        draft.profileBadgeDone = true;
+
+        draft.me.badge = action.data;
+        break;
+      case PROFILE_BADGE_FAILURE:
+        draft.profileBadgeError = action.error;
+        break;
+
       case CHECK_NOTIFICATION_REQUEST:
         draft.notificationCheckCount = action.data;
         break;
@@ -471,9 +495,10 @@ const reducer = (state = initialState, action) => {
         draft.logOutLoading = true;
         break;
       case LOGOUT_SUCCESS:
+        // window.location.href = "/LoginTest";
+
         draft.logOutLoading = false;
         draft.me = null;
-        window.location.href = "/LoginTest";
         break;
       case LOGOUT_FAIL:
         draft.logOutLoading = false;

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   Dropdown,
   Badge,
-  Menu,
   Card,
   List,
   Avatar,
-  Skeleton,
   Steps,
 } from "antd";
 import { BellOutlined } from "@ant-design/icons/lib/icons";
@@ -195,14 +193,7 @@ const Notification = () => {
                 </>
               )}
             />
-            {/* <ListWrapper>
-              <List.Item className="delete_list">
-                <List.Item.Meta
-                  onClick={deleteNotification}
-                  description="전부읽고 삭제하기"
-                />
-              </List.Item>
-            </ListWrapper> */}
+
           </CardWrapper>
         }
       >

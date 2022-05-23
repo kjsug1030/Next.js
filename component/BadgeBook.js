@@ -17,7 +17,10 @@ const BadgeBook = () => {
 
   return (
     <Container className="badge_book">
-      <img src="달리기숙제.jfif" onClick={showModal} />
+      {/* <div className="follow_chart"> */}
+      <img src="/badgeBook2.png" onClick={showModal} />
+      {/* <p>Badge</p> */}
+      {/* </div> */}
       <BadgeModal isModal={isModal} openModal={openModal} />
     </Container>
   );
@@ -38,74 +41,104 @@ const Container = styled.span`
   //     transition: all 0.45s ease;
   //   }
 
-  & {
-    display: inline-block;
-    // width: 300px;
-    // height: 370px;
-    width: 58px;
-    height: 76px;
-    width: 100px;
-    height: 118px;
-    border: 1px solid grey;
-    background: #fff;
-
-    // float: right;
-    cursor: pointer;
-
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 2px 4px 0 rgba(#000, 0.1), 0 9px 20px 0 rgba(#000, 0.25);
-    overflow: hidden;
-    transition: box-shadow 0.3s linear;
-
-    img {
-      width: inherit;
-      height: inherit;
-      transform-origin: 0 50%;
-      transform: rotateY(0);
-      transition: all 0.45s ease;
-    }
-  }
+  margin-right: 20px;
+  position: relative;
+  bottom: 4px;
 
   &:hover {
-    box-shadow: 0 2px 4px 0 rgba(#000, 0.25), 0 9px 20px 0 rgba(#000, 0.45);
     cursor: pointer;
-    img {
-      transform: rotateY(-25deg);
-      box-shadow: 1px 1px 5px 5px rgba(#000, 0.2);
-    }
-
-    .badge_title {
-      //   transform: rotateY(-25deg);
-      transform: rotateY(-40deg);
-    }
   }
 
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    width: inherit;
-    height: inherit;
-    position: absolute;
-    top: 0;
-    z-index: -1;
-    border: 1px solid grey;
-
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+  img {
+    width: 40px;
+    height: 40px;
   }
 
-  &::before {
-    left: -3px;
-  }
+  // .follow_chart {
+  //   position: absolute;
 
-  &::after {
-    left: -6px;
-  }
+  //   p {
+  //     position: absolute;
+  //     bottom: 31%;
+  //     left: 52px;
+  //     color: #fff;
+  //     font-size: 22px;
+  //     font-weight: bold;
+  //   }
+
+  //   p:hover {
+  //     cursor: pointer;
+  //   }
+  // }
+
+  // & {
+  //   display: inline-block;
+  //   // width: 300px;
+  //   // height: 370px;
+  //   width: 58px;
+  //   height: 76px;
+  //   width: 100px;
+  //   height: 118px;
+  //   border: 1px solid grey;
+  //   background: #fff;
+
+  //   // float: right;
+  //   cursor: pointer;
+
+  //   border-top-right-radius: 5px;
+  //   border-bottom-right-radius: 5px;
+
+  //   position: relative;
+  //   z-index: 1;
+  //   box-shadow: 0 2px 4px 0 rgba(#000, 0.1), 0 9px 20px 0 rgba(#000, 0.25);
+  //   overflow: hidden;
+  //   transition: box-shadow 0.3s linear;
+
+  //   img {
+  //     width: inherit;
+  //     height: inherit;
+  //     transform-origin: 0 50%;
+  //     transform: rotateY(0);
+  //     transition: all 0.45s ease;
+  //   }
+  // }
+
+  // &:hover {
+  //   box-shadow: 0 2px 4px 0 rgba(#000, 0.25), 0 9px 20px 0 rgba(#000, 0.45);
+  //   cursor: pointer;
+  //   img {
+  //     transform: rotateY(-25deg);
+  //     box-shadow: 1px 1px 5px 5px rgba(#000, 0.2);
+  //   }
+
+  //   .badge_title {
+  //     //   transform: rotateY(-25deg);
+  //     transform: rotateY(-40deg);
+  //   }
+  // }
+
+  // &::before,
+  // &::after {
+  //   content: "";
+  //   display: block;
+  //   width: inherit;
+  //   height: inherit;
+  //   position: absolute;
+  //   top: 0;
+  //   z-index: -1;
+  //   border: 1px solid grey;
+
+  //   border-top-right-radius: 5px;
+  //   border-bottom-right-radius: 5px;
+  // }
+
+  // &::before {
+  //   left: -3px;
+  // }
+
+  // &::after {
+  //   left: -6px;
+  // }
 
   //   .badge_book {
   //     display: block;

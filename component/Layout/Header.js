@@ -27,15 +27,19 @@ const header = () => {
 
   return (
     <HeaderWrapper>
-      <Title>Pace-Maker</Title>
+      <Title>PACE MAKER</Title>
 
       <IconList>
         {/* 알림 */}
-        {/* <Notification /> */}
+        <BadgeBook />
+        <Notification />
 
-        <Button type="primary" onClick={() => logout()}>
+        {/* <Button type="primary" onClick={() => logout()}>
           LogOut
-        </Button>
+        </Button> */}
+        <button onClick={() => logout()}>
+          <a href={"/LoginTest"}>로그아웃</a>
+        </button>
         <AvatarDiv>
           <a>
             {/* <Avatar onClick={openDrawer} src="kurumi.jpg" size={40}></Avatar> */}
