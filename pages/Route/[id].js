@@ -358,7 +358,9 @@ function oneRoute() {
                   >
                     <div style={{ width: 260 }}>{b.user.name}</div>
                   </Popover>
-                  <div style={{ width: 250 }}>{b.average_speed}km/h</div>
+                  <div style={{ width: 250 }}>
+                    {b.average_speed.toFixed(2)}km/h
+                  </div>
                   <div style={{ width: 335 }}>{timeChange(b.time)}</div>
                   <div style={{ width: 300 }}>{dateFormat(b.created_at)}</div>
                 </div>

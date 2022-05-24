@@ -37,8 +37,8 @@ const header = () => {
         {/* <Button type="primary" onClick={() => logout()}>
           LogOut
         </Button> */}
-        <button onClick={() => logout()}>
-          <a href={"/LoginTest"}>로그아웃</a>
+        <button className="logout_btn" onClick={() => logout()}>
+          <a href={"/LoginTest"}>LogOut</a>
         </button>
         <AvatarDiv>
           <a>
@@ -83,6 +83,7 @@ const AvatarDiv = styled.div`
 
   a {
     font-size: 20px;
+    cursor: default;
   }
   .ant-avatar {
     // background: #00a2ae;
@@ -104,6 +105,31 @@ export const HeaderWrapper = styled(Header)`
   // position: fixed;
   // top: 0;
   // z-index: 1;
+
+  .logout_btn {
+    display: inline-block;
+    line-height: 1.5715;
+    height: 32px;
+    padding: 4px 15px;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none; // 텍스트를 선택하지 못하게 함
+    touch-action: manipulation; // 클릭해서 끌어당길 수 있는 기능
+
+    border-radius: 9px;
+    position: relative;
+    bottom: 4px;
+    margin-right: 24px;
+    background: #467ada;
+    border: 1px solid #467ada;
+
+    a {
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
 `;
 
 export const Logo = styled.div`

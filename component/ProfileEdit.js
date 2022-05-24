@@ -212,6 +212,7 @@ const profileEdit = ({ visible, showEditProfile }) => {
       data: formData,
     });
 
+    window.location.reload();
     // window.location.href = "/";
 
     // console.log(body);

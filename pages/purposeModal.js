@@ -33,6 +33,12 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     });
   }
 
+  const now = moment();
+  const day = now.format("DD");
+
+  const nextDay = now.add(1, "d").format("DD");
+  const month = now.format("MM");
+
   const { goalpurpose } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -101,7 +107,7 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
   };
 
   const [end, setEnd] = useState({
-    year: "",
+    year: nowYear,
     month: "",
     day: "",
   });
@@ -194,12 +200,22 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
               <Option>{nowYear}</Option>
             </Select> */}
 
-            <Select name="month" placeholder="월" onChange={onChangeStartMonth}>
+            <Select
+              name="month"
+              value={month}
+              placeholder="월"
+              onChange={onChangeStartMonth}
+            >
               {months.map((month, index) => (
                 <Option key={`${index + 1}`}>{month}</Option>
               ))}
             </Select>
-            <Select name="day" placeholder="일" onChange={onChangeStartDay}>
+            <Select
+              name="day"
+              value={day}
+              placeholder="일"
+              onChange={onChangeStartDay}
+            >
               {days.map((day, index) => (
                 <Option key={`${index + 1}`}>{day}</Option>
               ))}
@@ -209,16 +225,27 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
           <SpaceWrapper>
             <DatePicker
               picker="year"
+              value={nowYear}
               onChange={onChangeEndYear}
               placeholder="년도"
             />
 
-            <Select name="month" placeholder="월" onChange={onChangeEndMonth}>
+            <Select
+              name="month"
+              value={month}
+              placeholder="월"
+              onChange={onChangeEndMonth}
+            >
               {months.map((month, index) => (
                 <Option key={`${index + 1}`}>{month}</Option>
               ))}
             </Select>
-            <Select name="day" placeholder="일" onChange={onChangeEndDay}>
+            <Select
+              name="day"
+              value={nextDay}
+              placeholder="일"
+              onChange={onChangeEndDay}
+            >
               {days.map((day, index) => (
                 <Option key={`${index + 1}`}>{day}</Option>
               ))}

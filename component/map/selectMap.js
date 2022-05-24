@@ -90,7 +90,7 @@ function selectMap({}) {
   }
 
   const [isState, setIsState] = useState(false);
-  const [mapState, setMapState] = useState("B");
+  const [mapState, setMapState] = useState("R");
 
   const dispatch = useDispatch();
 
@@ -127,6 +127,10 @@ function selectMap({}) {
         },
       });
     }
+
+    setTimeout(() => {
+      runningSelectMap();
+    }, 1000);
   }, [loadMap]);
 
   const handleOnLoad = (map) => {
@@ -321,28 +325,28 @@ function selectMap({}) {
                 <Buttons>
                   {mapState === "B" ? (
                     <>
+                      <Button className="btn1" onClick={runningSelectMap}>
+                        달리기
+                      </Button>
                       <Button
-                        className="btn1"
+                        className="btn2"
                         onClick={bikeSelectMap}
                         style={{ background: "#467ada", color: "#fff" }}
                       >
                         자전거
                       </Button>
-                      <Button className="btn2" onClick={runningSelectMap}>
-                        달리기
-                      </Button>
                     </>
                   ) : mapState === "R" ? (
                     <>
-                      <Button className="btn1" onClick={bikeSelectMap}>
-                        자전거
-                      </Button>
                       <Button
-                        className="btn2"
+                        className="btn1"
                         onClick={runningSelectMap}
                         style={{ background: "#467ada", color: "#fff" }}
                       >
                         달리기
+                      </Button>
+                      <Button className="btn2" onClick={bikeSelectMap}>
+                        자전거
                       </Button>
                     </>
                   ) : null}

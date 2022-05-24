@@ -4,20 +4,46 @@ import styled, { createGlobalStyle } from "styled-components";
 import { useSelector } from "react-redux";
 import { SettingOutlined } from "@ant-design/icons";
 import ProfileEdit from "../ProfileEdit";
+import FollowingModal from "../FollowingModal";
+import FollowerModal from "../FollowerModal";
 
 const UserForm = () => {
   const { me } = useSelector((state) => state.user);
 
-  const [visible, setVisible] = useState(false);
+  const [editProfile, setEditProfile] = useState(false);
 
   const showEditProfile = () => {
-    setVisible((prev) => !prev);
-    console.log(visible);
+    setEditProfile((prev) => !prev);
+    console.log(editProfile);
   };
 
   const openDrawer = () => {
-    setVisible(true);
-    console.log(visible);
+    setEditProfile(true);
+    console.log(editProfile);
+  };
+
+  const [followingModal, setFollowingModal] = useState(false);
+
+  const showFollowingModal = () => {
+    setFollowingModal((prev) => !prev);
+    console.log(followingModal);
+  };
+
+  const openFollowingModal = () => {
+    setFollowingModal(true);
+    console.log(followingModal);
+  };
+
+  const [followerModal, setFollowerModal] = useState(false);
+
+  const showFollowerModal = () => {
+    setFollowerModal((prev) => !prev);
+    console.log(followingModal);
+  };
+
+  const openFollowerModal = () => {
+    setFollowerModal(true);
+    console.log(followingModal);
   };
 
   return (
@@ -26,12 +52,12 @@ const UserForm = () => {
         <CardWrapper
           bordered={true}
           actions={[
-            <div key="followings">
+            <div key="followings" onClick={openFollowingModal}>
               팔로잉
               <br />
               {me.followings.length}
             </div>,
-            <div key="followings">
+            <div key="followings" onClick={openFollowerModal}>
               팔로워
               <br />
               {me.followers.length}
@@ -43,6 +69,14 @@ const UserForm = () => {
             </div>,
           ]}
         >
+          <FollowingModal
+            followingModal={followingModal}
+            showFollowingModal={showFollowingModal}
+          />
+          <FollowerModal
+            followerModal={followerModal}
+            showFollowerModal={showFollowerModal}
+          />
           <CardMetaWrapper
             avatar={
               <Avatar
@@ -58,7 +92,12 @@ const UserForm = () => {
         </CardWrapper>
       ) : null}
       {me ? (
-        <ProfileEdit visible={visible} showEditProfile={showEditProfile} />
+        <>
+          <ProfileEdit
+            visible={editProfile}
+            showEditProfile={showEditProfile}
+          />
+        </>
       ) : null}
     </Container>
   );

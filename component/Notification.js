@@ -154,7 +154,7 @@ const Notification = () => {
   ]);
 
   return (
-    <>
+    <Container>
       <Dropdown
         overlay={
           <CardWrapper>
@@ -208,17 +208,17 @@ const Notification = () => {
       >
         <Badge count={noti.length} className="noti" size="small">
           <a>
-            {/* <BellOutlined /> */}
-            <img
+            <BellOutlined className="icon" />
+            {/* <img
               // src="https://cdn-icons-png.flaticon.com/512/2571/2571000.png"
               // src="https://cdn-icons-png.flaticon.com/512/2569/2569963.png"
               src="https://cdn-icons-png.flaticon.com/512/6816/6816519.png"
               style={{ width: 35, height: 35 }}
-            />
+            /> */}
           </a>
         </Badge>
       </Dropdown>
-    </>
+    </Container>
   );
 };
 
@@ -227,15 +227,21 @@ export default Notification;
 const Container = styled.div`
   display: inline-block;
 
-  .ant-list-item:hover {
-    background: black;
-  }
+  // .ant-list-item:hover {
+  //   background: black;
+  // }
 
-  .ant-card {
-    background: black;
-  }
+  // .ant-card {
+  //   background: black;
+  // }
 
   transition: all 0.8s !important;
+
+  .icon {
+    &:hover {
+      // background: red;
+    }
+  }
 `;
 
 const CardWrapper = styled(Card)`
@@ -246,7 +252,8 @@ const ListWrapper = styled(List)`
   width: 400px;
   // padding: 0 6px;
   max-height: 600px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
+  overflow: auto;
 
   .ant-list-item:hover {
     background: #f0f0f0;

@@ -98,20 +98,25 @@ const reducer = (state = initialStates, action) => {
         draft.myRankloading = true;
         draft.myRankDone = false;
         draft.myRankError = null;
+        break;
       case LOAD_TRACK_MYRANK_SUCCESS:
         draft.myRankloading = false;
         draft.myRankDone = true;
         draft.myMapRank = [];
 
         draft.myMapRank.push(action.data);
+        break;
 
       case LOAD_TRACK_MYRANK_FAILURE:
         (draft.myRankloading = false), (draft.myRankError = "a");
+        break;
 
       case LOAD_TRACK_RANK_REQUEST:
         draft.Rankloading = true;
         draft.RankDone = false;
         draft.RankError = null;
+        break;
+
       case LOAD_TRACK_RANK_SUCCESS:
         // console.log('acttttttt',action.data)
         draft.mapRank[0] = action.data;
@@ -119,12 +124,16 @@ const reducer = (state = initialStates, action) => {
 
         draft.Rankloading = false;
         draft.RankDone = true;
-      // draft.mapRank=[]
-      // draft.mapRank.push(action.data)
+        // draft.mapRank=[]
+        // draft.mapRank.push(action.data)
 
-      // draft.mapRank=action.data
+        // draft.mapRank=action.data
+        break;
+
       case LOAD_TRACK_RANK_FAILURE:
         (draft.Rankloading = false), (draft.RankError = "a");
+        break;
+
       case SEARCH_MAP_REQUEST:
         draft.searchmapLoading = true;
         draft.searchmapDone = false;

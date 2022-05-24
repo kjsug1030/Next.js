@@ -39,7 +39,7 @@ import {
   LOAD_MORE_POST_REQUEST,
   LOAD_POSTS_REQUEST,
 } from "../../reducers/post";
-import BadgeModal from "../../component/badgeModal";
+import BadgeModal from "../../component/User/BadgeModal";
 import SportsChart from "../../component/User/SportsChart";
 import FollowerPost from "../../component/User/Post";
 import FollowerMMR from "../../component/User/MMR";
@@ -200,7 +200,11 @@ function userProfile() {
             <p className="badge" onClick={showModal}>
               Badge
             </p>
-            <BadgeModal isModal={isModal} openModal={openModal} />
+            <BadgeModal
+              otherProfile={otherProfile}
+              isModal={isModal}
+              openModal={openModal}
+            />
             {/* <FollowerPie className="follow_pie" userRate={userRate} /> */}
             {/* <BadgeBook /> */}
             <SportsChart

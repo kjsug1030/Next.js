@@ -77,13 +77,19 @@ const Target = () => {
         </DateCard>
         {weathers.weather[0].id === 800 &&
         weathers.weather[0].icon === "01d" ? (
-          <img className="img_icon" src="/sunny.png" />
+          // <img className="img_icon" src="/sunny.png" />
+          <img
+            className="img_icon"
+            src="https://cdn-icons.flaticon.com/png/512/2107/premium/2107060.png?token=exp=1653355595~hmac=70b8bb5c53754d4165907fca4916e786"
+          />
         ) : weathers.weather[0].icon === "01n" ? (
           <img className="img_icon" src="/moon.png" />
+        ) : weathers.weather[0].icon === "04d" || "04d" ? (
+          <img className="img_icon" src="/clouds.png" />
         ) : (
           <img src={weatherIcon} className="icon" />
         )}
-        <p className="wind_speed">풍속 : {weathers.wind.speed}</p>
+        <p className="wind_speed">풍속 : {weathers.wind.speed}m/s</p>
 
         <WeatherWrapper>
           <p className="main_temp">
@@ -128,7 +134,7 @@ const WeatherWrapper = styled.div`
   // bottom: 5px;
 
   position: absolute;
-  bottom: 25px;
+  bottom: 18px;
 
   padding: 0 20px;
 
@@ -186,7 +192,7 @@ const Container = styled.div`
     height: 130px;
     position: absolute;
     left: 50%;
-    top: 35px;
+    top: 80px;
     transform: translateX(-50%);
   }
 
@@ -236,6 +242,8 @@ const Container = styled.div`
       color: #fff;
       border-bottom: 1px solid #fff;
     }
+
+    z-index: 3;
   }
 
   .ant-card-hoverable:hover {

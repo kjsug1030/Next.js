@@ -52,4 +52,5 @@ padding-top: 70px;
   right:55px;
   bottom:35px;
 }
+
 `;
