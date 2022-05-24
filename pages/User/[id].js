@@ -350,10 +350,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
 
     context.store.dispatch({
-      type: LOAD_MY_INFO_REQUEST,
-    });
-
-    context.store.dispatch({
       type: LOAD_POSTS_REQUEST,
       data: context.params.id,
     });

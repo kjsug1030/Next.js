@@ -111,7 +111,7 @@ const FollowerPost = ({ post, user }) => {
                   className="space"
                 >
                   <p>제목 : {post.title}</p>
-                  <p>평균속도 : {post.average_speed} km/h</p>
+                  <p>평균속도 : {post.average_speed.toFixed(2)} km/h</p>
                   <p>뛴거리 : {post.distance} km</p>
                   <p>소모 칼로리 : {post.calorie} cal</p>
                 </SpaceDiv>

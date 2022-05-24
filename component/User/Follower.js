@@ -16,14 +16,14 @@ function Guild({ follower }) {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <Badge dot color={"green"}>
-                    <Avatar
-                      className="avatar1"
-                      src={v.profile}
+                  // <Badge dot color={"green"}>
+                  <Avatar
+                    className="avatar1"
+                    src={v.profile}
 
-                      // style={{ width: 50 }}
-                    />
-                  </Badge>
+                    // style={{ width: 50 }}
+                  />
+                  // </Badge>
                 }
                 title={<a>{v.name}</a>}
                 description={v.location}
@@ -59,7 +59,7 @@ const CardWrapper = styled(Card)`
   }
 
   .container {
-    padding: 0 12px;
+    // padding: 0 6px;
   }
 
   .ant-list-item-meta {
@@ -67,7 +67,22 @@ const CardWrapper = styled(Card)`
 
     .ant-list-item-meta-avatar {
       position: relative;
-      top: 7px;
+      top: 1px;
+    }
+  }
+
+  .ant-list-item {
+    height: 70px;
+    padding: 0 10px;
+    position: relative;
+
+    p {
+      margin: 0;
+    }
+
+    .ant-avatar {
+      width: 45px;
+      height: 45px;
     }
   }
 `;

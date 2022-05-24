@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Modal, Card, List, Avatar } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import { Modal, List, Avatar, Button } from "antd";
+import { useSelector } from "react-redux";
 
 const FollowerModal = ({ followerModal, showFollowerModal }) => {
   const { me } = useSelector((state) => state.user);
@@ -16,7 +15,6 @@ const FollowerModal = ({ followerModal, showFollowerModal }) => {
       <TitleDiv>
         <div>팔로워</div>
       </TitleDiv>
-      {/* <CardWrapper> */}
       <ListWrapper
         className="list"
         dataSource={me.followers}
@@ -28,13 +26,17 @@ const FollowerModal = ({ followerModal, showFollowerModal }) => {
                 <>
                   <div style={{ color: "black" }}>{v.name}</div>
                   <p>{v.location}</p>
+
+                  <a href={"User/" + v.id}>
+                    {/* user profile 페이지에서만 User/user/1처럼 경로가 겹처서 적용안됨 */}
+                    <Button className="profile_btn">프로필</Button>
+                  </a>
                 </>
               }
             />
           </List.Item>
         )}
       />
-      {/* </CardWrapper> */}
     </ModalWrapper>
   );
 };
@@ -42,43 +44,44 @@ const FollowerModal = ({ followerModal, showFollowerModal }) => {
 export default FollowerModal;
 
 const ModalWrapper = styled(Modal)`
-  //   display: inline-block;
-
-  //   top: 50%;
-  //   transform: translateY(-50%);
   position: relative;
-  //   border-radius: 12px;
 
   .ant-modal-content {
     width: 400px;
-    height: 600px;
+    height: 450px;
     margin: 0 auto;
     border-radius: 15px;
+    position: relative;
+    top: 100px;
   }
   .ant-modal-header {
     border-radius: 15px;
-    // margin-bottom: 30px;
   }
 
   .ant-modal-body {
     padding: 0;
-    // margin-top: 30px;
   }
 
-  .ant-input-affix-wrapper {
-    // 추가하기
-    border-radius: 5px;
+  .ant-btn {
+    width: 80px;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px;
   }
-`;
 
-const CardWrapper = styled(Card)`
-  border-radius: 12px;
+  .profile_btn {
+    // background: #467ada;
+    // border: 1px solid #467ada;
+    // color: #fff;
+  }
 `;
 
 const ListWrapper = styled(List)`
   width: 400px;
-  // padding: 0 6px;
-  max-height: 600px;
+  max-height: 450px;
   overflow: auto;
 
   .ant-list-item:hover {
@@ -88,6 +91,7 @@ const ListWrapper = styled(List)`
   .ant-list-item {
     height: 70px;
     padding: 0 10px;
+    position: relative;
 
     p {
       margin: 0;
@@ -96,32 +100,11 @@ const ListWrapper = styled(List)`
     .ant-avatar {
       width: 45px;
       height: 45px;
-      //   position: relative;
-      //   top: 1px;
     }
   }
 
-  .ant-list-split .ant-list-item:last-child {
+  .ant-list-item:last-child {
     border-bottom: 1px solid #f0f0f0 !important;
-  }
-
-  .delete_list {
-    border-top: 1px solid #e9e9e9;
-    cursor: pointer;
-    background: #fff;
-
-    .ant-list-item-meta-description {
-      text-align: center;
-      color: black;
-      //   font-size: 16px;
-      font-weight: bold;
-    }
-  }
-
-  .delete_list:hover {
-    .ant-list-item-meta-description {
-      //   color: #fff;
-    }
   }
 `;
 
@@ -134,10 +117,5 @@ const TitleDiv = styled.div`
   div {
     margin-bottom: 0;
     font-size: 22px;
-  }
-
-  span {
-    font-size: 15px;
-    color: #606770;
   }
 `;
