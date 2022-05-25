@@ -39,7 +39,7 @@ a {
 padding-top: 70px;
 
 .ant-back-top-content {
-  width:70px;
+  width:50px;
   height:50px;
   border-radius:50%;
 }

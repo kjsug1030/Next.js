@@ -99,6 +99,9 @@ import {
   PROFILE_BADGE_REQUEST,
   PROFILE_BADGE_SUCCESS,
   PROFILE_BADGE_FAILURE,
+  READ_NOTIFICATION_REQUEST,
+  READ_NOTIFICATION_SUCCESS,
+  READ_NOTIFICATION_FAILURE,
 } from "../reducers/user";
 import axios from "axios";
 import cookie from "react-cookies";
@@ -913,6 +916,43 @@ function* profileEdit(action) {
   }
 }
 
+const profileBadgeAPI = async (data) => {
+  try {
+    const res = await axios.put(
+      `https://2yubi.shop/api/profileBadge`,
+      {
+        badge: data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json`",
+        },
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+function* profileBadge(action) {
+  try {
+    console.log("profileBadge");
+    const result = yield call(profileBadgeAPI, action.data);
+    yield put({
+      type: PROFILE_BADGE_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: PROFILE_BADGE_FAILURE,
+      error: err,
+    });
+  }
+}
+
 const followCancelAPI = async (datas) => {
   try {
     const res = await fetch(`https://2yubi.shop/api/cancel/${datas}`, {
@@ -1044,40 +1084,42 @@ function* notificationDelete(action) {
   }
 }
 
-const profileBadgeAPI = async (data) => {
+const notificationReadAPI = async (datas) => {
   try {
-    const res = await axios.put(
-      `https://2yubi.shop/api/profileBadge`,
+    const res = await fetch(
+      `https://2yubi.shop/api/notification/read/${datas}`,
       {
-        badge: data,
-      },
-      {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json`",
+          Accept: "application/json",
         },
-        withCredentials: true,
+        credentials: "include",
       }
     );
-    return res;
+    const data = await res.json();
+    console.log("asdqweqweqw", data);
+
+    return data;
   } catch (err) {
+    console.log("asdasdqqq");
     console.log(err);
   }
 };
 
-function* profileBadge(action) {
+function* notificationRead(action) {
   try {
-    console.log("profileBadge");
-    const result = yield call(profileBadgeAPI, action.data);
+    const result = yield call(notificationReadAPI, action.data);
     yield put({
-      type: PROFILE_BADGE_SUCCESS,
-      data: result,
+      type: READ_NOTIFICATION_SUCCESS,
+      data: action.data,
     });
   } catch (err) {
     yield put({
-      type: PROFILE_BADGE_FAILURE,
+      type: READ_NOTIFICATION_FAILURE,
       error: err,
     });
+    // console.log(err)
   }
 }
 
@@ -1153,8 +1195,6 @@ function* watchOtherUserBikeTime() {
   yield takeLatest(OTHER_USER_TOTAL_BIKE_TIME_REQUEST, otherUser_totalBikeTime);
 }
 
-//////////////////////////////
-
 function* watchProfileBadge() {
   yield takeLatest(PROFILE_BADGE_REQUEST, profileBadge);
 }
@@ -1200,6 +1240,10 @@ function* watchProfileEdit() {
   yield takeLatest(PROFILE_EDIT_REQUEST, profileEdit);
 }
 
+function* watchNotificationRead() {
+  yield takeLatest(READ_NOTIFICATION_REQUEST, notificationRead);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchLoadLogin),
@@ -1234,7 +1278,7 @@ export default function* rootSaga() {
     fork(watchOtherUserCarlorie),
     fork(watchOtherUserRunTime),
     fork(watchOtherUserBikeTime),
-
+    fork(watchNotificationRead),
     fork(watchProfileBadge), // 대표뱃지설정
   ]);
 }

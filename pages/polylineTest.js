@@ -23,7 +23,7 @@ import Router from "next/router";
 // import {useHistory} from
 import Link from "next/link";
 import { END } from "redux-saga";
-import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
+import { LOAD_MY_INFO_REQUEST, NOTIFICATION_REQUEST } from "../reducers/user";
 import axios from "axios";
 import SelectMap from "../component/map/selectMap";
 import wrapper from "../store/configureStore";
@@ -49,6 +49,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
+
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
+    });
+
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }

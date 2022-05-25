@@ -8,6 +8,7 @@ import {
   TOTAL_CALORIE_REQUEST,
   TOTAL_RUN_TIME_REQUEST,
   TOTAL_TIME_REQUEST,
+  NOTIFICATION_REQUEST,
 } from "../reducers/user";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
@@ -271,7 +272,7 @@ function myRecord() {
                 <>
                   {record.kind === "자유" ? (
                     <Button
-                      type="success"
+                      type="primary"
                       // style={{
                       //   backgroundColor: "#467ada",
                       //   color: "white",
@@ -328,6 +329,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch({
       type: TOTAL_BIKE_TIME_REQUEST,
     });
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
+    });
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
@@ -336,7 +340,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 export default myRecord;
 const Container = styled.div`
-  padding: 3% 5% 0 5%;
+  padding: 0 5%;
+
+  margin-top: 70px;
 
   h1 {
     font-size: 32px;

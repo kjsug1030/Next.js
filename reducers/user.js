@@ -1,9 +1,10 @@
 import produce from "immer";
 import { LOAD_MY_LOCATION_REQUEST } from "./map";
 import Router from "next/router";
+import { LIKE_REQUEST, LIKE_SUCCESS } from "./post";
 
 export const initialState = {
-  // profileBadge: null,
+  profileBadge: null,
   profile: null,
   otherProfile: null,
   weathers: null,
@@ -67,11 +68,14 @@ export const initialState = {
   profileEditLoading: false,
   profileEditDone: false,
   profileEditError: null,
-
   profileBadgeLoading: false,
   profileBadgeDone: false,
   profileBadgeError: null,
 };
+
+export const READ_NOTIFICATION_REQUEST = "READ_NOTIFICATION_REQUEST";
+export const READ_NOTIFICATION_SUCCESS = "READ_NOTIFICATION_SUCCESS";
+export const READ_NOTIFICATION_FAILURE = "READ_NOTIFICATION_FAILURE";
 
 export const PROFILE_BADGE_REQUEST = "PROFILE_BADGE_REQUEST";
 export const PROFILE_BADGE_SUCCESS = "PROFILE_BADGE_SUCCESS";
@@ -81,7 +85,7 @@ export const PROFILE_EDIT_REQUEST = "PROFILE_EDIT_REQUEST";
 export const PROFILE_EDIT_SUCCESS = "PROFILE_EDIT_SUCCESS";
 export const PROFILE_EDIT_FAILURE = "PROFILE_EDIT_FAILURE";
 
-export const CHECK_NOTIFICATION_REQUEST = "CHECK_NOTIFICATION_REQUEST";
+// export const CHECK_NOTIFICATION_REQUEST = "CHECK_NOTIFICATION_REQUEST";
 // export const CHECK_NOFICATION_SUCCESS='CHECK_NOFICATION_SUCCESS'
 
 export const NOTIFICATION_DELETE_REQUEST = "NOTIFICATION_DELETE_REQUEST";
@@ -216,6 +220,19 @@ export const OTHER_USER_TOTAL_TIME_FAILURE = "OTHER_USER_TOTAL_TIME_FAILURE";
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case LIKE_SUCCESS:
+        const otherPosts = draft.otherProfile.posts.find(
+          (v) => v.id === action.data.id
+        );
+        if (action.data.result.attached[0]) {
+          otherPosts.likeCheck = true;
+          otherPosts.likes.unshift(1);
+        } else {
+          otherPosts.likeCheck = false;
+          otherPosts.likes.shift();
+        }
+        break;
+
       case PROFILE_BADGE_REQUEST:
         draft.profileBadgeLoading = true;
         draft.profileBadgeDone = false;
@@ -230,17 +247,36 @@ const reducer = (state = initialState, action) => {
       case PROFILE_BADGE_FAILURE:
         draft.profileBadgeError = action.error;
         break;
-
-      case CHECK_NOTIFICATION_REQUEST:
-        draft.notificationCheckCount = action.data;
+      case READ_NOTIFICATION_REQUEST:
         break;
+      case READ_NOTIFICATION_SUCCESS:
+        draft.notification.find((v) => v.not_id === action.data).read = 1;
+        draft.notificationCheckCount = draft.notification.filter(
+          (v) => v.read === 0
+        ).length;
+
+        // draft.nofication.data=draft.nofication.data.filter((v)=>v.read===0)
+        // readNoficationComponent.read=1
+        // var changeNofication=
+        // draft.nofication.data.filter((v)=>v.not_id===action.data)=readNoficationComponent
+        break;
+
+      case READ_NOTIFICATION_FAILURE:
+        break;
+
+      // case CHECK_NOTIFICATION_REQUEST:
+      //   draft.notificationCheckCount = action.data;
+      //   break;
 
       case NOTIFICATION_DELETE_REQUEST:
         break;
       case NOTIFICATION_DELETE_SUCCESS:
-        draft.notification.data = draft.notification.data.filter(
+        draft.notification = draft.notification.filter(
           (v) => v.not_id !== action.data
         );
+        draft.notificationCheckCount = draft.notification.filter(
+          (v) => v.read === 0
+        ).length;
         break;
       // draft.me.followings = draft.me.followings.filter((v) => v.id !== action.data);
 
@@ -251,6 +287,9 @@ const reducer = (state = initialState, action) => {
         break;
       case NOTIFICATION_SUCCESS:
         draft.notification = action.data;
+        draft.notificationCheckCount = draft.notification.filter(
+          (v) => v.read === 0
+        ).length;
         break;
       case NOTIFICATION_FAILURE:
         break;
@@ -495,10 +534,10 @@ const reducer = (state = initialState, action) => {
         draft.logOutLoading = true;
         break;
       case LOGOUT_SUCCESS:
-        // window.location.href = "/LoginTest";
+        window.location.href = "/LoginTest";
 
         draft.logOutLoading = false;
-        draft.me = null;
+        // draft.me = null;
         break;
       case LOGOUT_FAIL:
         draft.logOutLoading = false;

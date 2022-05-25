@@ -21,8 +21,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             <Global />
             <Head>
               <meta charset="UTF-8" />
-              <title>ペースメーカー</title>
-              <link rel="icon" href="/riderFavicon.png" />
+              <title>PACE MAKER</title>
+              <link rel="icon" href="/PACE MAKER.png" />
             </Head>
             {page}
           </AppLayout>
@@ -36,8 +36,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <Global />
         <Head>
           <meta charset="UTF-8" />
-          <title>ペースメーカー</title>
-          <link rel="icon" href="/riderFavicon.png" />
+          <title>PACE MAKER</title>
+          <link rel="icon" href="/PACE MAKER.png" />
         </Head>
 
         <Component {...pageProps} />

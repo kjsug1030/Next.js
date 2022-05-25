@@ -20,15 +20,17 @@ const MMR = () => {
             <br />
             <br />
 
-            <p>메인뱃지</p>
+            {me.badge ? <p>메인뱃지</p> : <p>메인뱃지 X</p>}
             {/* <div>
             <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/179/179251.png" />
           </div> */}
 
-            {me.badge && (
+            {me.badge ? (
               <img className="badge" src={`/badge/${me.badge}.png`} />
+            ) : (
+              <img className="badge" src="/badge_g/start_g.png" />
             )}
           </>
         )}

@@ -3,7 +3,11 @@ import { Calendar, Card, Alert, Button, Modal } from "antd";
 import { moment } from "moment";
 import styled from "styled-components";
 import axios from "axios";
-import { ALL_GOAL_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
+import {
+  ALL_GOAL_REQUEST,
+  LOAD_MY_INFO_REQUEST,
+  NOTIFICATION_REQUEST,
+} from "../reducers/user";
 import { END } from "redux-saga";
 import wrapper from "../store/configureStore";
 import Purpose from "./purposeModal";
@@ -165,6 +169,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch({
       type: ALL_GOAL_REQUEST,
+    });
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
     });
 
     context.store.dispatch(END);

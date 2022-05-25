@@ -15,6 +15,7 @@ import {
   Avatar,
   Spin,
   Alert,
+  BackTop,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
@@ -34,6 +35,7 @@ import {
   OTHER_USER_TOTAL_RUN_TIME_REQUEST,
   OTHER_USER_TOTAL_TIME_REQUEST,
   OTHER_USER_BADGE_REQUEST,
+  NOTIFICATION_REQUEST,
 } from "../../reducers/user";
 import {
   LOAD_MORE_POST_REQUEST,
@@ -136,7 +138,7 @@ function userProfile() {
     {
       title: "총 라이딩 거리",
       distance: otherUserTotalRunTime.distance
-        ? otherUserTotalRunTime.distance + "km"
+        ? otherUserTotalRunTime.distance.toFixed(2) + "km"
         : 0 + "km",
     },
     {
@@ -227,6 +229,8 @@ function userProfile() {
             <GreyRightLine />
           </LeftDiv>
           <MidDiv>
+            {/* <BackTop visibilityHeight={70} /> */}
+
             <PostDiv>
               {otherProfile.posts.length > 0 ? (
                 otherProfile.posts
@@ -249,12 +253,6 @@ function userProfile() {
             </PostDiv>
           </MidDiv>
           <RightDiv>
-            {/* <div className="sports_count">
-              <div className="sports_content">
-                <h2>이번달 운동횟수</h2>
-                <p>5</p>
-              </div>
-            </div> */}
             <FollowerMMR mmr={otherProfile.mmr} />
             <ScoreDiv>
               <Row gutter={[16, 16]}>
@@ -269,10 +267,22 @@ function userProfile() {
                 ))}
               </Row>
             </ScoreDiv>
-            <FollowerPie
-              bikePercentage={otherProfile.bikePercentage}
-              runPercentage={otherProfile.runPercentage}
-            />
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <FollowerPie
+                  bikePercentage={otherProfile.bikePercentage}
+                  runPercentage={otherProfile.runPercentage}
+                />
+              </Col>
+              <Col span={12}>
+                {otherProfile.badge ? (
+                  <img className="badge" src={`/badge/${me.badge}.png`} />
+                ) : (
+                  <img className="main_badge" src="/badge_g/start_g.png" />
+                )}
+              </Col>
+            </Row>
+
             {/* <BadgeBook /> */}
           </RightDiv>
         </div>
@@ -374,6 +384,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       data: context.params.id,
     });
 
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
+    });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   }
@@ -575,6 +588,15 @@ const RightDiv = styled.div`
   .follow_pie {
     width: 400px;
     height: 400px;
+  }
+
+  .main_badge {
+    width: 160px;
+    height: 160px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
   }
 `;
 

@@ -29,7 +29,11 @@ import {
 import axios from "axios";
 import useInput from "../../hooks/useInput";
 
-import { LOAD_LOGIN_REQUEST, LOAD_MY_INFO_REQUEST } from "../../reducers/user";
+import {
+  LOAD_LOGIN_REQUEST,
+  LOAD_MY_INFO_REQUEST,
+  NOTIFICATION_REQUEST,
+} from "../../reducers/user";
 import styled from "styled-components"; // 추가
 
 function createPath() {
@@ -356,39 +360,45 @@ function createPath() {
   );
 }
 
-export async function getStaticPaths() {
-  const posts = await axios.get("http://15.165.229.120/api/gpsdata");
+// export async function getStaticPaths() {
+//   const posts = await axios.get("http://15.165.229.120/api/gpsdata");
 
-  var paths1 = posts.data.map((id) => ({
-    params: { id: id._id },
-  }));
+//   var paths1 = posts.data.map((id) => ({
+//     params: { id: id._id },
+//   }));
 
-  return {
-    paths: paths1,
-    // paths:[  { params: { id: '62256147dc2958292cb17110' } },],
-    fallback: false,
-  };
-}
+//   return {
+//     paths: paths1,
+//     // paths:[  { params: { id: '62256147dc2958292cb17110' } },],
+//     fallback: false,
+//   };
+// }
 
-export const getStaticProps = wrapper.getStaticProps(async (context) => {
-  const cookie = context.req ? context.req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: LOAD_CREATEMAP_REQUEST,
+      data: context.params.id,
+    });
+
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
+    });
+
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
   }
-
-  context.store.dispatch({
-    type: LOAD_MY_INFO_REQUEST,
-  });
-
-  context.store.dispatch({
-    type: LOAD_CREATEMAP_REQUEST,
-    data: context.params.id,
-  });
-
-  context.store.dispatch(END);
-  await context.store.sagaTask.toPromise();
-});
+);
 
 export default createPath;
 
@@ -402,7 +412,7 @@ const mapContainerStyle = {
 
 const Container = styled.div`
   padding: 0 5%;
-  padding-top: 70px;
+  margin-top: 100px;
   width: 100%;
   // position: relative;
 `;

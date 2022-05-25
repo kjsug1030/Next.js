@@ -104,6 +104,12 @@ const ListWrapper = styled(List)`
   .ant-list-item:last-child {
     border-bottom: 1px solid #f0f0f0 !important;
   }
+
+  .ant-list-empty-text {
+    display: inline-block;
+    width: 100%;
+    margin-top: 100px;
+  }
 `;
 
 const TitleDiv = styled.div`

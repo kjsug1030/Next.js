@@ -123,7 +123,7 @@ const signin = () => {
                     LINE으로 시작하기
                   </button>
                 </LineDiv>
-                <GoogleDiv>
+                <GoogleDiv style={{ borderRadius: "7px" }}>
                   <GooBtn
                     type="light"
                     label="Google로 시작하기"
@@ -140,7 +140,7 @@ const signin = () => {
             </FormWrapper>
           </FormDiv>
           <QuestionDiv>
-            <div style={{ marginBottom: "10px" }}>
+            <div>
               <Link href="/findId">
                 <a>계정을 잊으셨나요?</a>
               </Link>
@@ -324,7 +324,7 @@ const LineDiv = styled.div`
 
 const GooBtn = styled(GoogleButton)`
   width: 347px !important;
-  border-radius: 0 !important;
+  border-radius: 7px !important;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%) !important;
   font-family: "Nunito Sans", sans-serif !important;
   margin: 0 !important;
@@ -342,6 +342,8 @@ const GoogleDiv = styled.div`
   position: relative;
   display: inline-block;
   width: 350px;
+  // border-radius: 7px !important;
+  margin-top: 5px;
 `;
 // 여기까지
 

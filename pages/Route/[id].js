@@ -350,7 +350,7 @@ function oneRoute() {
                           margin: "0 auto",
                         }}
                       >
-                        <Avatar src="kurumi.jpg" />
+                        <Avatar src={b.user.profile} />
                         <p>{b.user.name}</p>
                       </div>
                     }
@@ -413,6 +413,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+    });
+
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
     });
 
     context.store.dispatch(END);

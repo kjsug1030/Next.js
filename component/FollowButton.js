@@ -44,12 +44,11 @@ function FollowButton({ post }) {
 export default FollowButton;
 
 const Container = styled.div`
-  width: 100%;
-  position: absolute;
+  display: inline-block;
+  position: relative;
   left: 50%;
-  bottom: 15px;
-  bottom: 5px;
-  transform: translateX(-25%);
+  transform: translateX(-50%);
+  margin: 0 auto;
 
   .ant-btn {
     width: 90px;

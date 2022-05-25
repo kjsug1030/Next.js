@@ -33,11 +33,28 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     });
   }
 
-  const now = moment();
-  const day = now.format("DD");
+  const now = new Date();
+  const nowYear = now.getFullYear();
+  let nowMonth = now.getMonth() + 1;
 
-  const nextDay = now.add(1, "d").format("DD");
-  const month = now.format("MM");
+  if ((nowMonth + "").length < 2) {
+    nowMonth = "0" + nowMonth;
+  }
+
+  const nowDay = now.getDate();
+  if ((nowDay + "").length < 2) {
+    nowDay = "0" + nowDay;
+  }
+
+  let nowEndDay = now.getDate() + 1;
+  if ((nowEndDay + "").length < 2) {
+    nowEndDay = "0" + nowEndDay;
+  }
+
+  // const day = now.format("DD");
+
+  // const nextDay = now.add(1, "d").format("DD");
+  // const month = now.format("MM");
 
   const { goalpurpose } = useSelector((state) => state.user);
 
@@ -64,16 +81,32 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     console.log(date, dateString);
   }
 
+  const years = [];
+
+  for (let i = now.getFullYear(); i < 2030; i++) {
+    years.push(i);
+  }
+
   const months = [];
 
   for (let i = 1; i <= 12; i++) {
-    months.push(i);
+    if (i < 10) {
+      // 날짜가 2자리로 나타나야 했기 때문에 1자리 월에 0을 붙혀준다
+      months.push("0" + i.toString());
+    } else {
+      months.push(i.toString());
+    }
   }
 
   const days = [];
 
   for (let i = 1; i <= 31; i++) {
-    days.push(i);
+    if (i < 10) {
+      // 날짜가 2자리로 나타나야 했기 때문에 1자리 월에 0을 붙혀준다
+      days.push("0" + i.toString());
+    } else {
+      days.push(i.toString());
+    }
   }
 
   const [title, onChangeTitle] = useInput("");
@@ -85,17 +118,16 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     setEvent(v);
   };
 
-  const nowYear = moment();
+  // const nowYear = moment();
 
   const [start, setStart] = useState({
     year: nowYear,
-    month: "",
-    day: "",
+    month: nowMonth,
+    day: nowDay,
   });
 
   const onChangeStartYear = (date) => {
-    const dateString = moment(date);
-    setStart({ ...start, year: dateString });
+    setStart({ ...start, year: date });
   };
 
   const onChangeStartMonth = (e) => {
@@ -108,13 +140,12 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
 
   const [end, setEnd] = useState({
     year: nowYear,
-    month: "",
-    day: "",
+    month: nowMonth,
+    day: nowEndDay,
   });
 
   const onChangeEndYear = (date) => {
-    const dateString = moment(date).format("YYYY");
-    setEnd({ ...end, year: dateString });
+    setEnd({ ...end, year: date });
   };
 
   const onChangeEndMonth = (e) => {
@@ -190,19 +221,19 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
 
           <SmallTitle>시작날짜</SmallTitle>
           <SpaceWrapper>
-            <DatePicker
-              picker="year"
-              onChange={onChangeStartYear}
+            <Select
+              name="year"
               placeholder="년도"
               value={start.year}
-            />
-            {/* <Select name="year" placeholder="년도">
-              <Option>{nowYear}</Option>
-            </Select> */}
-
+              onChange={onChangeStartYear}
+            >
+              {years.map((years) => (
+                <Option key={years}>{years}</Option>
+              ))}
+            </Select>
             <Select
               name="month"
-              value={month}
+              value={start.month}
               placeholder="월"
               onChange={onChangeStartMonth}
             >
@@ -212,7 +243,7 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             </Select>
             <Select
               name="day"
-              value={day}
+              value={start.day}
               placeholder="일"
               onChange={onChangeStartDay}
             >
@@ -223,16 +254,20 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
           </SpaceWrapper>
           <SmallTitle>끝나는날짜</SmallTitle>
           <SpaceWrapper>
-            <DatePicker
-              picker="year"
-              value={nowYear}
-              onChange={onChangeEndYear}
+            <Select
+              name="year"
               placeholder="년도"
-            />
+              value={end.year}
+              onChange={onChangeEndYear}
+            >
+              {years.map((years) => (
+                <Option key={years}>{years}</Option>
+              ))}
+            </Select>
 
             <Select
               name="month"
-              value={month}
+              value={end.month}
               placeholder="월"
               onChange={onChangeEndMonth}
             >
@@ -242,7 +277,7 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             </Select>
             <Select
               name="day"
-              value={nextDay}
+              value={end.day}
               placeholder="일"
               onChange={onChangeEndDay}
             >
@@ -297,7 +332,7 @@ const SpaceWrapper = styled(Space)`
   }
 
   .ant-select-single {
-    width: 125px;
+    width: 128px;
     border-radius: 5px;
     // color: rgba(0, 0, 0, 0.4);
   }

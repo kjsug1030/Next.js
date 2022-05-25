@@ -9,8 +9,9 @@ import {
   USER_SEARCH_REQUEST,
   LOAD_MY_INFO_REQUEST,
   OTHER_PROFILE_REQUEST,
+  NOTIFICATION_REQUEST,
 } from "../reducers/user";
-import { Card, Input, Avatar, Button, Row, Col } from "antd";
+import { Card, Input, Avatar, Button, Row, Col, Result } from "antd";
 import FollowButton from "../component/FollowButton";
 import userProfile from "./User/[id]";
 import { useRouter } from "next/router";
@@ -60,57 +61,55 @@ function userSearch() {
         style={{ marginBottom: 40 }}
       />
       <Row gutter={32}>
-        {/* {searchUsers ? ( */}
-        {
-          searchUsers.map((m) => (
-            <Col xs={24} sm={12} md={8} xl={6} style={{ padding: "0 30px" }}>
-              <Card className="card_wrapper" hoverable>
-                <TitleCard />
-                <ProfileCard>
-                  <ProfileDiv className="profile_div">
-                    <Avatar size={160} src={m.profile} />
-                    {/* <Avatar size={160} src="user.png" /> */}
-                    <h2 className="user_name">{m.name}</h2>
-                    <ProfileText className="profile_text">
-                      <p>자기소개 : {m.introduce}</p>
-                      {/* <p>생일 : {m.birth}</p> */}
-                      {/* <p>활동지역 : {m.location}</p> */}
-                      <div className="follow">
-                        <p className="follower">생일 : {m.birth}</p>
-                        <p>성별 : {m.sex}</p>
-                      </div>
-                      <div className="follow">
-                        <p className="follower">활동지역 : {m.location}</p>
-                        <p>MMR : {m.mmr}</p>
-                      </div>
-                    </ProfileText>
-                  </ProfileDiv>
-                  <FollowButton className="follower_btn" post={m} />
-                </ProfileCard>
-              </Card>
-              {/* <Button>
+        {searchUsers[0]
+          ? // {
+            searchUsers.map((m) => (
+              <Col xs={24} sm={12} md={8} xl={6} style={{ padding: "0 30px" }}>
+                <Card className="card_wrapper" hoverable>
+                  <TitleCard />
+                  <ProfileCard>
+                    <ProfileDiv className="profile_div">
+                      <Avatar size={160} src={m.profile} />
+                      {/* <Avatar size={160} src="user.png" /> */}
+                      <h2 className="user_name">{m.name}</h2>
+                      <ProfileText className="profile_text">
+                        <p>자기소개 : {m.introduce}</p>
+                        {/* <p>생일 : {m.birth}</p> */}
+                        {/* <p>활동지역 : {m.location}</p> */}
+                        <div className="follow">
+                          <p className="follower">생일 : {m.birth}</p>
+                          <p>성별 : {m.sex}</p>
+                        </div>
+                        <div className="follow">
+                          <p className="follower">활동지역 : {m.location}</p>
+                          <p>MMR : {m.mmr}</p>
+                        </div>
+                      </ProfileText>
+                    </ProfileDiv>
+                    <FollowButton className="follower_btn" post={m} />
+                  </ProfileCard>
+                </Card>
+                {/* <Button>
               {" "}
               <a href={"User/" + m.id}>상세보기</a>
             </Button> */}
-              {/* <FollowButton className="follower_btn" post={m} /> */}
-            </Col>
-          ))
-          // ) : (
-          //   <Result
-          //     status="404"
-          //     title="해당하는 유저의 정보를 찾을 수 없습니다"
-          //     subTitle="이름이 헷갈리지는 않았는지 확인해주세요"
-          //     style={{
-          //       width: "100%",
-          //       margin: "65px 0",
-          //       position: "absolute",
-          //       top: "50%",
-          //       left: "50%",
-          //       transform: "translate(-50%,-50%)",
-          //     }}
-          //   />
-          // )
-        }
+                {/* <FollowButton className="follower_btn" post={m} /> */}
+              </Col>
+            ))
+          : // <Result
+            //   status="404"
+            //   title="해당하는 유저의 정보를 찾을 수 없습니다"
+            //   subTitle="이름이 헷갈리지는 않았는지 확인해주세요"
+            //   style={{
+            //     width: "100%",
+            //     margin: "65px 0",
+            //     position: "absolute",
+            //     top: "50%",
+            //     left: "50%",
+            //     transform: "translate(-50%,-50%)",
+            //   }}
+            // />
+            null}
       </Row>
     </Container>
   );
@@ -125,6 +124,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+    });
+    context.store.dispatch({
+      type: NOTIFICATION_REQUEST,
     });
 
     context.store.dispatch(END);

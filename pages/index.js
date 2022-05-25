@@ -55,7 +55,7 @@ function index() {
 
   useEffect(() => {
     Modal.destroyAll();
-  });
+  }, []);
 
   const { searchMap } = useSelector((state) => state.map);
   const { me, notification, notificationCheckCount } = useSelector(
@@ -79,14 +79,6 @@ function index() {
     console.log(isModal);
   };
 
-  // const [notificationCount, setNotificationCount] = useState(0);
-
-  // const [checkNotificationCount, setCheckNotificationCount] = useState(0);
-
-  // const [notificationLength, setNotificationLength] = useState(
-  //   notification.data.length
-  // );
-  // const originalNotificationLength = notification.data.length;
   const dispatch = useDispatch();
 
   const checkNotificationCountfunction = () => {
@@ -101,25 +93,6 @@ function index() {
     // setCheckNotificationCount(notification.data.length)//새로고침하면저장이안됨
     setNotificationCount(0);
   };
-
-  // nickName=me.name
-
-  // useEffect(() => {
-  //   if (!localStorage.getItem(me.name)) {
-  //     localStorage.setItem(me.name, 0);
-  //   }
-
-  //   console.log("fd", localStorage);
-  //   console.log("length", notification.data.length);
-  //   console.log("check", localStorage.originalCount);
-
-  //   if (notification.data.length - localStorage.getItem(me.name) > 0) {
-  //     setNotificationCount(
-  //       notificationCount +
-  //         (notification.data.length - localStorage.getItem(me.name))
-  //     );
-  //   }
-  // }, []);
 
   useEffect(() => {
     function onScroll() {
@@ -161,9 +134,8 @@ function index() {
   return (
     <Container>
       <LeftDiv>
-        {/* <GreyLine /> */}
         <PostDiv>
-          <BackTop />
+          <BackTop visibilityHeight={70} />
           {mainPosts.data.length !== 0 ? (
             mainPosts.data.map((post) => (
               <>
@@ -174,11 +146,11 @@ function index() {
           ) : (
             <Empty description="포스트가 존재하지 않습니다" />
           )}
-          {/* {loadMorePostErrorBolean ? null : (
+          {loadMorePostErrorBolean ? null : (
             <LoadingOutlined
               style={{ zIndex: "5", fontSize: 40, marginLeft: 250 }}
             />
-          )} */}
+          )}
         </PostDiv>
 
         <GreyRightLine />
@@ -190,8 +162,6 @@ function index() {
             width: "100%",
             position: "sticky",
             top: "15%",
-            // right: 0,
-            // padding: 12,
           }}
         >
           <TopDiv>
@@ -199,37 +169,6 @@ function index() {
               weekRecord={weekRecord}
               weekBikeRecord={weekBikeRecord}
             />
-
-            {/* <Badge count={notificationCount}>
-              <Button onClick={() => checkNotificationCountfunction()}>
-                알림확인하기
-              </Button>
-            </Badge>
-            {notification
-              ? notification.data.map((m) => (
-                  <>
-                    <Card>
-                      {m.not_message}
-                      {m.not_type === "followRequest" ? (
-                        <Button
-                          primary
-                          onClick={() => followAccept(m.target_mem_id)}
-                        >
-                          요청수락
-                        </Button>
-                      ) : null}
-
-                      <Button
-                        danger
-                        onClick={() => notificationDelete(m.not_id)}
-                      >
-                        삭제
-                      </Button>
-                    </Card>
-                    <br></br>
-                  </>
-                ))
-              : null} */}
 
             <MMR />
           </TopDiv>
