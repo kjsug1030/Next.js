@@ -76,7 +76,7 @@ const Target = () => {
           />
           <div className="right_div">
             <p className="des">{weathers.weather[0].description}</p>
-            {weathers.name === "Daegu" ? <p>대구광역시</p> : null}
+            {weathers.name === "Daegu" ? <p>경상북도 칠곡군</p> : null}
             {/* {weathers.name} */}
           </div>
 

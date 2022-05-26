@@ -212,7 +212,7 @@ function MyNote() {
           overlay={
             <Menu mode="horizontal">
               {purposeProgress.run.map((v, i) => (
-                <Menu.Item value={i} onClick={() => setValue(i)}>
+                <Menu.Item value={i} onClick={() => setRunValue(i)}>
                   {v.title}
                 </Menu.Item>
               ))}

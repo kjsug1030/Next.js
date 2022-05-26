@@ -6,7 +6,16 @@ import { LIKE_REQUEST, LIKE_SUCCESS } from "./post";
 export const initialState = {
   profileBadge: null,
   profile: null,
-  otherProfile: null,
+  otherProfile: {
+    id: 0,
+    posts: [
+      {
+        id: 0,
+        likeCheck: false,
+        likes: [],
+      },
+    ],
+  },
   weathers: null,
   goalpurpose: null,
   notification: null,
@@ -224,12 +233,14 @@ const reducer = (state = initialState, action) => {
         const otherPosts = draft.otherProfile.posts.find(
           (v) => v.id === action.data.id
         );
-        if (action.data.result.attached[0]) {
-          otherPosts.likeCheck = true;
-          otherPosts.likes.unshift(1);
-        } else {
-          otherPosts.likeCheck = false;
-          otherPosts.likes.shift();
+        if (otherPosts) {
+          if (action.data.result.attached[0]) {
+            otherPosts.likeCheck = true;
+            otherPosts.likes.unshift(1);
+          } else {
+            otherPosts.likeCheck = false;
+            otherPosts.likes.shift();
+          }
         }
         break;
 

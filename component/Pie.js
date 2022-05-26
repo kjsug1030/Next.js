@@ -25,7 +25,8 @@ const Pie = ({ userRate }) => {
       {
         label: ["라이딩", "러닝"],
         data: [userRateRidding, userRateRunning],
-        backgroundColor: ["#0288D1", "#BBDEFB"],
+        backgroundColor: ["rgb(53, 162, 235,0.8)", "rgb(75, 192, 192, 0.8)"],
+        // "#BBDEFB",
       },
     ],
   };

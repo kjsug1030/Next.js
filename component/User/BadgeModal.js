@@ -4,10 +4,22 @@ import { Modal, Row, Col, Button, Tabs } from "antd";
 
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { PROFILE_BADGE_REQUEST } from "../../reducers/user";
 
 const badgeModal = ({ isModal, openModal, otherProfile }) => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const updateBadge = (e) => {
+    e.preventDefault;
+
+    dispatch({
+      type: PROFILE_BADGE_REQUEST,
+      data: e.target.value,
+    });
+
+    window.location.reload();
+  };
 
   const altitude = [
     ["/badge_g/altitude1_g.png", "/badge/altitude1.png"],
@@ -30,6 +42,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
     ["/badge_g/running3_g.png", "/badge/running3.png"],
   ];
   const start = ["/badge_g/start_g.png", "/badge/first_exercise.png"];
+
+  const reload = () => {
+    window.location.reload();
+  };
 
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
@@ -62,6 +78,12 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                       <h3>목표달성</h3>
                     </span>
                     <span className="text">첫운동 실시</span>
+                    <span
+                      className="profile_badge"
+                      onClick={() => profileBadge("first_exercise")}
+                    >
+                      대표뱃지설정
+                    </span>
                   </div>
                 </div>
               )}

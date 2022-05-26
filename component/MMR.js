@@ -19,8 +19,8 @@ const MMR = () => {
 
             <br />
             <br />
-
-            {me.badge ? <p>메인뱃지</p> : <p>메인뱃지 X</p>}
+            <br />
+            {/* {me.badge ? <p>메인뱃지</p> : <p>메인뱃지없음</p>} */}
             {/* <div>
             <img src="https://cdn-icons-png.flaticon.com/512/473/473405.png" />
             <img src="https://cdn-icons-png.flaticon.com/512/473/473421.png" />
@@ -29,6 +29,8 @@ const MMR = () => {
 
             {me.badge ? (
               <img className="badge" src={`/badge/${me.badge}.png`} />
+            ) : me.badge === "" ? (
+              <img className="badge" src="/badge_g/start_g.png" />
             ) : (
               <img className="badge" src="/badge_g/start_g.png" />
             )}
@@ -85,6 +87,14 @@ const Container = styled.div`
 
   p {
     font-size: 16px;
+    position: relative;
+    top: 120px;
+    left: 15%;
+    color: black;
+    font-weight: bold;
+    z-index: 3;
+    // background: #fff;
+    // border: 1px solid #467ada;
   }
 
   span {
@@ -102,7 +112,10 @@ const Container = styled.div`
   }
 
   .badge {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+    position: relative;
+    // bottom: 10px;
+    left: 10px;
   }
 `;

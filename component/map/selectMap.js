@@ -128,9 +128,9 @@ function selectMap({}) {
       });
     }
 
-    setTimeout(() => {
-      runningSelectMap();
-    }, 1000);
+    // setTimeout(() => {
+    //   runningSelectMap();
+    // }, 1000);
   }, [loadMap]);
 
   const handleOnLoad = (map) => {

@@ -107,7 +107,7 @@ const Notification = () => {
                   {v.read === 0 ? (
                     <List.Item>
                       <List.Item.Meta
-                        avatar={<Avatar src={v.profile} />}
+                        avatar={<Avatar src={v.profile.profile} />}
                         description={
                           <div style={{ color: "black" }}>
                             <p>{v.not_message}.</p>{" "}
@@ -148,7 +148,7 @@ const Notification = () => {
                       style={{ background: "#f2f7fe" }} // 읽음처리
                     >
                       <List.Item.Meta
-                        avatar={<Avatar src={v.profile} />}
+                        avatar={<Avatar src={v.profile.profile} />}
                         description={
                           <div>
                             <p>{v.not_message}.</p>{" "}

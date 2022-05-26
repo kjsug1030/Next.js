@@ -181,6 +181,7 @@ const profileEdit = ({ visible, showEditProfile }) => {
     // }, 2000);
     return () => clearTimeout(timer);
   };
+  
 
   const onSubmit = async (e) => {
     e.preventDefault;
