@@ -15,7 +15,7 @@ const MMR = () => {
       <Card hoverable>
         {me && (
           <>
-            <h1>MMR : {me.mmr}</h1>
+            <h1>운동점수 : {me.mmr}</h1>
 
             <br />
             <br />

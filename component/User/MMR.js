@@ -8,7 +8,7 @@ const FollowerMMR = () => {
   return (
     <Container>
       <Card hoverable>
-        <h1>MMR : {me.mmr}</h1>
+        <h1>운동점수 : {me.mmr}</h1>
         {/* <p>어제로부터 스코어 변화</p>
         <div>
           <span style={{ color: "#fff" }}>+</span>
