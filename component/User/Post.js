@@ -83,11 +83,11 @@ const FollowerPost = ({ post, user }) => {
           hoverable
         >
           <Row gutter={[16, 16]}>
-            <Col span={16}>
+            <Col span={12}>
               <ImageCarousel post={post} />
             </Col>
 
-            <Col span={8}>
+            <Col span={12}>
               <RightCol>
                 <Card.Meta
                   style={{ position: "relative" }}
@@ -112,7 +112,7 @@ const FollowerPost = ({ post, user }) => {
                 >
                   <p>제목 : {post.title}</p>
                   <p>평균속도 : {post.average_speed.toFixed(2)} km/h</p>
-                  <p>뛴거리 : {post.distance} km</p>
+                  <p>운동거리 : {post.distance} km</p>
                   <p>소모 칼로리 : {post.calorie} cal</p>
                 </SpaceDiv>
                 <HashTag>

@@ -29,7 +29,7 @@ import {
   FOLLOWING_REQUEST,
   UNFOLLOWING_REQUEST,
   FOLLOW_CANCEL_REQUEST,
-  FOLLOW_NOFICATION_REQUEST,
+  FOLLOW_NOTIFICATION_REQUEST,
   OTHER_USER_TOTAL_BIKE_TIME_REQUEST,
   OTHER_USER_TOTAL_CALORIE_REQUEST,
   OTHER_USER_TOTAL_RUN_TIME_REQUEST,
@@ -103,7 +103,7 @@ function userProfile() {
       });
     } else {
       dispatch({
-        type: FOLLOW_NOFICATION_REQUEST,
+        type: FOLLOW_NOTIFICATION_REQUEST,
         data: otherProfile.id,
       });
     }
@@ -151,11 +151,11 @@ function userProfile() {
 
   return (
     <Container>
-      <BadgeModal
+      {/* <BadgeModal
         isModal={isModal}
         openModal={openModal}
         setIsModal={setIsModal}
-      />
+      /> */}
       <div className="flex_div">
         <Avatar size={160} src={otherProfile.profile} />
         <div className="profile_wrapper">
@@ -198,15 +198,20 @@ function userProfile() {
 
         {otherProfile.followCheck === 1 && (
           <div className="follow_chart">
-            <img src="/badgeBook2.png" onClick={showModal} />
-            <p className="badge" onClick={showModal}>
+            {/* <img src="/badgeBook2.png" onClick={showModal} /> */}
+            {otherProfile.badge ? (
+              <img src={`/badge/${otherProfile.badge}.png`} />
+            ) : (
+              <img src="/badge_g/start_g.png" />
+            )}
+            {/* <p className="badge" onClick={showModal}>
               Badge
-            </p>
-            <BadgeModal
+            </p> */}
+            {/* <BadgeModal
               otherProfile={otherProfile}
               isModal={isModal}
               openModal={openModal}
-            />
+            /> */}
             {/* <FollowerPie className="follow_pie" userRate={userRate} /> */}
             {/* <BadgeBook /> */}
             <SportsChart
@@ -275,11 +280,24 @@ function userProfile() {
                 />
               </Col>
               <Col span={12}>
-                {otherProfile.badge ? (
+                {/* {otherProfile.badge ? (
                   <img className="badge" src={`/badge/${me.badge}.png`} />
                 ) : (
                   <img className="main_badge" src="/badge_g/start_g.png" />
-                )}
+                )} */}
+                <img
+                  // className="badge"
+                  src="/badgeBook2.png"
+                  onClick={showModal}
+                />
+                <p className="badge" onClick={showModal}>
+                  Badge
+                </p>
+                <BadgeModal
+                  otherProfile={otherProfile}
+                  isModal={isModal}
+                  openModal={openModal}
+                />
               </Col>
             </Row>
 
@@ -301,38 +319,6 @@ function userProfile() {
     </Container>
   );
 }
-
-// export async function getStaticPaths() {
-//   const posts = await axios.get("https://2yubi.shop/api/allUser");
-
-//   var paths1 = posts.data.map((id) => ({
-//     params: { id: id.id.toString()},
-//   }));
-
-//   return {
-//     paths: paths1,
-//     // paths:[  { params: { id: '5' } },],
-//     fallback: false,
-//   };
-// }
-
-// export const getStaticProps = wrapper.getStaticProps(async (context) => {
-//   const cookie = context.req ? context.req.headers.cookie : "";
-//   axios.defaults.headers.Cookie = "";
-//   if (context.req && cookie) {
-//     axios.defaults.headers.Cookie = cookie;
-//   }
-//   context.store.dispatch({
-//     type: LOAD_MY_INFO_REQUEST,
-//   });
-
-//   context.store.dispatch({
-//     type: OTHER_PROFILE_REQUEST,
-//     data: context.params.id,
-//   });
-//   context.store.dispatch(END);
-//   await context.store.sagaTask.toPromise();
-// });
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
@@ -455,11 +441,6 @@ const Container = styled.div`
       width: 165px;
       height: 165px;
       margin-right: 10%;
-    }
-
-    img:hover {
-      // border: 4px solid #467ada;
-      cursor: pointer;
     }
 
     p {
@@ -590,13 +571,43 @@ const RightDiv = styled.div`
     height: 400px;
   }
 
-  .main_badge {
-    width: 160px;
-    height: 160px;
+  // .main_badge {
+  //   width: 160px;
+  //   height: 160px;
+  //   position: relative;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -30%);
+  // }
+
+  .badge {
+    position: absolute;
+    bottom: -20px;
+    left: 37%;
+    // transform: translateX(-50%);
+    color: #fff;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  img {
+    // width: 165px;
+    // height: 165px;
+    width: 200px;
+    height: 200px;
     position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -30%);
+    top: 18%;
+    left: 5%;
+  }
+
+  img:hover {
+    // border: 4px solid #467ada;
+    cursor: pointer;
   }
 `;
 

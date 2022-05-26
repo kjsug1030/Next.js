@@ -452,6 +452,11 @@ const Container = styled.div`
   .ant-card-body {
     padding: 0;
   }
+
+  .ant-btn-primary {
+    background: #467ada;
+    border: 1px solid #467ada;
+  }
 `;
 
 const ColorCard = styled(Card)`
@@ -475,8 +480,9 @@ const FormWrapper = styled.div`
   margin-top: 15px;
 
   .btn1 {
-    position: absolute;
-    right: 10px;
+    float: right;
+    margin-right: 6px;
+    margin-bottom: 16px;
   }
 `;
 

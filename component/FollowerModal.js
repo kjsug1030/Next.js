@@ -81,8 +81,10 @@ const ModalWrapper = styled(Modal)`
 
 const ListWrapper = styled(List)`
   width: 400px;
-  max-height: 450px;
+  height: 395px;
   overflow: auto;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 
   .ant-list-item:hover {
     background: #f0f0f0;

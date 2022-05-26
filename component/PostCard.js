@@ -145,7 +145,7 @@ const PostCard = ({ post }) => {
                   {/* 함께 달린 유저ID가 넘어오면 함께달린 유저도 표시 */}
                   {/* <p>내가 함께달린 유저ID : {post.opponent_id}</p> */}
                   <p>평균속도 : {post.average_speed} km/h</p>
-                  <p>뛴거리 : {post.distance} km</p>
+                  <p>운동거리 : {post.distance} km</p>
                   <p>소모 칼로리 : {post.calorie} cal</p>
                 </SpaceDiv>
                 <HashTag>

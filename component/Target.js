@@ -46,29 +46,6 @@ const Target = () => {
     return todayLabel;
   };
 
-  const selectIcon = () => {
-    let iconId =
-      weathers.weather[0].id === 800
-        ? 0
-        : (parseInt(weathers.weather[0].id) / 100).toFixed(0);
-    switch (iconId) {
-      case "0":
-        return <img className="icon" src="/weather/day_clear.png" />;
-      case "2":
-        return <TiWeatherStormy size="6rem" color="black" />;
-      case "3":
-        return <TiWeatherShower size="6rem" color="blue" />;
-      case "5":
-        return <TiWeatherDownpour size="6rem" color="navy" />;
-      case "6":
-        return <TiWeatherSnow size="6rem" color="white" />;
-      case "7":
-        return <BsCloudFog size="6rem" color="white" />;
-      case "8":
-        return <TiWeatherCloudy size="6rem" color="white" />;
-    }
-  };
-
   return (
     <Container>
       <Card hoverable>
@@ -78,10 +55,7 @@ const Target = () => {
         {weathers.weather[0].id === 800 &&
         weathers.weather[0].icon === "01d" ? (
           // <img className="img_icon" src="/sunny.png" />
-          <img
-            className="img_icon"
-            src="https://cdn-icons.flaticon.com/png/512/2107/premium/2107060.png?token=exp=1653355595~hmac=70b8bb5c53754d4165907fca4916e786"
-          />
+          <img className="img_icon" src="/sunrise.png" />
         ) : weathers.weather[0].icon === "01n" ? (
           <img className="img_icon" src="/moon.png" />
         ) : weathers.weather[0].icon === "04d" || "04d" ? (
@@ -97,7 +71,8 @@ const Target = () => {
           </p>
           <img
             className="temp_img"
-            src="https://cdn-icons-png.flaticon.com/512/808/808569.png"
+            // src="https://cdn-icons-png.flaticon.com/512/808/808569.png"
+            src="/circle.png"
           />
           <div className="right_div">
             <p className="des">{weathers.weather[0].description}</p>

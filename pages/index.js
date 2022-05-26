@@ -148,7 +148,12 @@ function index() {
           )}
           {loadMorePostErrorBolean ? null : (
             <LoadingOutlined
-              style={{ zIndex: "5", fontSize: 40, marginLeft: 250 }}
+              style={{
+                zIndex: "5",
+                fontSize: 40,
+                position: "relative",
+                left: "50%",
+              }}
             />
           )}
         </PostDiv>
@@ -371,7 +376,7 @@ const TopDiv = styled.div`
 `;
 
 const BottomDiv = styled.div`
-  margin-top: 7%;
+  margin-top: 9%;
   display: flex;
   justify-content: space-between;
   width: 100%;

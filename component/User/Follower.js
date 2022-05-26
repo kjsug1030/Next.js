@@ -85,4 +85,8 @@ const CardWrapper = styled(Card)`
       height: 45px;
     }
   }
+
+  .ant-list-item:last-child {
+    border-bottom: 1px solid #f0f0f0 !important;
+  }
 `;
