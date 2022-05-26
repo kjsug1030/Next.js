@@ -52,7 +52,7 @@ const Container = styled.div`
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
     color: #fff;
     margin: 0;
