@@ -30,9 +30,9 @@ function FollowButton({ post }) {
   return (
     <Container>
       {isFollowing ? (
-        <Button className="follow_btn">언팔로우</Button>
+        <Button className="follow_btn">팔로잉O</Button>
       ) : (
-        <Button className="follow_btn">팔로우</Button>
+        <Button className="follow_btn">팔로잉X</Button>
       )}
       <a href={"User/" + post.id}>
         <Button>프로필</Button>

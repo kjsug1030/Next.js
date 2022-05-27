@@ -342,7 +342,7 @@ function oneRoute() {
 
                   <Popover
                     placement="topLeft"
-                    title="Rider"
+                    title="Player"
                     content={
                       <div
                         style={{

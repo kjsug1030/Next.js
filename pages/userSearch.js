@@ -48,7 +48,7 @@ function userSearch() {
 
   return (
     <Container>
-      <h1>유저검색</h1>
+      <h1>유저탐색</h1>
       <Search
         //   loading={searchmapLoading}
         onPressEnter={handleButton}

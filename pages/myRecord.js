@@ -144,7 +144,7 @@ function myRecord() {
 
   return (
     <Container>
-      <h1>내 종합 운동기록</h1>
+      <h1>종합 운동기록</h1>
       <CardDiv>
         <Card>
           <ScoreDiv>

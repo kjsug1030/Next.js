@@ -16,6 +16,7 @@ import {
   Spin,
   Alert,
   BackTop,
+  Empty,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
@@ -622,7 +623,7 @@ const PostDiv = styled.div`
 
   .ant-empty {
     position: absolute;
-    top: 50%;
+    top: 290px;
     left: 50%;
     transform: translate(-50%, -80%);
   }

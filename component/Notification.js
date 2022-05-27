@@ -92,11 +92,17 @@ const Notification = () => {
     });
   };
 
-  ///
+  const [visible, setVisible] = useState(false);
+
+  const handleVisibleChange = (data) => {
+    setVisible(data);
+  };
 
   return (
     <Container>
       <Dropdown
+        visible={visible}
+        onVisibleChange={handleVisibleChange}
         overlay={
           <CardWrapper>
             <ListWrapper
@@ -105,7 +111,7 @@ const Notification = () => {
               renderItem={(v) => (
                 <>
                   {v.read === 0 ? (
-                    <List.Item>
+                    <List.Item onClick={() => noficationRead(v.not_id)}>
                       <List.Item.Meta
                         avatar={<Avatar src={v.profile.profile} />}
                         description={
@@ -132,13 +138,13 @@ const Notification = () => {
                             >
                               삭제
                             </Button>
-                            <Button
+                            {/* <Button
                               size="small"
                               onClick={() => noficationRead(v.not_id)}
                               style={{ marginLeft: 3 }}
                             >
                               확인하기
-                            </Button>
+                            </Button> */}
                           </div>
                         }
                       />
@@ -148,6 +154,7 @@ const Notification = () => {
                       style={{ background: "#f2f7fe" }} // 읽음처리
                     >
                       <List.Item.Meta
+                        onClick={() => noficationRead(v.not_id)}
                         avatar={<Avatar src={v.profile.profile} />}
                         description={
                           <div>
@@ -173,13 +180,13 @@ const Notification = () => {
                             >
                               삭제
                             </Button>
-                            <Button
+                            {/* <Button
                               size="small"
                               onClick={() => noficationRead(v.not_id)}
                               style={{ marginLeft: 3 }}
                             >
                               확인하기
-                            </Button>
+                            </Button> */}
                           </div>
                         }
                       />

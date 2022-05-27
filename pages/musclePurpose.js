@@ -99,7 +99,7 @@ const musclePurpose = () => {
         openModal={openModal}
         setIsModal={setIsModal}
       />
-      <Title>나의 운동목표</Title>
+      <Title>운동목표</Title>
       <Card>
         {/* <Calendar onPanelChange={onPanelChange} /> */}
         <div>

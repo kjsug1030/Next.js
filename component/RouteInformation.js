@@ -25,7 +25,6 @@ function RouteInformation() {
     <Container>
       <Card
         title="코스만든사람정보"
-      
         hoverable
         style={{
           width: "100%",
@@ -33,12 +32,11 @@ function RouteInformation() {
         bordered
       >
         <DivWrapper>
-          <Avatar size={58}>{loadMap.user.name}</Avatar>
+          <Avatar size={58} src={loadMap.user.profile} />
           <div>
             <p>코스만든사람이름:{loadMap.user.name}</p>
             <p>코스설명 : {loadMap.description}</p>
             <p>생성날짜 : {dateFormat(loadMap.createdAt)}</p>
-            
           </div>
         </DivWrapper>
       </Card>
