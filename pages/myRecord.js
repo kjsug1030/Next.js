@@ -65,11 +65,6 @@ function myRecord() {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
 
-  const createLink = (data) => {
-    // console.log(data)
-    setPropsId(data.gps_id);
-  };
-
   // useEffect(()=>{
   //   window.location.reload
   // },[me.posts])
@@ -269,7 +264,7 @@ function myRecord() {
               dataIndex={["id", "kind"]}
               key={["id", "kind"]}
               render={(v, record) => (
-                <>
+                <div style={{ display: "flex" }}>
                   {record.kind === "자유" ? (
                     <Button
                       type="primary"
@@ -278,9 +273,10 @@ function myRecord() {
                       //   color: "white",
                       //   right: 30,
                       // }}
-                      onClick={() => createLink(record)}
+                      // onClick={() => createLink(record)}
+                      style={{ marginRight: 10 }}
                     >
-                      코스만들기
+                      <a href={"Create/" + record.gps_id}>코스만들기</a>
                     </Button>
                   ) : null}
 
@@ -291,7 +287,7 @@ function myRecord() {
                   >
                     삭제
                   </Button>
-                </>
+                </div>
               )}
             />
           </Table>

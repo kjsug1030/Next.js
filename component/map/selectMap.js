@@ -13,6 +13,7 @@ import {
   StreetViewPanorama,
   MarkerClusterer,
 } from "@react-google-maps/api";
+
 import { InfoWindow } from "@react-google-maps/api";
 import Router from "next/router";
 import {
@@ -303,6 +304,8 @@ function selectMap({}) {
   }, [mapState, isState]);
 
   const [btn, setBtn] = useState(false);
+
+  // const mapApi = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   return (
     <Container>
