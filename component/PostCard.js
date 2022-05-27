@@ -44,7 +44,7 @@ import postcss from "postcss";
 
 import moment from "moment";
 
-import ImageCarousel from "./ImageCarousel";
+import ImageCarousel from "../component/ImageCarousel";
 import "moment/locale/ko";
 
 const PostCard = ({ post }) => {

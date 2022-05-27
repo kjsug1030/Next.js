@@ -27,7 +27,7 @@ import {
 import styled from "styled-components";
 import CommentForm from "../CommentForm";
 import moment from "moment";
-import ImageCarousel from "../ImageCarousel";
+import ImageCarousel from "../../component/ImageCarousel";
 import "moment/locale/ko";
 
 const FollowerPost = ({ post, user }) => {
