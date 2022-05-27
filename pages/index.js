@@ -3,7 +3,6 @@ import { Button, Card, Modal, Empty, BackTop, Badge } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "../component/LoginForm";
 import axios from "axios";
 
 import wrapper from "../store/configureStore";
