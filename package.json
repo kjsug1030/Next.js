@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next -p 3200",
-    "build": "next build"
+    "build": "next build",
+    "start": "next start"
   },
   "author": "",
   "license": "ISC",

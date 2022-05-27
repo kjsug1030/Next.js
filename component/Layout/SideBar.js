@@ -157,6 +157,7 @@ const SiderWrapper = styled(Sider)`
   background: #467ada;
   // background: linear-gradient(to right, #66b5ff, #3fa3ff, #1890ff);
   // color: #fff;
+  padding-bottom: 0 !important;
 
   a {
     color: #fff;
@@ -180,7 +181,12 @@ const SiderWrapper = styled(Sider)`
 
   .ant-layout-sider-children {
     // border-radius: 20px;
+    background: #467ada !important;
   }
+
+  // .ant-layout-sider-has-trigger {
+  //   padding-bottom: 0 !important;
+  // }
 
   .ant-menu-light .ant-menu-item:hover,
   .ant-menu-light {
@@ -189,7 +195,7 @@ const SiderWrapper = styled(Sider)`
   }
 
   .ant-menu:not(.ant-menu-horizontal) {
-    background: #5c92eb !important;
+    // background: #5c92eb !important;
     background: #467ada !important;
   }
 
