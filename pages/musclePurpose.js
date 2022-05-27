@@ -18,7 +18,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRef } from "react";
-import Information from "./purposeInformation";
+import Information from "../component/purposeInformation";
 
 function onPanelChange(value, mode) {
   console.log(value.format("YYYY-MM-DD"), mode);

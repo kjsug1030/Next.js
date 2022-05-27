@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   Modal,
@@ -12,7 +12,6 @@ import {
   Space,
   Radio,
 } from "antd";
-import useInput from "../hooks/useInputTest";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DELETE_GOAL_REQUEST,
