@@ -45,8 +45,8 @@ import postcss from "postcss";
 import moment from "moment";
 
 import ImageCarousel from "../component/ImageCarousel";
-import "moment/locale/ko";
-// import "moment/locale/jp";
+// import "moment/locale/ko";
+import "moment/locale/ja";
 
 const PostCard = ({ post, t }) => {
   const { me } = useSelector((state) => state.user);
