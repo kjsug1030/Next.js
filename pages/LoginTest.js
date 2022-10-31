@@ -14,6 +14,9 @@ import GoogleButton from "react-google-button"; // google 버튼
 import { LOADS_POSTS_REQUEST } from "../reducers/post";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const { Header, Footer, Content } = Layout;
 const { Meta } = Card;
@@ -21,24 +24,28 @@ const { Meta } = Card;
 const signin = () => {
   const dispatch = useDispatch();
 
+  const { locale } = useRouter();
+
+  const { t } = useTranslation("login");
+
   const { me } = useSelector((state) => state.user);
 
   const loginError = () => {
     Modal.warning({
-      title: "로그인실패",
+      title: t("faile"),
     });
   };
 
   const loginSuccess = () => {
     Modal.success({
-      content: "로그인성공!",
+      content: t("success"),
     });
   };
   useEffect(() => {
     if (me != null) {
       if (me.message === "Invalid credentials!") {
         loginError();
-        return "로그인실패";
+        return t("faile");
       }
       loginSuccess();
       // dispatch({
@@ -47,7 +54,11 @@ const signin = () => {
       // Router.push(
       //   '/'
       // )
-      window.location.href = "/";
+      if (locale === "ko") {
+        window.location.href = "/ko";
+      } else {
+        window.location.href = "/jp";
+      }
     }
   }, [me]);
 
@@ -89,7 +100,8 @@ const signin = () => {
       <ContentWrapper>
         <CardStyle>
           <MetaDiv>
-            <Meta title="페이스메이커 로그인" />
+            {/* <Meta title="페이스메이커 로그인" /> */}
+            <Meta title={t("title")} />
           </MetaDiv>
           <FormDiv>
             <FormWrapper onFinish={onSubmit} form={form} size="large">
@@ -97,7 +109,7 @@ const signin = () => {
                 <Input
                   value={id}
                   onChange={onChangeId}
-                  placeholder="이메일 또는 전화번호"
+                  placeholder={t("id")}
                   required
                 />
               </Form.Item>
@@ -105,7 +117,7 @@ const signin = () => {
                 <Input.Password
                   value={password}
                   onChange={onChangePassword}
-                  placeholder="비밀번호"
+                  placeholder={t("password")}
                   required
                 />
               </Form.Item>
@@ -120,20 +132,20 @@ const signin = () => {
                     }}
                   >
                     <img src="btn_base.png" />
-                    LINE으로 시작하기
+                    {t("line")}
                   </button>
                 </LineDiv>
                 <GoogleDiv style={{ borderRadius: "7px" }}>
                   <GooBtn
                     type="light"
-                    label="Google로 시작하기"
+                    label={t("google")}
                     onClick={() => {
                       signIn("google");
                     }}
                   />
                 </GoogleDiv>
                 <Button type="default" htmlType="submit">
-                  Signin
+                  {t("login")}
                 </Button>
               </BtnDiv>
               {/*  */}
@@ -142,14 +154,14 @@ const signin = () => {
           <QuestionDiv>
             <div>
               <Link href="/findId">
-                <a>계정을 잊으셨나요?</a>
+                <a>{t("find")}</a>
               </Link>
             </div>
-            <Meta description="또는" />
+            <Meta description={t("description")} />
           </QuestionDiv>
           <SignupBtn>
             <Button type="primary" onClick={showModal} ghost>
-              새로운 계정 생성
+              {t("signup")}
             </Button>
             <Signup isModal={isModal} openModal={openModal} />
           </SignupBtn>
@@ -179,6 +191,12 @@ signin.getLayout = function getLayout(page) {
 //     await context.store.sagaTask.toPromise();
 // })
 
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["login", "signup"])),
+  },
+});
+
 export default signin;
 
 // FormDiv 밑에 추가코드있음
@@ -200,20 +218,19 @@ const QuestionDiv = styled.div`
   width: 100%;
   height: 40px;
   text-align: center;
-  margin-top:10px;
+  margin-top: 10px;
 
   & div {
-    
   }
 
   & a {
     font-size: 16px;
   }
 
-  .ant-card-meta-description::before {
+  /* .ant-card-meta-description::before {
     context:'';
     background:color: rgba(0, 0, 0, 0.45);
-  }
+  } */
 `;
 
 const MetaDiv = styled.div`

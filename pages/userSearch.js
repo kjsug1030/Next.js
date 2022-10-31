@@ -15,8 +15,11 @@ import { Card, Input, Avatar, Button, Row, Col, Result } from "antd";
 import FollowButton from "../component/FollowButton";
 import userProfile from "./User/[id]";
 import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function userSearch() {
+  const { t } = useTranslation("layout");
   const { Search } = Input;
   const Router = useRouter();
 
@@ -48,11 +51,12 @@ function userSearch() {
 
   return (
     <Container>
-      <h1>유저탐색</h1>
+      <h1>{t("userSearch")}</h1>
+      {/* <h1>유저탐색</h1> */}
       <Search
         //   loading={searchmapLoading}
         onPressEnter={handleButton}
-        placeholder="유저를 입력해주세요"
+        placeholder={t("userInput")}
         enterButton
         // allowClear
         icon={<SearchOutlined />}
@@ -73,20 +77,32 @@ function userSearch() {
                       {/* <Avatar size={160} src="user.png" /> */}
                       <h2 className="user_name">{m.name}</h2>
                       <ProfileText className="profile_text">
-                        <p>자기소개 : {m.introduce}</p>
+                        <p>
+                          {t("userIntroduce")} : {m.introduce}
+                        </p>
+                        {/* <p>자기소개 : {m.introduce}</p> */}
                         {/* <p>생일 : {m.birth}</p> */}
                         {/* <p>활동지역 : {m.location}</p> */}
                         <div className="follow">
-                          <p className="follower">생일 : {m.birth}</p>
-                          <p>성별 : {m.sex}</p>
+                          <p className="follower">
+                            {t("userBirth")} : {m.birth}
+                          </p>
+                          {/* <p className="follower">생일 : {m.birth}</p> */}
+                          <p>
+                            {t("userSex")} : {m.sex}
+                          </p>
+                          {/* <p>성별 : {m.sex}</p> */}
                         </div>
                         <div className="follow">
-                          <p className="follower">활동지역 : {m.location}</p>
+                          <p className="follower">
+                            {t("userLocation")} : {m.location}
+                          </p>
+                          {/* <p className="follower">활동지역 : {m.location}</p> */}
                           <p>MMR : {m.mmr}</p>
                         </div>
                       </ProfileText>
                     </ProfileDiv>
-                    <FollowButton className="follower_btn" post={m} />
+                    <FollowButton className="follower_btn" post={m} t={t} />
                   </ProfileCard>
                 </Card>
                 {/* <Button>
@@ -119,6 +135,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
+
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
@@ -131,6 +148,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "layout",
+          "login",
+          "badge",
+          "profile",
+        ])),
+      },
+    };
   }
 );
 

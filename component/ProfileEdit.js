@@ -15,7 +15,7 @@ import moment from "moment";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const profileEdit = ({ visible, showEditProfile }) => {
+const profileEdit = ({ visible, showEditProfile, t }) => {
   const router = useRouter();
   const [form] = Form.useForm();
   const { me } = useSelector((state) => state.user);
@@ -181,11 +181,9 @@ const profileEdit = ({ visible, showEditProfile }) => {
     // }, 2000);
     return () => clearTimeout(timer);
   };
-  
 
   const onSubmit = async (e) => {
     e.preventDefault;
-
     // const body = {
     //   name: me.name,
     //   email: me.email,
@@ -222,7 +220,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
   return (
     <div>
       <Drawer
-        title="내 정보"
+        title={t("profile:profile")}
+        // title="내 정보"
         placement="right"
         size="large"
         width={450}
@@ -268,7 +267,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
                 ref={fileInput}
               />
               <a className="a2" onClick={() => deleteProfileImage()}>
-                삭제
+                {t("profile:delete")}
+                {/* 삭제 */}
               </a>
             </ImageDiv>
             <FormWrapper>
@@ -278,16 +278,19 @@ const profileEdit = ({ visible, showEditProfile }) => {
                 encType="multipart/form-data"
               >
                 <FormDiv>
-                  <TextDiv>이름</TextDiv>
+                  <TextDiv>{t("profile:name")}</TextDiv>
+                  {/* <TextDiv>이름</TextDiv> */}
                   <Input
                     name="name"
                     value={name}
                     onChange={onChangeProfile}
-                    placeholder="이름을 입력해주세요"
+                    placeholder={t("profile:nameText")}
+                    // placeholder="이름을 입력해주세요"
                   />
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>이메일</TextDiv>
+                  <TextDiv>{t("profile:email")}</TextDiv>
+                  {/* <TextDiv>이메일</TextDiv> */}
                   <Input
                     name="email"
                     value={email}
@@ -295,30 +298,36 @@ const profileEdit = ({ visible, showEditProfile }) => {
                   />
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>소개</TextDiv>
+                  <TextDiv>{t("profile:introduce")}</TextDiv>
+                  {/* <TextDiv>소개</TextDiv> */}
                   <Input
                     name="introduce"
                     value={introduce}
                     onChange={onChangeProfile}
-                    placeholder="자기소개를 입력해주세요"
+                    placeholder={t("profile:introduceText")}
+                    // placeholder="자기소개를 입력해주세요"
                   />
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>지역</TextDiv>
+                  <TextDiv>{t("profile:introduce")}</TextDiv>
+                  {/* <TextDiv>지역</TextDiv> */}
                   <Input
                     name="location"
                     value={location}
                     onChange={onChangeProfile}
-                    placeholder="지역을 입력해주세요"
+                    placeholder={t("profile:locationText")}
+                    // placeholder="지역을 입력해주세요"
                   />
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>생일</TextDiv>
+                  <TextDiv>{t("profile:birth")}</TextDiv>
+                  {/* <TextDiv>생일</TextDiv> */}
                   {/* <Input name="birth" value={birth} onChange={onChangeBirth} /> */}
                   <SpaceWrapper>
                     <Select
                       name="year"
-                      placeholder="년도"
+                      placeholder={t("profile:year")}
+                      // placeholder="년도"
                       value={birth.year}
                       onChange={onChangeYear}
                     >
@@ -329,7 +338,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
 
                     <Select
                       name="month"
-                      placeholder="월"
+                      placeholder={t("profile:month")}
+                      // placeholder="월"
                       value={birth.month}
                       onChange={onChangeMonth}
                     >
@@ -339,7 +349,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
                     </Select>
                     <Select
                       name="day"
-                      placeholder="일"
+                      placeholder={t("profile:day")}
+                      // placeholder="일"
                       value={birth.day}
                       onChange={onChangeDay}
                     >
@@ -350,27 +361,35 @@ const profileEdit = ({ visible, showEditProfile }) => {
                   </SpaceWrapper>
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>성별</TextDiv>
+                  <TextDiv>{t("profile:sex")}</TextDiv>
+                  {/* <TextDiv>성별</TextDiv> */}
                   {/* <Input name="sex" value={me.sex} /> */}
                   <Select
-                    placeholder="성별"
+                    placeholder={t("profile:sex")}
+                    // placeholder="성별"
                     value={sex}
                     onChange={onChangeSex}
                     style={{ width: 300 }}
                   >
-                    <Option value="F">여성</Option>
+                    <Option value="F">{t("profile:man")}</Option>
+                    <Option value="M">{t("profile:woman")}</Option>
+                    <Option value="T">{t("profile:transgender")}</Option>
+                    <Option value="N">{t("profile:nosex")}</Option>
+                    {/* <Option value="F">여성</Option>
                     <Option value="M">남성</Option>
                     <Option value="T">트랜스젠더</Option>
-                    <Option value="N">알리고 싶지 않음</Option>
+                    <Option value="N">알리고 싶지 않음</Option> */}
                   </Select>
                 </FormDiv>
                 <FormDiv>
-                  <TextDiv>몸무게</TextDiv>
+                  <TextDiv>{t("profile:weight")}</TextDiv>
+                  {/* <TextDiv>몸무게</TextDiv> */}
                   <Input
                     name="weight"
                     value={weight}
                     onChange={onChangeProfile}
-                    placeholder="몸무게를 입력해주세요"
+                    placeholder={t("profile:weightText")}
+                    // placeholder="몸무게를 입력해주세요"
                   />
                 </FormDiv>
                 <Button
@@ -381,7 +400,8 @@ const profileEdit = ({ visible, showEditProfile }) => {
                   // onClick={showEditProfile}
                   loading={isLoading}
                 >
-                  제출
+                  {t("profile:submit")}
+                  {/* 제출 */}
                 </Button>
               </Form>
             </FormWrapper>

@@ -1,0 +1,11 @@
+{
+  "success": "팔로우수락을 했습니다!",
+  "date": "MM월DD일",
+  "follow": "요청수락",
+  "delete": "삭제",
+  "title": "타이틀",
+  "speed": "평균속도",
+  "distance": "운동거리",
+  "calorie": "소비 칼로리",
+  "comment": "댓글"
+}

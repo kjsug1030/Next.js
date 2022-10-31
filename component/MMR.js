@@ -6,16 +6,23 @@ import { useSelector } from "react-redux";
 import Intro from "./Intro";
 import BadgeBook from "./BadgeBook";
 import BadgeModal from "./badgeModal";
+// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+// import { useTranslation } from "next-i18next";
 
-const MMR = () => {
+const MMR = ({ t }) => {
   const { me } = useSelector((state) => state.user);
+
+  // const { t } = useTranslation("common");
 
   return (
     <Container>
       <Card hoverable>
         {me && (
           <>
-            <h1>운동점수 : {me.mmr}</h1>
+            <h1>
+              {t("common:mmr")} : {me.mmr}
+            </h1>
+            {/* <h1>운동점수 : {me.mmr}</h1> */}
 
             <br />
             <br />
@@ -40,6 +47,12 @@ const MMR = () => {
     </Container>
   );
 };
+
+// export const getStaticProps = async ({ locale }) => ({
+//   props: {
+//     ...(await serverSideTranslations(locale, ["common"])),
+//   },
+// });
 
 export default MMR;
 

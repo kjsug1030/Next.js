@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "antd";
 import RunningChart from "./RunningChart";
 import BikeChart from "./BikeChart";
@@ -15,14 +15,9 @@ import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 
-
 function MyNote() {
-
-  const {weathers}=useSelector((state)=>state.user)
-  var weatherIcon=`http://openweathermap.org/img/wn/${weathers.weather[0].icon}@2x.png`
-
- 
-
+  const { weathers } = useSelector((state) => state.user);
+  var weatherIcon = `http://openweathermap.org/img/wn/${weathers.weather[0].icon}@2x.png`;
 
   return (
     <div
@@ -43,15 +38,11 @@ function MyNote() {
           borderRadius: 30,
         }}
         bordered={false}
-      
       >
-     
-       <div> {weathers.name}의현재날씨</div>
+        <div> {weathers.name}의현재날씨</div>
         <img src={weatherIcon} alt="" width="50%" height="50%" />
-       
-        {
-          weathers.weather[0].description
-        }
+
+        {weathers.weather[0].description}
       </Card>
     </div>
   );

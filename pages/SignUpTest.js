@@ -17,6 +17,8 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { SIGNUP_REQUEST } from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const { Meta } = Card;
 const { Option } = Select;
@@ -101,11 +103,13 @@ const Signup = ({ isModal, openModal }) => {
     openModal(false);
   };
 
+  const { t } = useTranslation("signup");
+
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
       <TitleDiv>
-        <div>새로운 계정 만들기</div>
-        <span>간단합니다</span>
+        <div>{t("signup:title1")}</div>
+        <span>{t("signup:title2")}</span>
       </TitleDiv>
       <FormWrapper>
         <Form onFinish={onSubmit} layout="horizontal" form={form} size="large">
@@ -113,22 +117,22 @@ const Signup = ({ isModal, openModal }) => {
             <Input
               value={firstName}
               onChange={onChangeFirstName}
-              placeholder="성"
+              placeholder={t("signup:firstName")}
             />
           </FirstName>
           <SecondName rules={[{ required: true }]}>
             <Input
               value={lastName}
               onChange={onChangeLastName}
-              placeholder="이름"
+              placeholder={t("signup:secondName")}
             />
           </SecondName>
           <MaleFemale>
-            <Select placeholder="성별" onChange={onChangeSex}>
-              <Option value="F">여성</Option>
-              <Option value="M">남성</Option>
-              <Option value="T">트랜스젠더</Option>
-              <Option value="N">알리고 싶지 않음</Option>
+            <Select placeholder={t("signup:sex")} onChange={onChangeSex}>
+              <Option value="F">{t("signup:woman")}</Option>
+              <Option value="M">{t("signup:man")}</Option>
+              <Option value="T">{t("signup:transgender")}</Option>
+              <Option value="N">{t("signup:no")}</Option>
             </Select>
           </MaleFemale>
           {/* 여기까지 */}
@@ -137,30 +141,38 @@ const Signup = ({ isModal, openModal }) => {
             <Input
               value={email}
               onChange={onChangeEmail}
-              placeholder="이메일"
+              placeholder={t("signup:email")}
             />
           </Form.Item>
           <Form.Item rules={[{ required: true }]}>
             <Input.Password
               value={password}
               onChange={onChangePassword}
-              placeholder="새 비밀번호"
+              placeholder={t("signup:password")}
             />
           </Form.Item>
-          <SmallTitle>생일</SmallTitle>
+          <SmallTitle>{t("signup:birth")}</SmallTitle>
           <SpaceWrapper>
             <DatePicker
               picker="year"
               onChange={onChangeBirth}
-              placeholder="년도"
+              placeholder={t("signup:year")}
             />
 
-            <Select name="month" placeholder="월" onChange={onChangeMonth}>
+            <Select
+              name="month"
+              placeholder={t("signup:month")}
+              onChange={onChangeMonth}
+            >
               {months.map((month, index) => (
                 <Option key={`${index + 1}`}>{month}</Option>
               ))}
             </Select>
-            <Select name="day" placeholder="일" onChange={onChangeDay}>
+            <Select
+              name="day"
+              placeholder={t("signup:day")}
+              onChange={onChangeDay}
+            >
               {days.map((day, index) => (
                 <Option key={`${index + 1}`}>{day}</Option>
               ))}
@@ -169,7 +181,7 @@ const Signup = ({ isModal, openModal }) => {
 
           <Form.Item>
             <Button type="default" htmlType="submit">
-              Signup
+              {t("signup:signup")}
             </Button>
           </Form.Item>
         </Form>
@@ -179,6 +191,12 @@ const Signup = ({ isModal, openModal }) => {
 };
 
 export default Signup;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["signup"])),
+  },
+});
 
 // const BtnWrapper = styled.div` 제거하기
 //   // display: flex;

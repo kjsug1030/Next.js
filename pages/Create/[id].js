@@ -35,12 +35,18 @@ import {
   NOTIFICATION_REQUEST,
 } from "../../reducers/user";
 import styled from "styled-components"; // 추가
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function createPath() {
+  const { t } = useTranslation("map");
+
   function error() {
     Modal.error({
-      title: "운동코스제작실패",
-      content: "비슷한 트랙이있습니다.",
+      title: t("errTitle"),
+      content: t("errContent"),
+      // title: "운동코스제작실패",
+      // content: "비슷한 트랙이있습니다.",
     });
   }
 
@@ -172,7 +178,8 @@ function createPath() {
 
   const createSuccess = () => {
     Modal.success({
-      title: "경로만들기 성공",
+      title: t("createSuccess"),
+      // title: "경로만들기 성공",
     });
   };
 
@@ -294,7 +301,8 @@ function createPath() {
               <div>
                 <span style={{ fontWeight: "bold" }}>
                   {" "}
-                  현재 측정중인 코스거리 : {createDistance.toFixed(2)}km
+                  {t("formDistance")} : {createDistance.toFixed(2)}km
+                  {/* 현재 측정중인 코스거리 : {createDistance.toFixed(2)}km */}
                   {/* {Calculation(createDistance).toFixed(2)} km */}
                 </span>
                 <span
@@ -304,7 +312,7 @@ function createPath() {
                     fontWeight: "bold",
                   }}
                 >
-                  만드는 코스:{" "}
+                  {t("formCourse")} : {/* 만드는 코스:{" "} */}
                   <a
                     style={{
                       backgroundColor: "red",
@@ -321,7 +329,8 @@ function createPath() {
               <Form.Item>
                 <Input
                   style={{ marginTop: 10, marginBottom: 20 }}
-                  placeholder="경로이름을 입력해주세요"
+                  placeholder={t("formContent1")}
+                  // placeholder="경로이름을 입력해주세요"
                   value={trackName}
                   onChange={onChangeTrackName}
                 />
@@ -329,14 +338,16 @@ function createPath() {
               <Form.Item>
                 <Input.TextArea
                   style={{ marginBottom: 20 }}
-                  placeholder="경로내용을 입력해주세요"
+                  placeholder={t("formContent2")}
+                  // placeholder="경로내용을 입력해주세요"
                   value={trackDescription}
                   onChange={onChangeTrackDescription}
                 />
               </Form.Item>
 
               <Button type="primary" onClick={pathStore}>
-                경로만들기
+                {t("formBtn")}
+                {/* 경로만들기 */}
               </Button>
             </FormWrapper>
             <SliderDiv>
@@ -349,8 +360,10 @@ function createPath() {
                 tipFormatter={null}
               />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p>출발</p>
-                <p>도착</p>
+                <p>{t("start")}</p>
+                <p>{t("end")}</p>
+                {/* <p>출발</p>
+                <p>도착</p> */}
               </div>
             </SliderDiv>
           </Card>
@@ -397,6 +410,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, ["map"])),
+      },
+    };
   }
 );
 

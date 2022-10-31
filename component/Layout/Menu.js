@@ -13,32 +13,45 @@ import {
   PieChartOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-const MenuMenu = () => {
+const MenuMenu = ({ t }) => {
+  const { locale } = useRouter();
+
   const category = [
     {
-      title: "홈",
+      title: t("layout:home"),
+      // title: "홈",
       link: "/",
+      link2: "/jp",
       icon: <HomeOutlined />,
     },
     {
-      title: "종합 운동기록",
+      title: t("layout:record"),
+      // title: "종합 운동기록",
       link: "/myRecord",
+      link2: "/jp/myRecord",
       icon: <PieChartOutlined />,
     },
     {
-      title: "운동경로 탐색",
+      title: t("layout:course"),
+      // title: "운동경로 탐색",
       link: "/polylineTest",
+      link2: "/jp/polylineTest",
       icon: <EnvironmentOutlined />,
     },
     {
-      title: "내 운동목표",
+      title: t("layout:target"),
+      // title: "내 운동목표",
       link: "/musclePurpose",
+      link2: "/jp/musclePurpose",
       icon: <ScheduleOutlined />,
     },
     {
-      title: "유저탐색",
+      title: t("layout:friends"),
+      // title: "유저탐색",
       link: "/userSearch",
+      link2: "/jp/userSearch",
       icon: <UserOutlined />,
     },
   ];
@@ -47,7 +60,12 @@ const MenuMenu = () => {
     <MenuWrapper mode="inline">
       {category.map((menu, index) => (
         <Menu.Item key={index} icon={menu.icon}>
-          <a href={menu.link}>{menu.title}</a>
+          {locale === "ko" ? (
+            <a href={menu.link}>{menu.title}</a>
+          ) : (
+            <a href={menu.link2}>{menu.title}</a>
+          )}
+          {/* <a href={menu.link}>{menu.title}</a> */}
         </Menu.Item>
       ))}
     </MenuWrapper>

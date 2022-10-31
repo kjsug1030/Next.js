@@ -20,6 +20,7 @@ import {
 } from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 const { Meta } = Card;
 const { Option } = Select;
@@ -29,8 +30,11 @@ const Signup = ({
   openInformationModal,
   setInformationModal,
   information,
+  t,
 }) => {
   const dispatch = useDispatch();
+
+  const { locale } = useRouter();
 
   const deletePurpose = (datas) => {
     dispatch({
@@ -39,7 +43,11 @@ const Signup = ({
     });
     // location.reload();
 
-    window.location.href = "/musclePurpose";
+    if (locale === "ko") {
+      window.location.href = "/musclePurpose";
+    } else {
+      window.location.href = "/jp/musclePurpose";
+    }
   };
 
   const dateFormat = (d) => {
@@ -55,14 +63,27 @@ const Signup = ({
         footer={null}
       >
         <TitleDiv>
-          <h1>현재 진행중인 목표</h1>
+          <h1>{t("nowPurpose")}</h1>
+          {/* <h1>현재 진행중인 목표</h1> */}
         </TitleDiv>
         <div>
           <div style={{ textAlign: "center" }}>
-            <h2>타이틀 : {information.title}</h2>
+            <h2>
+              {t("pTitle")} : {information.title}
+            </h2>
+            <h3>
+              {t("pDistance")} : {information.textColor + "km"}
+            </h3>
+            <h3>
+              {t("pStart")} : {dateFormat(information.startStr)}
+            </h3>
+            <h3>
+              {t("pEnd")} : {dateFormat(information.endStr)}
+            </h3>
+            {/* <h2>타이틀 : {information.title}</h2>
             <h3>목표거리 : {information.textColor + "km"}</h3>
             <h3>도전을 시작한 날 : {dateFormat(information.startStr)}</h3>
-            <h3>끝 마치는 날 : {dateFormat(information.endStr)}</h3>
+            <h3>끝 마치는 날 : {dateFormat(information.endStr)}</h3> */}
           </div>
         </div>
         <Button
@@ -70,7 +91,8 @@ const Signup = ({
           onClick={() => deletePurpose(information.id)}
           danger
         >
-          목표삭제
+          {t("pDelete")}
+          {/* 목표삭제 */}
         </Button>
       </ModalWrapper>
     </Container>

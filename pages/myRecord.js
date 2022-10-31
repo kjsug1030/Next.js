@@ -24,14 +24,19 @@ import {
 } from "../reducers/user";
 const { Option } = Select;
 import { NotificationOutlined } from "@ant-design/icons";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function myRecord() {
+  const { t } = useTranslation();
+
   const { totalCalorie, totalTime, totalRunTime, totalBikeTime } = useSelector(
     (state) => state.user
   );
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("YYYY년 MM월 DD일");
+    return date.format(t("layout:date"));
+    // return date.format("YYYY년 MM월 DD일");
   };
   const [gpsId, setGpsId] = useState();
   const sortData = ["ascend", "descend", "ascend"];
@@ -88,7 +93,8 @@ function myRecord() {
 
   const deleteModal = (data) => {
     // setGpsId(data)
-    var deleteform = confirm("진짜삭제하겠습니까?");
+    // var deleteform = confirm("진짜삭제하겠습니까?");
+    var deleteform = confirm(t("layout:deleteform"));
     if (deleteform) {
       recordDelete(data);
     } else {
@@ -116,21 +122,25 @@ function myRecord() {
   const cardScore = [
     // 차트그래프 옆 카드 더미데이터
     {
-      title: "총 운동 시간",
+      title: t("layout:recordTotal1"),
+      // title: "총 운동 시간",
       distance: timeChange(totalTime),
     },
     {
-      title: "총 소모 칼로리",
+      title: t("layout:recordTotal2"),
+      // title: "총 소모 칼로리",
       distance: totalCalorie + "Kcal",
     },
     {
-      title: "총 라이딩 거리",
+      title: t("layout:recordTotal3"),
+      // title: "총 라이딩 거리",
       distance: totalBikeTime.distance
         ? totalBikeTime.distance + "km"
         : 0 + "km",
     },
     {
-      title: "총 러닝 거리",
+      title: t("layout:recordTotal4"),
+      // title: "총 러닝 거리",
       distance: totalRunTime.distance
         ? totalRunTime.distance.toFixed(2) + "km"
         : 0 + "km",
@@ -139,7 +149,8 @@ function myRecord() {
 
   return (
     <Container>
-      <h1>종합 운동기록</h1>
+      {/* 종합 운동기록 */}
+      <h1>{t("common:score")}</h1>
       <CardDiv>
         <Card>
           <ScoreDiv>
@@ -156,8 +167,10 @@ function myRecord() {
             </Row>
           </ScoreDiv>
           <div style={{ marginTop: 20, fontSize: 25 }}>
-            <NotificationOutlined style={{ color: "#467ada" }} /> 자유운동만
-            코스만들기가능
+            <NotificationOutlined style={{ color: "#467ada" }} />
+            {t("layout:recordDes1")}
+            {/* <NotificationOutlined style={{ color: "#467ada" }} /> 자유운동만
+            코스만들기가능 */}
           </div>
           <Table
             style={{
@@ -166,76 +179,102 @@ function myRecord() {
             dataSource={me.posts}
           >
             <Column
-              title="유형"
+              title={t("layout:recordTitle1")}
+              // title="유형"
               dataIndex="kind"
               key="kind"
               render={(e) => {
-                if (e === "자유") {
-                  return <p>자유운동</p>;
-                } else if (e === "싱글") {
-                  return <p>코스운동(싱글)</p>;
-                } else if (e === "친선") {
-                  return <p>코스운동(친선)</p>;
-                } else if (e === "랭크") {
-                  return <p>코스운동(랭크)</p>;
+                if (e === t("layout:recordTitle2")) {
+                  return <p>{t("layout:recordKind1")}</p>;
+                } else if (e === t("layout:recordTitle2")) {
+                  return <p>{t("layout:recordKind2")}</p>;
+                } else if (e === t("layout:recordTitle3")) {
+                  return <p>{t("layout:recordKind3")}</p>;
+                } else if (e === t("layout:recordTitle5")) {
+                  return <p>{t("layout:recordKind4")}</p>;
                 }
+                // if (e === "자유") {
+                //   return <p>자유운동</p>;
+                // } else if (e === "싱글") {
+                //   return <p>코스운동(싱글)</p>;
+                // } else if (e === "친선") {
+                //   return <p>코스운동(친선)</p>;
+                // } else if (e === "랭크") {
+                //   return <p>코스운동(랭크)</p>;
+                // }
               }}
               filters={[
                 {
-                  text: "자유운동",
-                  value: "자유",
+                  text: t("layout:recordKind1"),
+                  value: t("layout:recordTitle2"),
+                  // text: "자유운동",
+                  // value: "자유",
                 },
                 {
-                  text: "코스운동(싱글)",
-                  value: "싱글",
+                  text: t("layout:recordKind2"),
+                  value: t("layout:recordTitle4"),
+                  // text: "코스운동(싱글)",
+                  // value: "싱글",
                 },
                 {
-                  text: "코스운동(친선)",
-                  value: "친선",
+                  text: t("layout:recordKind3"),
+                  value: t("layout:recordTitle3"),
+                  // text: "코스운동(친선)",
+                  // value: "친선",
                 },
                 {
-                  text: "코스운동(랭크)",
-                  value: "랭크",
+                  text: t("layout:recordKind4"),
+                  value: t("layout:recordTitle5"),
+                  // text: "코스운동(랭크)",
+                  // value: "랭크",
                 },
               ]}
               onFilter={(value, record) => record.kind.indexOf(value) === 0}
             />
             <Column
-              title="종목"
+              title={t("layout:recordEvent")}
+              // 종목
               dataIndex="event"
               key="event"
               render={(e) => {
                 if (e === "B") {
-                  return <p>라이딩</p>;
+                  return <p>{t("layout:cycling")}</p>;
+                  // 라이딩
                 }
-                return <p>달리기</p>;
+                return <p>{t("layout:running")}</p>;
+                // return <p>달리기</p>;
               }}
               filters={[
                 {
-                  text: "라이딩",
+                  text: t("layout:cycling"),
                   value: "B",
+                  // text: "라이딩",
                 },
                 {
-                  text: "달리기",
+                  text: t("layout:running"),
+                  // text: "달리기",
                   value: "R",
                 },
               ]}
               onFilter={(value, record) => record.event.indexOf(value) === 0}
             />
             <Column
-              title="이름"
+              title={t("layout:recordName")}
+              // title="이름"
               dataIndex="title"
               key="title"
               render={(title) => <a style={{ color: "#1890ff" }}>{title}</a>}
             />
             <Column
-              title="거리"
+              title={t("layout:recordDistance")}
+              // title="거리"
               dataIndex="distance"
               key="distance"
               render={(v) => <p>{parseFloat(v).toFixed(2)}km</p>}
             />
             <Column
-              title="고도"
+              title={t("layout:recordAltitude")}
+              // title="고도"
               dataIndex="altitude"
               key="altitude"
               sortDirections={sortData}
@@ -243,13 +282,15 @@ function myRecord() {
               render={(v) => <p>{v}m</p>}
             />
             <Column
-              title="시간"
+              title={t("layout:recordTime")}
+              // title="시간"
               dataIndex="time"
               key="time"
               render={(v) => timeChange(v)}
             />
             <Column
-              title="날짜"
+              title={t("layout:recordDate")}
+              // title="날짜"
               dataIndex="created_at"
               key="created_at"
               sortDirections={["ascend", "descend"]}
@@ -258,14 +299,16 @@ function myRecord() {
               sortOrder="ascend"
             />
             <Column
-              title={<p onClick={onChangeDelete}>수정</p>}
+              title={<p onClick={onChangeDelete}>{t("layout:modify")}</p>}
+              // title={<p onClick={onChangeDelete}>수정</p>}
               width="200px"
               align="right"
               dataIndex={["id", "kind"]}
               key={["id", "kind"]}
               render={(v, record) => (
                 <div style={{ display: "flex" }}>
-                  {record.kind === "자유" ? (
+                  {record.kind === t("layout:recordTitle2") ? (
+                    // {record.kind === "자유" ? (
                     <Button
                       type="primary"
                       // style={{
@@ -276,7 +319,10 @@ function myRecord() {
                       // onClick={() => createLink(record)}
                       style={{ marginRight: 10 }}
                     >
-                      <a href={"Create/" + record.gps_id}>코스만들기</a>
+                      <a href={"Create/" + record.gps_id}>
+                        {t("layout:recordCreate")}
+                      </a>
+                      {/* <a href={"Create/" + record.gps_id}>코스만들기</a> */}
                     </Button>
                   ) : null}
 
@@ -285,14 +331,16 @@ function myRecord() {
                     onClick={() => deleteModal(record.id)}
                     style={{ translate: "all 0.2" }}
                   >
-                    삭제
+                    {t("layout:delete")}
+                    {/* 삭제 */}
                   </Button>
                 </div>
               )}
             />
           </Table>
           <Modal
-            title="진짜삭제할거야?"
+            title={t("layout:deleteform")}
+            // title="진짜삭제할거야?"
             visible={isModalVisible}
             onOk={recordDelete}
             onCancel={cancel}
@@ -307,9 +355,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
+
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
+
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
@@ -331,6 +381,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "common",
+          "layout",
+          "login",
+          "badge",
+        ])),
+      },
+    };
   }
 );
 

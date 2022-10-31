@@ -1,0 +1,19 @@
+{
+  "title": "뱃지",
+  "misson": "달성조건",
+  "clear": "목표달성",
+  "badge": "대표뱃지설정",
+  "first": "첫운동 실시",
+  "altitude1": "고도 10000km",
+  "altitude2": "고도 20000km",
+  "altitude3": "고도 30000km",
+  "cycling1": "라이딩 1000km",
+  "cycling2": "라이딩 5000km",
+  "cycling3": "라이딩 10000km",
+  "running1": "러닝 100km",
+  "running2": "러닝 500km",
+  "running3": "러닝 1000km",
+  "course1": "코스생성 3개",
+  "course2": "코스생성 20개",
+  "course3": "코스생성 50개"
+}

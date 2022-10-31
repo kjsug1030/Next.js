@@ -353,25 +353,6 @@ function* trackRank(action) {
 }
 
 const trackMyRankAPI = async (datas) => {
-  // try{
-  //     const res= await fetch(`https://2yubi.shop/api/ranking/myRank?track_id=${datas}`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json",
-  //         },
-  //         credentials: "include",
-
-  //       });
-  //       const data= await res.json()
-  //       console.log('myrankkkdnate',data)
-
-  //       return data
-
-  // }catch(err){
-  //     console.log(err)
-  // }
-
   const res = await axios.get(
     `https://2yubi.shop/api/ranking/myRank?track_id=${datas}`
   );

@@ -8,15 +8,16 @@ import { signOut, useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_REQUEST, SIGNUP_REQUEST } from "../../reducers/user";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const { Sider } = Layout;
 const { Meta } = Card;
-const push = () => {};
 
-const SideBar = ({ isSide, showSide }) => {
+const SideBar = ({ isSide, showSide, t }) => {
   const { data: session } = useSession(); // 소셜로그인
   const { me } = useSelector((state) => state.user);
-
+  const { locale } = useRouter();
+  const router = useRouter();
   const dispatch = useDispatch();
   const logout = () => {
     // localStorage.originalCount=0
@@ -70,20 +71,45 @@ const SideBar = ({ isSide, showSide }) => {
           </SpaceDiv>
         )
       ) : (
-        <UserForm />
+        <UserForm t={t} />
       )}
-      <MenuMenu />
+      <MenuMenu t={t} />
 
       {!isSide ? (
         <LogoutBtn>
           {session ? (
             <button onClick={() => logout()}>
-              <img src="/logout.png" /> 로그아웃
+              <img src="/logout.png" />
+              {t("login:logout")}
+              {/* <img src="/logout.png" /> 로그아웃 */}
             </button>
           ) : (
-            <button onClick={() => logout()}>
-              <img src="/logout.png" /> 로그아웃
-            </button>
+            <>
+              {locale === "ko" ? (
+                // <CountryDiv onClick={() => router.push("/jp")}>
+                <CountryDiv>
+                  <Link href="/" locale="jp">
+                    <a target="_blank">
+                      <img src="/japan1.png" />
+                    </a>
+                  </Link>
+                </CountryDiv>
+              ) : (
+                //  <CountryDiv onClick={() => router.push("/ko")}>
+                <CountryDiv>
+                  <Link href="/" locale="ko">
+                    <a target="_blank">
+                      <img src="/korea.webp" />
+                    </a>
+                  </Link>
+                </CountryDiv>
+              )}
+
+              <button onClick={() => logout()}>
+                <img src="/logout.png" /> {t("login:logout")}
+                {/* <img src="/logout.png" /> 로그아웃 */}
+              </button>
+            </>
           )}
         </LogoutBtn>
       ) : null}
@@ -92,6 +118,19 @@ const SideBar = ({ isSide, showSide }) => {
 };
 
 export default SideBar;
+
+const CountryDiv = styled.div`
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  margin-bottom: 20px;
+  cursor: pointer;
+  /* border: solid 1px black; */
+  img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+`;
 
 const LogoutBtn = styled.div`
   position: absolute;

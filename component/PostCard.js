@@ -46,8 +46,9 @@ import moment from "moment";
 
 import ImageCarousel from "../component/ImageCarousel";
 import "moment/locale/ko";
+// import "moment/locale/jp";
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, t }) => {
   const { me } = useSelector((state) => state.user);
   const { comment, likeRequest } = useSelector((state) => state.post);
 
@@ -85,7 +86,8 @@ const PostCard = ({ post }) => {
 
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("MM월DD일");
+    return date.format(t("notification:date"));
+    // return date.format("MM월DD일");
   };
 
   return (
@@ -139,14 +141,26 @@ const PostCard = ({ post }) => {
                   }}
                   className="space"
                 >
-                  <p>제목 : {post.title}</p>
+                  <p>
+                    {t("notification:title")} : {post.title}
+                  </p>
+                  {/* <p>제목 : {post.title}</p> */}
                   {/* <p>내용 : {post.content}</p> */}
 
                   {/* 함께 달린 유저ID가 넘어오면 함께달린 유저도 표시 */}
                   {/* <p>내가 함께달린 유저ID : {post.opponent_id}</p> */}
-                  <p>평균속도 : {post.average_speed} km/h</p>
+                  <p>
+                    {t("notification:speed")} : {post.average_speed} km/h
+                  </p>
+                  <p>
+                    {t("notification:distance")} : {post.distance} km
+                  </p>
+                  <p>
+                    {t("notification:calorie")} : {post.calorie} cal
+                  </p>
+                  {/* <p>평균속도 : {post.average_speed} km/h</p>
                   <p>운동거리 : {post.distance} km</p>
-                  <p>소모 칼로리 : {post.calorie} cal</p>
+                  <p>소비 칼로리 : {post.calorie} cal</p> */}
                 </SpaceDiv>
                 <HashTag>
                   {post.event === "R" ? <a>#Running</a> : <a>#Ridding</a>}
@@ -189,7 +203,8 @@ const PostCard = ({ post }) => {
           <CommentForm comment={comment} postId={post.id} />
           <List
             // style={{ width: 500, marginLeft: 100 }}
-            header={`${comment.length} 댓글`}
+            header={`${comment.length} comment`}
+            // header={`${comment.length} 댓글`}
             itemLayout="horizontal"
             dataSource={comment}
             renderItem={(item) => (
@@ -205,7 +220,8 @@ const PostCard = ({ post }) => {
                 />
                 {me.id === item.user_id ? (
                   <Button type="danger" onClick={() => commentDelete(item.id)}>
-                    삭제
+                    {t("notification:delete")}
+                    {/* 삭제 */}
                   </Button>
                 ) : null}
               </li>

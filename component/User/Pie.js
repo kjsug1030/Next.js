@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Card, Empty } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
-const FollowerPie = ({ bikePercentage, runPercentage }) => {
+const FollowerPie = ({ bikePercentage, runPercentage, t }) => {
   const userRateRidding = bikePercentage ? bikePercentage : 0;
   const userRateRunning = runPercentage ? runPercentage : 0;
 
@@ -24,12 +24,12 @@ const FollowerPie = ({ bikePercentage, runPercentage }) => {
     maintainAspectRatio: true, // 반응형 자동 높이설정 off
   };
 
-  const labels = ["라이딩", "러닝"];
+  const labels = [t("index:cycling"), t("index:running")];
   const data = {
     labels,
     datasets: [
       {
-        label: ["라이딩", "러닝"],
+        label: [t("index:cycling"), t("index:running")],
         data: [userRateRidding, userRateRunning],
         backgroundColor: ["#0288D1", "#BBDEFB"],
       },
@@ -37,10 +37,10 @@ const FollowerPie = ({ bikePercentage, runPercentage }) => {
   };
 
   return (
-    <PieDiv>
+    <PieDiv hoverable>
       <TitleCard />
       <CardWrapper hoverable>
-        <h3>운동비율</h3>
+        <h3>{t("index:title1")}</h3>
         {bikePercentage || runPercentage ? (
           <Doughnut
             data={data}
@@ -52,7 +52,7 @@ const FollowerPie = ({ bikePercentage, runPercentage }) => {
         ) : (
           <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-            description="운동Data가 없습니다"
+            description={t("index:description1")}
             style={{
               marginTop: 80,
             }}

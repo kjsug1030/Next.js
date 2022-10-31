@@ -7,7 +7,7 @@ import ProfileEdit from "../ProfileEdit";
 import FollowingModal from "../FollowingModal";
 import FollowerModal from "../FollowerModal";
 
-const UserForm = () => {
+const UserForm = ({ t }) => {
   const { me } = useSelector((state) => state.user);
 
   const [editProfile, setEditProfile] = useState(false);
@@ -53,17 +53,20 @@ const UserForm = () => {
           bordered={true}
           actions={[
             <div key="followings" onClick={openFollowingModal}>
-              팔로잉
+              {t("layout:following")}
+              {/* 팔로잉 */}
               <br />
               {me.followings.length}
             </div>,
             <div key="followings" onClick={openFollowerModal}>
-              팔로워
+              {t("layout:follower")}
+              {/* 팔로워 */}
               <br />
               {me.followers.length}
             </div>,
             <div key="twit">
-              게시물
+              {t("layout:post")}
+              {/* 게시물 */}
               <br />
               {me.posts.length}
             </div>,
@@ -96,6 +99,7 @@ const UserForm = () => {
           <ProfileEdit
             visible={editProfile}
             showEditProfile={showEditProfile}
+            t={t}
           />
         </>
       ) : null}

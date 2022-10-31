@@ -15,6 +15,7 @@ function SearchList({
   list,
   setStrokeWeight,
   setTarget,
+  t,
 }) {
   const { searchMap } = useSelector((state) => state.map);
 
@@ -45,7 +46,8 @@ function SearchList({
 
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("YYYY년 MM월 DD일");
+    return date.format(t("layout:date"));
+    // return date.format("YYYY년 MM월 DD일");
   };
 
   return (

@@ -15,7 +15,7 @@ import BadgeBook from "../BadgeBook";
 
 const { Search } = Input;
 
-const header = () => {
+const header = ({ t }) => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -31,14 +31,15 @@ const header = () => {
 
       <IconList>
         {/* 알림 */}
-        <BadgeBook />
-        <Notification />
+        <BadgeBook t={t} />
+        <Notification t={t} />
 
         {/* <Button type="primary" onClick={() => logout()}>
           LogOut
         </Button> */}
         <button className="logout_btn" onClick={() => logout()}>
-          <a href={"/LoginTest"}>LogOut</a>
+          <a href={"/LoginTest"}>{t("login:logout")}</a>
+          {/* <a href={"/LoginTest"}>LogOut</a> */}
         </button>
         <AvatarDiv>
           <a>
@@ -136,12 +137,12 @@ export const Logo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // 
-  img {
+  //
+  /* img { */
   //   width: 20px;
   //   height: 20px;
   // }
-  
+
   p {
     color: black;
     font-weight: bold;

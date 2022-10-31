@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import userProfile from "../pages/User/[id]";
 
-function FollowButton({ post }) {
+function FollowButton({ post, t }) {
   const dispatch = useDispatch();
   const { me, follower } = useSelector((state) => state.user);
 
@@ -30,12 +30,15 @@ function FollowButton({ post }) {
   return (
     <Container>
       {isFollowing ? (
-        <Button className="follow_btn">팔로잉O</Button>
+        <Button className="follow_btn">{t("profile:followingOK")}</Button>
       ) : (
-        <Button className="follow_btn">팔로잉X</Button>
+        // <Button className="follow_btn">팔로잉O</Button>
+        <Button className="follow_btn">{t("profile:followingX")}</Button>
+        // <Button className="follow_btn">팔로잉X</Button>
       )}
       <a href={"User/" + post.id}>
-        <Button>프로필</Button>
+        <Button>{t("profile:profile2")}</Button>
+        {/* <Button>프로필</Button> */}
       </a>
     </Container>
   );

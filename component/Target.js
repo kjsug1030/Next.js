@@ -5,7 +5,7 @@ import MissionCard from "./MissionCard";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-const Target = () => {
+const Target = ({ t }) => {
   const { weathers } = useSelector((state) => state.user);
   const weatherIcon = `http://openweathermap.org/img/wn/${weathers.weather[0].icon}@2x.png`;
 
@@ -32,13 +32,20 @@ const Target = () => {
     // 요일구별기
     // let now = moment().day();
     let week = [
-      "일요일",
-      "월요일",
-      "화요일",
-      "수요일",
-      "목요일",
-      "금요일",
-      "토요일",
+      t("index:sunday"),
+      t("index:monday"),
+      t("index:tuesday"),
+      t("index:wednesday"),
+      t("index:thursday"),
+      t("index:friday"),
+      t("index:saturday"),
+      // "일요일",
+      // "월요일",
+      // "화요일",
+      // "수요일",
+      // "목요일",
+      // "금요일",
+      // "토요일",
     ];
 
     const todayLabel = week[now];
@@ -63,7 +70,10 @@ const Target = () => {
         ) : (
           <img src={weatherIcon} className="icon" />
         )}
-        <p className="wind_speed">풍속 : {weathers.wind.speed}m/s</p>
+        <p className="wind_speed">
+          {t("index:speed")} : {weathers.wind.speed}m/s
+          {/* 풍속 */}
+        </p>
 
         <WeatherWrapper>
           <p className="main_temp">
@@ -76,7 +86,8 @@ const Target = () => {
           />
           <div className="right_div">
             <p className="des">{weathers.weather[0].description}</p>
-            {weathers.name === "Daegu" ? <p>경상북도 칠곡군</p> : null}
+            {weathers.name === "Daegu" ? <p>{t("index:area")}</p> : null}
+            {/* 경상북도 칠곡군 */}
             {/* {weathers.name} */}
           </div>
 

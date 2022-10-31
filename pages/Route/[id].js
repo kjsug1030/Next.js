@@ -35,8 +35,12 @@ import {
   Crosshair,
 } from "react-vis";
 import "react-vis/dist/style.css";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function oneRoute() {
+  const { t } = useTranslation("map");
+
   const { userId } = useParams();
   const router = useRouter();
 
@@ -133,7 +137,8 @@ function oneRoute() {
 
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("YYYY년 MM월 DD일");
+    return date.format(t("date"));
+    // return date.format("YYYY년 MM월 DD일");
   };
 
   function timeChange(seconds) {
@@ -160,19 +165,23 @@ function oneRoute() {
           <h1>{loadMap.trackName}</h1>
           <FlexDiv>
             <div>
-              <div className="title">거리</div>
+              <div className="title">{t("distance")}</div>
+              {/* <div className="title">거리</div> */}
               <div className="item">{loadMap.totalDistance.toFixed(2)}km</div>
             </div>
             <div>
-              <div className="title">최고 고도</div>
+              <div className="title">{t("highAltitude")}</div>
+              {/* <div className="title">최고 고도</div> */}
               <div className="item">{parseFloat(highAltitude).toFixed(2)}m</div>
             </div>
             <div>
-              <div className="title">최저 고도</div>
+              <div className="title">{t("lowAltitude")}</div>
+              {/* <div className="title">최저 고도</div> */}
               <div className="item">{parseFloat(lowAltitude).toFixed(2)}m</div>
             </div>
             <div>
-              <div className="title">평균경사도</div>
+              <div className="title">{t("avgSlope")}</div>
+              {/* <div className="title">평균경사도</div> */}
               <div className="item">{loadMap.avgSlope}%</div>
             </div>
           </FlexDiv>
@@ -241,7 +250,8 @@ function oneRoute() {
           </LeftDiv>
           <RightDiv>
             <RouteInformation />
-            <PDiv>나의랭크</PDiv>
+            <PDiv>{t("myRank")}</PDiv>
+            {/* <PDiv>나의랭크</PDiv> */}
             <div
               style={{
                 width: "100%",
@@ -251,20 +261,26 @@ function oneRoute() {
               <CardWrapper>
                 <TopCard>
                   <div>
-                    <span>순위</span>
+                    <span>{t("rank")}</span>
+                    <span>{t("speed")}</span>
+                    <span>{t("record")}</span>
+                    <span>{t("rDate")}</span>
+                    {/* <span>순위</span>
                     <span>속도</span>
                     <span>기록</span>
-                    <span>날짜</span>
+                    <span>날짜</span> */}
                   </div>
                 </TopCard>
 
                 {myMapRank[0] == 0 ? (
-                  <div>순위데이터없음</div>
+                  <div>{t("noData")}</div>
                 ) : (
+                  // <div>순위데이터없음</div>
                   <BottomCard hoverable>
                     <div style={{ width: "100%", display: "flex" }}>
                       <span style={{ marginLeft: 15 }} className="span1">
-                        {myMapRank[0].rank + "위"}
+                        {myMapRank[0].rank + t("rankName")}
+                        {/* {myMapRank[0].rank + "위"} */}
                       </span>
                       <span style={{ paddingLeft: 0 }} className="span2">
                         {myMapRank[0].post.average_speed + "km"}
@@ -283,20 +299,27 @@ function oneRoute() {
           </RightDiv>
         </TopDiv>
         <BottomDiv>
-          <div style={{ fontWeight: "bold", fontSize: 30 }}>전체순위</div>
+          <div style={{ fontWeight: "bold", fontSize: 30 }}>{t("allRank")}</div>
+          {/* <div style={{ fontWeight: "bold", fontSize: 30 }}>전체순위</div> */}
           <BottomTopCard>
             <div>
-              <span className="span1">순위</span>
+              <span className="span1">{t("rank")}</span>
+              <span className="span2">{t("name")}</span>
+              <span>{t("avSpeed")}</span>
+              <span>{t("recodrTime")}</span>
+              <span>{t("rDate")}</span>
+              {/* <span className="span1">순위</span>
               <span className="span2">이름</span>
               <span>평균속도</span>
               <span>기록(시간)</span>
-              <span>날짜</span>
+              <span>날짜</span> */}
             </div>
           </BottomTopCard>
 
           {mapRank[0] == 0 ? (
             <BottomCard>
-              <div>순위데이터없음</div>
+              <div>{t("noData")}</div>
+              {/* <div>순위데이터없음</div> */}
             </BottomCard>
           ) : (
             mapRank[0].map((b, index) => (
@@ -336,7 +359,8 @@ function oneRoute() {
                       className="rank"
                       style={{ width: 270, paddingLeft: 20 }}
                     >
-                      {index + 1 + "위"}
+                      {index + 1 + t("rankName")}
+                      {/* {index + 1 + "위"} */}
                     </div>
                   )}
 
@@ -373,19 +397,6 @@ function oneRoute() {
   );
 }
 
-// export async function getStaticPaths() {
-//   const posts = await axios.get("http://13.124.24.179/api/tracks");
-
-//   var paths1 = posts.data.map((id) => ({
-//     params: { id: id._id },
-//   }));
-
-//   return {
-//     paths: paths1,
-//     fallback: false,
-//   };
-// }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     // const { query } = context;
@@ -421,6 +432,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, ["map"])),
+      },
+    };
   }
 );
 

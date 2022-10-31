@@ -1,0 +1,18 @@
+{
+  "firstName": "성",
+  "secondName": "이름",
+  "sex": "성별",
+  "email": "이메일",
+  "password": "새 비밀번호",
+  "birth": "생일",
+  "year": "년도",
+  "month": "월",
+  "day": "일",
+  "signup": "회원가입",
+  "title1": "새로운 계정 만들기",
+  "title2": "간단합니다",
+  "man": "남성",
+  "woman": "여성",
+  "transgender": "트랜스젠더",
+  "no": "알리고 싶지 않음"
+}

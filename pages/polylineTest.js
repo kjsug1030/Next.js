@@ -29,11 +29,15 @@ import SelectMap from "../component/map/selectMap";
 import wrapper from "../store/configureStore";
 // import InfoWindow from '../component/InfoWindow';
 import styled from "styled-components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function polylineTest() {
+  const { t } = useTranslation();
+
   return (
     <Container>
-      <SelectMap />
+      <SelectMap t={t} />
     </Container>
   );
 }
@@ -43,6 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
+
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
@@ -56,6 +61,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "layout",
+          "login",
+          "badge",
+        ])),
+      },
+    };
   }
 );
 

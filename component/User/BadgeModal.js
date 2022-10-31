@@ -5,9 +5,12 @@ import { Modal, Row, Col, Button, Tabs } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { PROFILE_BADGE_REQUEST } from "../../reducers/user";
+// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+// import { useTranslation } from "next-i18next";
 
-const badgeModal = ({ isModal, openModal, otherProfile }) => {
+const badgeModal = ({ isModal, openModal, otherProfile, t }) => {
   const { me } = useSelector((state) => state.user);
+  // const { t } = useTranslation("badge");
   const dispatch = useDispatch();
 
   const updateBadge = (e) => {
@@ -50,7 +53,8 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
       <TitleDiv>
-        <div>뱃지</div>
+        <div>{t("badge:title")}</div>
+        {/* <div>뱃지</div> */}
       </TitleDiv>
       <div className="grid">
         {otherProfile && (
@@ -64,9 +68,11 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
 
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
+                      {/* <h3>달성조건</h3> */}
                     </span>
-                    <span className="text">첫운동 실시</span>
+                    <span className="text">{t("badge:misson")}</span>
+                    {/* <span className="text">첫운동 실시</span> */}
                   </div>
                 </div>
               ) : (
@@ -75,14 +81,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">첫운동 실시</span>
+                    <span className="text">{t("badge:misson")}</span>
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("first_exercise")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
+                      {/* 대표뱃지설정 */}
                     </span>
                   </div>
                 </div>
@@ -97,9 +105,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={altitude[0][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">고도 10000km</span>
+                    <span className="text">{t("badge:altitude1")}</span>
+                    {/* <span className="text">고도 10000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -108,14 +117,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">고도 10000km</span>
+                    <span className="text">{t("badge:altitude1")}</span>
+                    {/* <span className="text">고도 10000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("altitude")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -127,9 +138,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={altitude[1][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">고도 20000km</span>
+                    <span className="text">{t("badge:altitude2")}</span>
+                    {/* <span className="text">고도 20000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -138,14 +150,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">고도 20000km</span>
+                    <span className="text">{t("badge:altitude2")}</span>
+                    {/* <span className="text">고도 20000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("altitude2")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -157,9 +171,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={altitude[2][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">고도 30000km</span>
+                    <span className="text">{t("badge:altitude3")}</span>
+                    {/* <span className="text">고도 30000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -168,14 +183,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">고도 30000km</span>
+                    <span className="text">{t("badge:altitude3")}</span>
+                    {/* <span className="text">고도 30000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("altitude3")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -189,9 +206,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={bike[0][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">라이딩 1000km</span>
+                    <span className="text">{t("badge:cycling1")}</span>
+                    {/* <span className="text">라이딩 1000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -200,14 +218,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">라이딩 1000km</span>
+                    <span className="text">{t("badge:cycling")}</span>
+                    {/* <span className="text">라이딩 1000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("bike_distance")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -219,9 +239,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={bike[1][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">라이딩 5000km</span>
+                    <span className="text">{t("badge:cycling2")}</span>
+                    {/* <span className="text">라이딩 5000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -230,14 +251,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">라이딩 5000km</span>
+                    <span className="text">{t("badge:cycling2")}</span>
+                    {/* <span className="text">라이딩 5000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("bike_distance2")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -249,9 +272,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={bike[2][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">라이딩 10000km</span>
+                    <span className="text">{t("badge:cycling3")}</span>
+                    {/* <span className="text">라이딩 10000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -260,14 +284,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">라이딩 10000km</span>
+                    <span className="text">{t("badge:cycling3")}</span>
+                    {/* <span className="text">라이딩 10000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("bike_distance3")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -281,9 +307,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={running[0][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">달리기 100km</span>
+                    <span className="text">{t("badge:running1")}</span>
+                    {/* <span className="text">달리기 100km</span> */}
                   </div>
                 </div>
               ) : (
@@ -292,14 +319,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">달리기 100km</span>
+                    <span className="text">{t("badge:running1")}</span>
+                    {/* <span className="text">달리기 100km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("run_distance")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -311,9 +340,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={running[1][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">달리기 500km</span>
+                    <span className="text">{t("badge:running2")}</span>
+                    {/* <span className="text">달리기 500km</span> */}
                   </div>
                 </div>
               ) : (
@@ -322,14 +352,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">달리기 500km</span>
+                    <span className="text">{t("badge:running2")}</span>
+                    {/* <span className="text">달리기 500km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("run_distance2")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -341,9 +373,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={running[2][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">달리기 1000km</span>
+                    <span className="text">{t("badge:running3")}</span>
+                    {/* <span className="text">달리기 1000km</span> */}
                   </div>
                 </div>
               ) : (
@@ -352,14 +385,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">달리기 1000km</span>
+                    <span className="text">{t("badge:running3")}</span>
+                    {/* <span className="text">달리기 1000km</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("run_distance3")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -373,9 +408,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={track[0][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">코스생성 3개</span>
+                    <span className="text">{t("badge:course1")}</span>
+                    {/* <span className="text">코스생성 3개</span> */}
                   </div>
                 </div>
               ) : (
@@ -384,14 +420,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">코스생성 3개</span>
+                    <span className="text">{t("badge:course1")}</span>
+                    {/* <span className="text">코스생성 3개</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("make_track")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -403,9 +441,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={track[1][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">코스생성 20개</span>
+                    <span className="text">{t("badge:course2")}</span>
+                    {/* <span className="text">코스생성 20개</span> */}
                   </div>
                 </div>
               ) : (
@@ -414,14 +453,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">코스생성 20개</span>
+                    <span className="text">{t("badge:course2")}</span>
+                    {/* <span className="text">코스생성 20개</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("make_track2")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -433,9 +474,10 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src={track[2][0]} />
                   <div className="mission">
                     <span>
-                      <h3>달성조건</h3>
+                      <h3>{t("badge:misson")}</h3>
                     </span>
-                    <span className="text">코스생성 50개</span>
+                    <span className="text">{t("badge:course3")}</span>
+                    {/* <span className="text">코스생성 50개</span> */}
                   </div>
                 </div>
               ) : (
@@ -444,14 +486,16 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
                   <img src="/check.png" className="check" />
                   <div className="mission">
                     <span>
-                      <h3>목표달성</h3>
+                      <h3>{t("badge:clear")}</h3>
+                      {/* <h3>목표달성</h3> */}
                     </span>
-                    <span className="text">코스생성 50개</span>
+                    <span className="text">{t("badge:course3")}</span>
+                    {/* <span className="text">코스생성 50개</span> */}
                     <span
                       className="profile_badge"
                       onClick={() => profileBadge("make_track3")}
                     >
-                      대표뱃지설정
+                      {t("badge:badge")}
                     </span>
                   </div>
                 </div>
@@ -484,6 +528,12 @@ const badgeModal = ({ isModal, openModal, otherProfile }) => {
 // altitude: 0;
 // altitude2: 0;
 // altitude3: 0;
+
+// export const getStaticProps = async ({ locale }) => ({
+//   props: {
+//     ...(await serverSideTranslations(locale, ["badge"])),
+//   },
+// });
 
 export default badgeModal;
 

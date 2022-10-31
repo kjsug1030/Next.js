@@ -3,13 +3,18 @@ import ChartChart from "chart.js/auto";
 import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import { Card } from "antd";
+// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+// import { useTranslation } from "next-i18next";
 
-const WeekChart = ({ weekRecord, weekBikeRecord }) => {
+const WeekChart = ({ weekRecord, weekBikeRecord, t }) => {
+  // const { t } = useTranslation("week");
+
   const options = {
     plugins: {
       title: {
         display: false,
-        text: "최근 일주일 운동통계",
+        text: t("week:title"),
+        // text: "최근 일주일 운동통계",
       },
       legend: {
         position: "top",
@@ -23,20 +28,28 @@ const WeekChart = ({ weekRecord, weekBikeRecord }) => {
   };
 
   const labels = [
-    "6일 전",
-    "5일 전",
-    "4일 전",
-    "3일 전",
-    "2일 전",
-    "1일 전",
-    "오늘",
+    t("week:6day"),
+    t("week:5day"),
+    t("week:4day"),
+    t("week:3day"),
+    t("week:2day"),
+    t("week:1day"),
+    t("week:today"),
+    // "6일 전",
+    // "5일 전",
+    // "4일 전",
+    // "3일 전",
+    // "2일 전",
+    // "1일 전",
+    // "오늘",
   ];
 
   const data = {
     labels,
     datasets: [
       {
-        label: "라이딩",
+        label: t("week:cycling"),
+        // label: "라이딩",
         data: [
           weekBikeRecord.sixDayAgo,
           weekBikeRecord.fiveDayAgo,
@@ -49,7 +62,8 @@ const WeekChart = ({ weekRecord, weekBikeRecord }) => {
         backgroundColor: "rgb(53, 162, 235,0.8)",
       },
       {
-        label: "러닝",
+        label: t("week:running"),
+        // label: "러닝",
         data: [
           weekRecord.sixDayAgo,
           weekRecord.fiveDayAgo,

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Card, Empty } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
-const Pie = ({ userRate }) => {
+const Pie = ({ userRate, t }) => {
   const userRateRidding = userRate.B ? userRate.B : 0;
   const userRateRunning = userRate.R ? userRate.R : 0;
 
@@ -18,12 +18,14 @@ const Pie = ({ userRate }) => {
     maintainAspectRatio: true, // 반응형 자동 높이설정 off
   };
 
-  const labels = ["라이딩", "러닝"];
+  const labels = [t("week:cycling"), t("week:running")];
+  // const labels = ["라이딩", "러닝"];
   const data = {
     labels,
     datasets: [
       {
-        label: ["라이딩", "러닝"],
+        label: [t("week:cycling"), t("week:running")],
+        // label: ["라이딩", "러닝"],
         data: [userRateRidding, userRateRunning],
         backgroundColor: ["rgb(53, 162, 235,0.8)", "rgb(75, 192, 192, 0.8)"],
         // "#BBDEFB",
@@ -38,13 +40,15 @@ const Pie = ({ userRate }) => {
       {/* </TopCard> */}
 
       <CardWrapper>
-        <h3>나의 운동비율</h3>
+        <h3>{t("week:title2")}</h3>
+        {/* <h3>나의 운동비율</h3> */}
         {userRate ? (
           <Doughnut data={data} options={options} width={250} height={290} />
         ) : (
           <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-            description="운동Data가 없습니다"
+            description={t("week:noData")}
+            // description="운동Data가 없습니다"
             style={{
               marginTop: 80,
             }}

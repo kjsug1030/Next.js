@@ -37,10 +37,11 @@ import {
   NOTIFICATION_DELETE_REQUEST,
 } from "../reducers/user";
 
-const Notification = () => {
+const Notification = ({ t }) => {
   const followAcceptSuccess = () => {
     Modal.success({
-      content: "팔로우수락을 했습니다!",
+      content: t("notification:faile"),
+      // content: "팔로우수락을 했습니다!",
     });
   };
   // const { notification } = useSelector((state) => state.user);
@@ -49,7 +50,8 @@ const Notification = () => {
 
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("MM월DD일");
+    return date.format(t("notification:date"));
+    // return date.format("MM월DD일");
   };
 
   ////
@@ -127,7 +129,8 @@ const Notification = () => {
                                   followAccept(v.target_mem_id, v.not_id)
                                 }
                               >
-                                요청수락
+                                {t("notification:success")}
+                                {/* 요청수락 */}
                               </Button>
                             ) : null}
                             <Button
@@ -136,7 +139,8 @@ const Notification = () => {
                               onClick={() => noficationDelete(v.not_id)}
                               style={{ marginLeft: 3 }}
                             >
-                              삭제
+                              {t("notification:delete")}
+                              {/* 삭제 */}
                             </Button>
                             {/* <Button
                               size="small"
@@ -169,7 +173,8 @@ const Notification = () => {
                                   followAccept(v.target_mem_id, v.not_id)
                                 }
                               >
-                                요청수락
+                                {t("notification:success")}
+                                {/* 요청수락 */}
                               </Button>
                             ) : null}
                             <Button
@@ -178,7 +183,8 @@ const Notification = () => {
                               onClick={() => noficationDelete(v.not_id)}
                               style={{ marginLeft: 3 }}
                             >
-                              삭제
+                              {t("notification:delete")}
+                              {/* 삭제 */}
                             </Button>
                             {/* <Button
                               size="small"

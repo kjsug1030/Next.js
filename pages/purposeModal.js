@@ -21,18 +21,25 @@ import {
   ALL_GOAL_REQUEST,
 } from "../reducers/user";
 import { CloseOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const { Meta } = Card;
 const { Option } = Select;
 
 const Signup = ({ isModal, openModal, setIsModal }) => {
+  const { t } = useTranslation("purpose");
+
   function error() {
     Modal.error({
-      title: "목표설정실패",
-      content: "지정된 날짜에 목표가 이미설정되어있습니다.",
+      title: t("pTitleFaile"),
+      content: t("pContentFaile"),
+      // title: "목표설정실패",
+      // content: "지정된 날짜에 목표가 이미설정되어있습니다.",
     });
   }
-
+  const { locale } = useRouter();
   const now = new Date();
   const nowYear = now.getFullYear();
   let nowMonth = now.getMonth() + 1;
@@ -65,8 +72,14 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     // window.location.href='/musclePurpose'
 
     //     }
-    if (goalpurpose ? goalpurpose.goal : goalpurpose) {
-      window.location.href = "/musclePurpose";
+    if (locale === "ko") {
+      if (goalpurpose ? goalpurpose.goal : goalpurpose) {
+        window.location.href = "/musclePurpose";
+      }
+    } else {
+      if (goalpurpose ? goalpurpose.goal : goalpurpose) {
+        window.location.href = "/jp/musclePurpose";
+      }
     }
   }, [goalpurpose]);
   const [form] = Form.useForm();
@@ -193,37 +206,50 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
   return (
     <ModalWrapper visible={isModal} onCancel={openModal} footer={null}>
       <TitleDiv>
-        <div>운동목표설정</div>
-        <span>간단합니다</span>
+        <div>{t("setting")}</div>
+        <span>{t("pContent2")}</span>
+        {/* <div>운동목표설정</div>
+        <span>간단합니다</span> */}
       </TitleDiv>
       <FormWrapper>
         <Form onFinish={onSubmit} layout="horizontal" form={form} size="large">
           <MaleFemale>
-            종목
-            <Select placeholder="종목" onChange={onChangeEvent}>
-              <Option value="B">자전거</Option>
-              <Option value="R">러닝</Option>
+            {t("pKind")}
+            {/* 종목 */}
+            <Select placeholder={t("pKind")} onChange={onChangeEvent}>
+              <Option value="B">{t("cycling")}</Option>
+              <Option value="R">{t("running")}</Option>
+              {/* <Option value="B">자전거</Option>
+              <Option value="R">러닝</Option> */}
             </Select>
           </MaleFemale>
           {/* 여기까지 */}
-          <SmallTitle>제목</SmallTitle>
+          <SmallTitle>{t("pTitle3")}</SmallTitle>
+          {/* <SmallTitle>제목</SmallTitle> */}
           <Form.Item rules={[{ required: true }]}>
-            <Input value={title} onChange={onChangeTitle} placeholder="제목" />
+            <Input
+              value={title}
+              onChange={onChangeTitle}
+              placeholder={t("pTitle3")}
+            />
           </Form.Item>
-          <SmallTitle>운동목표</SmallTitle>
+          <SmallTitle>{t("pPurpose2")}</SmallTitle>
+          {/* <SmallTitle>운동목표</SmallTitle> */}
           <Form.Item rules={[{ required: true }]}>
             <Input
               value={purpose}
               onChange={onChangePurpose}
-              placeholder="목표km"
+              placeholder={t("pPurposeKm")}
             />
           </Form.Item>
 
-          <SmallTitle>시작날짜</SmallTitle>
+          <SmallTitle>{t("pStart2")}</SmallTitle>
+          {/* <SmallTitle>시작날짜</SmallTitle> */}
           <SpaceWrapper>
             <Select
               name="year"
-              placeholder="년도"
+              placeholder={t("year")}
+              // placeholder="년도"
               value={start.year}
               onChange={onChangeStartYear}
             >
@@ -234,7 +260,8 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             <Select
               name="month"
               value={start.month}
-              placeholder="월"
+              placeholder={t("month")}
+              // placeholder="월"
               onChange={onChangeStartMonth}
             >
               {months.map((month, index) => (
@@ -244,7 +271,8 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             <Select
               name="day"
               value={start.day}
-              placeholder="일"
+              placeholder={t("day")}
+              // placeholder="일"
               onChange={onChangeStartDay}
             >
               {days.map((day, index) => (
@@ -252,11 +280,13 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
               ))}
             </Select>
           </SpaceWrapper>
-          <SmallTitle>끝나는날짜</SmallTitle>
+          <SmallTitle>{t("pEnd2")}</SmallTitle>
+          {/* <SmallTitle>끝나는날짜</SmallTitle> */}
           <SpaceWrapper>
             <Select
               name="year"
-              placeholder="년도"
+              placeholder={t("year")}
+              // placeholder="년도"
               value={end.year}
               onChange={onChangeEndYear}
             >
@@ -268,7 +298,8 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             <Select
               name="month"
               value={end.month}
-              placeholder="월"
+              placeholder={t("month")}
+              // placeholder="월"
               onChange={onChangeEndMonth}
             >
               {months.map((month, index) => (
@@ -278,7 +309,8 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
             <Select
               name="day"
               value={end.day}
-              placeholder="일"
+              placeholder={t("day")}
+              // placeholder="일"
               onChange={onChangeEndDay}
             >
               {days.map((day, index) => (
@@ -289,7 +321,8 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
 
           <Form.Item>
             <Button type="default" htmlType="submit">
-              설정
+              {t("setting2")}
+              {/* 설정 */}
             </Button>
           </Form.Item>
         </Form>
@@ -297,6 +330,12 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     </ModalWrapper>
   );
 };
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["purpose"])),
+  },
+});
 
 export default Signup;
 

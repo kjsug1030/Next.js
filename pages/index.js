@@ -40,11 +40,19 @@ import { ArrowUpOutlined } from "@ant-design/icons";
 import PurposePie from "../component/purposePie";
 import Progress from "../component/Progress";
 // import { disableCursor } from "@fullcalendar/common";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/router";
 
 function index() {
+  const { t } = useTranslation();
+  const router = useRouter();
+
   const followAcceptSuccess = () => {
     Modal.success({
-      content: "팔로우수락을 했습니다!",
+      content: t("index:agree"),
+      // content: "팔로우수락을 했습니다!",
     });
   };
 
@@ -60,6 +68,14 @@ function index() {
   const { me, notification, notificationCheckCount } = useSelector(
     (state) => state.user
   );
+
+  // useEffect(() => {
+  //   console.log("user정보", me);
+  //   if (!me) {
+  //     window.location.href = "/LoginTest";
+  //   }
+  // }, []);
+
   const {
     mainPosts,
     hasMorePosts,
@@ -139,11 +155,12 @@ function index() {
             mainPosts.data.map((post) => (
               <>
                 <span className="title">Post</span>
-                <PostCard post={post} key={post.id} />
+                <PostCard post={post} key={post.id} t={t} />
               </>
             ))
           ) : (
-            <Empty description="포스트가 존재하지 않습니다" />
+            <Empty description={t("index:postDesc")} />
+            // <Empty description="포스트 존재 X" />
           )}
           {loadMorePostErrorBolean ? null : (
             <LoadingOutlined
@@ -172,15 +189,16 @@ function index() {
             <WeekChart
               weekRecord={weekRecord}
               weekBikeRecord={weekBikeRecord}
+              t={t}
             />
 
-            <MMR />
+            <MMR t={t} />
           </TopDiv>
 
           <BottomDiv>
-            <Pie userRate={userRate} />
-            <Progress />
-            <Target />
+            <Pie userRate={userRate} t={t} />
+            <Progress t={t} />
+            <Target t={t} />
           </BottomDiv>
         </div>
       </RightDiv>
@@ -192,9 +210,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
+
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
+    } else {
+      // return {
+      //   redirect: {
+      //     destination: "/LoginTest",
+      //     permanent: false,
+      //   },
+      // };
     }
+
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
@@ -224,6 +251,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "index",
+          "common",
+          "week",
+          "login",
+          "layout",
+          "badge",
+          "profile",
+          "notification",
+        ])),
+      },
+    };
   }
 );
 
@@ -233,12 +275,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  // height: 1300px;
   padding: 0 2%;
-  // border: 1px solid grey;
-
-  // padding: "3% 0,
-
   position: relative;
 
   .ant-card {
@@ -295,7 +332,7 @@ const PostDiv = styled.div`
   padding-left: 5px;
   // height: 88vh;
   // height: 70%;
-  border-lef-width: 0;
+  border-left-width: 0;
   border-top-width: 0;
   border-bottom-width: 0;
   border-right-width: 0;

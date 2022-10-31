@@ -10,6 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import { appWithTranslation } from "next-i18next";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const getLayout =
@@ -39,11 +40,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <title>PACE MAKER</title>
           <link rel="icon" href="/PACE MAKER.png" />
         </Head>
-
         <Component {...pageProps} />
       </CookiesProvider>
     </SessionProvider>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default wrapper.withRedux(appWithTranslation(MyApp));

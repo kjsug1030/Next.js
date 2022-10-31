@@ -33,7 +33,7 @@ import LoginForm from "./LoginForm";
 
 const { Meta } = Card;
 
-function MyNote() {
+function MyNote({ t }) {
   const [value, setValue] = useState(0);
   const [runValue, setRunValue] = useState(0);
   const { purposeProgress } = useSelector((state) => state.user);
@@ -125,7 +125,8 @@ function MyNote() {
   const contentList = {
     tab1: (
       <div style={{ textAlign: "center" }}>
-        <h2>라이딩목표율</h2>
+        <h2>{t("index:target1")}</h2>
+        {/* <h2>라이딩목표율</h2> */}
 
         {/* <Radio.Group onChange={bikeChange} defaultValue={0}>
           {purposeProgress.bike.map((v, i) => (
@@ -179,12 +180,19 @@ function MyNote() {
                     lineHeight: "23px",
                   }}
                 >
-                  목표
+                  {t("index:target1")}
+                  {/* 목표 */}
                 </Tag>
                 {bike[value].goalDistance}km
               </h4>
-              <h4>시작일 : {bike[value].firstDate}</h4>
-              <h4>종료일 : {bike[value].lastDate}</h4>
+              <h4>
+                {t("index:start")} : {bike[value].firstDate}
+              </h4>
+              {/* 시작일 */}
+              <h4>
+                {t("index:end")} : {bike[value].lastDate}
+              </h4>
+              {/* 종료일 */}
             </div>
           </div>
         ) : (
@@ -198,15 +206,17 @@ function MyNote() {
               format={() => "0%"}
               style={{ marginBottom: "25px", paddingTop: "5px" }}
             />
-            <h4>등록된 목표가 없습니다</h4>
-            <h4>목표를 등록해주세요!</h4>
+            <h4>{t("index:targetContent1")}</h4>
+            <h4>{t("index:targetContent2")}</h4>
+            {/* <h4>등록된 목표가 없습니다</h4>
+            <h4>목표를 등록해주세요!</h4> */}
           </div>
         )}
       </div>
     ),
     tab2: (
       <div>
-        <h2>러닝목표율</h2>
+        <h2>{t("index:target2")}</h2>
 
         <Dropdown
           overlay={
@@ -254,11 +264,18 @@ function MyNote() {
                     lineHeight: "23px",
                   }}
                 >
-                  목표
+                  {t("index:target1")}
+                  {/* 목표 */}
                 </Tag>
                 {run[runValue].goalDistance}km
               </h4>
-              <h4>시작일 : {run[runValue].firstDate}</h4>
+              <h4>
+                {t("index:start")} : {run[runValue].firstDate}
+              </h4>
+              {/* <h4>시작일 : {run[runValue].firstDate}</h4> */}
+              <h4>
+                {t("index:end")}: {run[runValue].lastDate}
+              </h4>
               <h4>종료일 : {run[runValue].lastDate}</h4>
             </div>
           </div>
@@ -273,8 +290,10 @@ function MyNote() {
               format={() => "0%"}
               style={{ marginBottom: "25px", paddingTop: "5px" }}
             />
-            <h4>등록된 목표가 없습니다</h4>
-            <h4>목표를 등록해주세요!</h4>
+            <h4>{t("index:targetContent1")}</h4>
+            <h4>{t("index:targetContent2")}</h4>
+            {/* <h4>등록된 목표가 없습니다</h4>
+            <h4>목표를 등록해주세요!</h4> */}
           </div>
         )}
       </div>

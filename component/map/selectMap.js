@@ -39,10 +39,11 @@ import { SearchOutlined } from "@ant-design/icons";
 var lat = 1;
 var lng = 2;
 
-function selectMap({}) {
+function selectMap({ t }) {
   function success() {
     Modal.success({
-      content: "현재위치검색중...",
+      content: t("layout:courseSearch"),
+      // content: "현재위치검색중...",
       centered: true,
       icon: <LoadingOutlined />,
     });
@@ -86,7 +87,8 @@ function selectMap({}) {
         }
       );
     } else {
-      alert("GPS를 지원하지 않습니다");
+      alert(t("layout:courseGps"));
+      // alert("GPS를 지원하지 않습니다");
     }
   }
 
@@ -313,12 +315,13 @@ function selectMap({}) {
         <Row>
           <Col span={12}>
             <LeftDiv>
-              <Title>코스찾기</Title>
+              <Title>{t("layout:courseTitle")}</Title>
+              {/* <Title>코스찾기</Title> */}
               <div>
                 <Search
                   loading={searchmapLoading}
                   onPressEnter={handleButton}
-                  placeholder="코스를 입력해주세요"
+                  placeholder={t("layout:courseInput")}
                   enterButton
                   // allowClear
                   icon={<SearchOutlined />}
@@ -329,14 +332,16 @@ function selectMap({}) {
                   {mapState === "B" ? (
                     <>
                       <Button className="btn1" onClick={runningSelectMap}>
-                        달리기
+                        {t("layout:running")}
+                        {/* 달리기 */}
                       </Button>
                       <Button
                         className="btn2"
                         onClick={bikeSelectMap}
                         style={{ background: "#467ada", color: "#fff" }}
                       >
-                        자전거
+                        {t("layout:cycling")}
+                        {/* 자전거 */}
                       </Button>
                     </>
                   ) : mapState === "R" ? (
@@ -346,10 +351,12 @@ function selectMap({}) {
                         onClick={runningSelectMap}
                         style={{ background: "#467ada", color: "#fff" }}
                       >
-                        달리기
+                        {t("layout:running")}
+                        {/* 달리기 */}
                       </Button>
                       <Button className="btn2" onClick={bikeSelectMap}>
-                        자전거
+                        {t("layout:cycling")}
+                        {/* 자전거 */}
                       </Button>
                     </>
                   ) : null}
@@ -376,6 +383,7 @@ function selectMap({}) {
                     setStrokeWeight={setStrokeWeight}
                     list={p}
                     key={p.id}
+                    t={t}
                   />
                 ))}
               </div>
@@ -438,7 +446,10 @@ function selectMap({}) {
                       <h1>{trackName}</h1>
 
                       <button>
-                        <a href={"Route/" + propsId}>상세보기</a>
+                        <a href={"Route/" + propsId}>
+                          {t("layout:courseDetail")}
+                        </a>
+                        {/* <a href={"Route/" + propsId}>상세보기</a> */}
                       </button>
                     </div>
                   </InfoWindow>

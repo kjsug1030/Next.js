@@ -1,0 +1,19 @@
+{
+  "title": "バッジ",
+  "misson": "達成条件",
+  "clear": "目標達成",
+  "badge": "代表バッジ設定",
+  "first": "初運動実施",
+  "altitude1": "高度 10000km",
+  "altitude2": "高度 20000km",
+  "altitude3": "高度 30000km",
+  "cycling1": "サイクリング 1000km",
+  "cycling2": "サイクリング 5000km",
+  "cycling3": "サイクリング 10000km",
+  "running1": "ランニング 100km",
+  "running2": "ランニング 500km",
+  "running3": "ランニング 1000km",
+  "course1": "コース制作 3個",
+  "course2": "コース制作 20個",
+  "course3": "コース制作 50個"
+}

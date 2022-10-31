@@ -1,0 +1,14 @@
+{
+  "title": "PACEMAKER ログイン",
+  "line": "LINEでログイン",
+  "google": "Googleでログイン",
+  "login": "ログイン",
+  "logout": "ログアウト",
+  "signup": "会員登録",
+  "find": "IDを忘れましたか？",
+  "id": "e-mail または 電話番号",
+  "password": "暗証番号",
+  "description": "または",
+  "success": "ログイン成功",
+  "faile": "ログイン失敗"
+}

@@ -19,6 +19,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRef } from "react";
 import Information from "../component/purposeInformation";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function onPanelChange(value, mode) {
   console.log(value.format("YYYY-MM-DD"), mode);
@@ -28,6 +30,8 @@ const musclePurpose = () => {
   const { goalpurpose, allPurpose } = useSelector((state) => state.user);
 
   const calendarRef = useRef(null);
+
+  const { t } = useTranslation("purpose");
 
   // const [calendarEvent,setCalendarEvent]=useState([])
   const calendarEvent = [];
@@ -99,11 +103,13 @@ const musclePurpose = () => {
         openModal={openModal}
         setIsModal={setIsModal}
       />
-      <Title>운동목표</Title>
+      <Title>{t("title")}</Title>
+      {/* <Title>운동목표</Title> */}
       <Card>
         {/* <Calendar onPanelChange={onPanelChange} /> */}
         <div>
-          러닝
+          {t("running")}
+          {/* 러닝 */}
           <a
             style={{
               width: 300,
@@ -116,7 +122,8 @@ const musclePurpose = () => {
           </a>
         </div>
         <div>
-          자전거
+          {t("cycling")}
+          {/* 자전거 */}
           <a
             style={{
               width: 300,
@@ -130,7 +137,8 @@ const musclePurpose = () => {
         </div>
         <span>
           <Button type="primary" onClick={showModal} ghost>
-            운동목표설정
+            {t("setting")}
+            {/* 운동목표설정 */}
           </Button>
         </span>
         <FullCalendar
@@ -151,6 +159,7 @@ const musclePurpose = () => {
           openInformationModal={openInformationModal}
           setInformationModal={setInformationModal}
           information={information}
+          t={t}
         />
       </Card>
     </Container>
@@ -161,6 +170,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
+
     if (context.req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
@@ -176,6 +186,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "purpose",
+          "login",
+          "layout",
+          "badge",
+          "profile",
+        ])),
+      },
+    };
   }
 );
 

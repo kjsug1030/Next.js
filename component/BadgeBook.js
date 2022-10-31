@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BadgeModal from "./badgeModal";
 
-const BadgeBook = () => {
+const BadgeBook = ({ t }) => {
   const [isModal, setIsModal] = useState(false);
 
   const showModal = () => {
@@ -21,7 +21,7 @@ const BadgeBook = () => {
       <img src="/badgeBook2.png" onClick={showModal} />
       {/* <p>Badge</p> */}
       {/* </div> */}
-      <BadgeModal isModal={isModal} openModal={openModal} />
+      <BadgeModal isModal={isModal} openModal={openModal} t={t} />
     </Container>
   );
 };

@@ -1,0 +1,18 @@
+{
+  "firstName": "名字",
+  "secondName": "名前",
+  "sex": "性別",
+  "email": "イーメール",
+  "password": "暗証番号",
+  "birth": "誕生日",
+  "year": "年",
+  "month": "月",
+  "day": "日",
+  "signup": "登録",
+  "title1": "会員登録",
+  "title2": "簡単です",
+  "man": "男性",
+  "woman": "女性",
+  "transgender": "トランスジェンダー",
+  "no": "知られたくない"
+}
