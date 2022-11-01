@@ -48,7 +48,7 @@ const Signup = ({ isModal, openModal, setIsModal }) => {
     nowMonth = "0" + nowMonth;
   }
 
-  const nowDay = now.getDate();
+  let nowDay = now.getDate();
   if ((nowDay + "").length < 2) {
     nowDay = "0" + nowDay;
   }
