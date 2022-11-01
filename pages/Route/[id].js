@@ -249,7 +249,7 @@ function oneRoute() {
             </MouseDiv>
           </LeftDiv>
           <RightDiv>
-            <RouteInformation />
+            <RouteInformation t={t} />
             <PDiv>{t("myRank")}</PDiv>
             {/* <PDiv>나의랭크</PDiv> */}
             <div
@@ -306,7 +306,7 @@ function oneRoute() {
               <span className="span1">{t("rank")}</span>
               <span className="span2">{t("name")}</span>
               <span>{t("avSpeed")}</span>
-              <span>{t("recodrTime")}</span>
+              <span>{t("recordTime")}</span>
               <span>{t("rDate")}</span>
               {/* <span className="span1">순위</span>
               <span className="span2">이름</span>
@@ -435,7 +435,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ["map"])),
+        ...(await serverSideTranslations(context.locale, [
+          "map",
+          "layout",
+          "login",
+          "badge",
+        ])),
       },
     };
   }

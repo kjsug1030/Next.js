@@ -48,8 +48,11 @@ import FollowerPost from "../../component/User/Post";
 import FollowerMMR from "../../component/User/MMR";
 import Follower from "../../component/User/Follower";
 import FollowerPie from "../../component/User/Pie";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 function userProfile() {
+  const { t } = useTranslation("common");
   const [isModal, setIsModal] = useState(false);
   // const [loading, setLoading] = useState(true);
 
@@ -129,21 +132,25 @@ function userProfile() {
 
   const cardScore = [
     {
-      title: "총 운동 시간",
+      title: t("recordTotal1"),
+      // title: "총 운동 시간",
       distance: timeChange(otherUserTotalTime),
     },
     {
-      title: "총 소모 칼로리",
+      title: t("recordTotal2"),
+      // title: "총 소모 칼로리",
       distance: otherUserTotalCalorie + "Kcal",
     },
     {
-      title: "총 라이딩 거리",
+      title: t("recordTotal3"),
+      // title: "총 라이딩 거리",
       distance: otherUserTotalRunTime.distance
         ? otherUserTotalRunTime.distance.toFixed(2) + "km"
         : 0 + "km",
     },
     {
-      title: "총 러닝 거리",
+      title: t("recordTotal4"),
+      // title: "총 러닝 거리",
       distance: otherUserTotalBikeTime.distance
         ? otherUserTotalBikeTime.distance.toFixed(2) + "km"
         : 0 + "km",
@@ -168,32 +175,39 @@ function userProfile() {
                 style={{ backgroundColor: "green" }}
                 onClick={followCancel}
               >
-                요청중
+                {t("followRequest")}
+                {/* 요청중 */}
               </Button>
             ) : otherProfile.followCheck === 1 ? (
               <Button className="follow_btn" onClick={follow}>
-                언팔로우
+                {t("unfollow")}
+                {/* 언팔로우 */}
               </Button>
             ) : (
               <Button className="follow_btn" onClick={follow}>
-                팔로우
+                {t("follow")}
+                {/* 팔로우 */}
               </Button>
             )}
           </div>
           <div className="follow">
             <h2 className="follower">
-              게시물 : {otherProfile.post ? otherProfile.posts.length : 0}
+              {t("post")} : {otherProfile.post ? otherProfile.posts.length : 0}
+              {/* 게시물 : {otherProfile.post ? otherProfile.posts.length : 0} */}
             </h2>
             <h2 className="follower">
-              팔로워 :{" "}
+              {t("follower")} : {/* 팔로워 :{" "} */}
               {otherProfile.followers ? otherProfile.followers.length : 0}
             </h2>
             <h2>
-              팔로잉 :{" "}
+              {t("following")} : {/* 팔로잉 :{" "} */}
               {otherProfile.followings ? otherProfile.followings.length : 0}
             </h2>
           </div>
-          <h2>자기소개 : {otherProfile.introduce}</h2>
+          <h2>
+            {t("selfIntroduce")} : {otherProfile.introduce}
+          </h2>
+          {/* <h2>자기소개 : {otherProfile.introduce}</h2> */}
           {/* <Button onClick={showModal}>도감</Button> */}
         </div>
 
@@ -218,6 +232,7 @@ function userProfile() {
             <SportsChart
               runWeekRecord={otherProfile.runWeekData}
               bikeWeekRecord={otherProfile.bikeWeekData}
+              t={t}
             />
             {/* <Pie userRate={userRate} /> */}
           </div>
@@ -254,7 +269,8 @@ function userProfile() {
                     </>
                   ))
               ) : (
-                <Empty description="포스트가 존재하지 않습니다" />
+                <Empty description={t("nodata")} />
+                // <Empty description="포스트가 존재하지 않습니다" />
               )}
             </PostDiv>
           </MidDiv>
@@ -278,6 +294,7 @@ function userProfile() {
                 <FollowerPie
                   bikePercentage={otherProfile.bikePercentage}
                   runPercentage={otherProfile.runPercentage}
+                  t={t}
                 />
               </Col>
               <Col span={12}>
@@ -298,6 +315,7 @@ function userProfile() {
                   otherProfile={otherProfile}
                   isModal={isModal}
                   openModal={openModal}
+                  t={t}
                 />
               </Col>
             </Row>
@@ -310,10 +328,12 @@ function userProfile() {
           {/* 언팔로잉 때 컴포넌트 */}
           <div className="card_div">
             <div className="flex_div">
-              <h1>비공개 계정입니다</h1>
+              <h1>{t("unfollowTitle1")}</h1>
+              {/* <h1>비공개 계정입니다</h1> */}
               <LockOutlined className="lock" />
             </div>
-            <p>포스트 및 기록을 보려면 팔로우하세요</p>
+            <p>{t("unfollowTitle2")}</p>
+            {/* <p>포스트 및 기록을 보려면 팔로우하세요</p> */}
           </div>
         </Card>
       )}
@@ -376,6 +396,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
+
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "common",
+          "layout",
+          "login",
+          "badge",
+        ])),
+      },
+    };
   }
 );
 

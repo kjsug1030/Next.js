@@ -17,11 +17,15 @@
   "rank": "순위",
   "speed": "속도",
   "record": "기록",
+  "recordTime": "기록(시간)",
   "rDate": "날짜",
   "noData": "순위데이터없음",
   "rankName": "위",
   "allRank": "전체순위",
   "name": "이름",
   "avSpeed": "평균속도",
-  "recodrTime": "기록(시간)"
+  "name1": "코스만든사람정보",
+  "name2": "코스만든사람이름",
+  "des": "코스설명",
+  "courseDate": "생성날짜"
 }

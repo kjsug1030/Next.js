@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import { Card, Badge } from "antd";
 
-const SportsChart = ({ runWeekRecord, bikeWeekRecord }) => {
+const SportsChart = ({ runWeekRecord, bikeWeekRecord, t }) => {
   const options = {
     plugins: {
       title: {
         display: false,
-        text: "최근 일주일 운동통계",
+        text: t("title"),
+        // text: "최근 일주일 운동통계",
       },
       legend: {
         position: "top",
@@ -24,20 +25,28 @@ const SportsChart = ({ runWeekRecord, bikeWeekRecord }) => {
   };
 
   const labels = [
-    "6일 전",
-    "5일 전",
-    "4일 전",
-    "3일 전",
-    "2일 전",
-    "1일 전",
-    "오늘",
+    t("6day"),
+    t("5day"),
+    t("4day"),
+    t("3day"),
+    t("2day"),
+    t("1day"),
+    t("today"),
+    // "6일 전",
+    // "5일 전",
+    // "4일 전",
+    // "3일 전",
+    // "2일 전",
+    // "1일 전",
+    // "오늘",
   ];
 
   const data = {
     labels,
     datasets: [
       {
-        label: "라이딩",
+        label: t("cycling"),
+        // label: "라이딩",
         data: [
           bikeWeekRecord.sixDayAgo,
           bikeWeekRecord.fiveDayAgo,
@@ -50,7 +59,8 @@ const SportsChart = ({ runWeekRecord, bikeWeekRecord }) => {
         backgroundColor: "rgb(53, 162, 235,0.8)",
       },
       {
-        label: "러닝",
+        label: t("running"),
+        // label: "러닝",
         data: [
           runWeekRecord.sixDayAgo,
           runWeekRecord.fiveDayAgo,

@@ -186,7 +186,7 @@ function myRecord() {
               render={(e) => {
                 if (e === t("layout:recordTitle2")) {
                   return <p>{t("layout:recordKind1")}</p>;
-                } else if (e === t("layout:recordTitle2")) {
+                } else if (e === t("layout:recordTitle4")) {
                   return <p>{t("layout:recordKind2")}</p>;
                 } else if (e === t("layout:recordTitle3")) {
                   return <p>{t("layout:recordKind3")}</p>;

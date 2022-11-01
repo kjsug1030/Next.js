@@ -24,12 +24,12 @@ const FollowerPie = ({ bikePercentage, runPercentage, t }) => {
     maintainAspectRatio: true, // 반응형 자동 높이설정 off
   };
 
-  const labels = [t("index:cycling"), t("index:running")];
+  const labels = [t("cycling"), t("running")];
   const data = {
     labels,
     datasets: [
       {
-        label: [t("index:cycling"), t("index:running")],
+        label: [t("cycling"), t("running")],
         data: [userRateRidding, userRateRunning],
         backgroundColor: ["#0288D1", "#BBDEFB"],
       },
@@ -40,7 +40,7 @@ const FollowerPie = ({ bikePercentage, runPercentage, t }) => {
     <PieDiv hoverable>
       <TitleCard />
       <CardWrapper hoverable>
-        <h3>{t("index:title1")}</h3>
+        <h3>{t("title1")}</h3>
         {bikePercentage || runPercentage ? (
           <Doughnut
             data={data}
@@ -52,7 +52,7 @@ const FollowerPie = ({ bikePercentage, runPercentage, t }) => {
         ) : (
           <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-            description={t("index:description1")}
+            description={t("description1")}
             style={{
               marginTop: 80,
             }}

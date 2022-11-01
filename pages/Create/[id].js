@@ -413,7 +413,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ["map"])),
+        ...(await serverSideTranslations(context.locale, [
+          "map",
+          "layout",
+          "login",
+          "badge",
+        ])),
       },
     };
   }

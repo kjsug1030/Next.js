@@ -28,7 +28,8 @@ import styled from "styled-components";
 import CommentForm from "../CommentForm";
 import moment from "moment";
 import ImageCarousel from "../../component/ImageCarousel";
-import "moment/locale/ko";
+// import "moment/locale/ko";
+import "moment/locale/ja";
 
 const FollowerPost = ({ post, user }) => {
   const { me } = useSelector((state) => state.user);

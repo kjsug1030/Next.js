@@ -3,7 +3,7 @@
   "errContent": "似ているトラクックがあります。.",
   "createSuccess": "経路作り成功",
   "formDistance": "現在、測定中のコース距離",
-  "formCourse": "作っているコース",
+  "formCourse": "作るコース",
   "formContent1": "経路タイトルを入力してください。",
   "formContent2": "経路内容を入力してください。",
   "formBtn": "経路作る",
@@ -18,11 +18,15 @@
   "rank": "順位",
   "speed": "速度",
   "record": "記録",
+  "recordTime": "記録(時間)",
   "rDate": "日付",
   "noData": "順位データがありません。",
   "rankName": "位",
   "allRank": "全体順位",
   "name": "姓名",
   "avSpeed": "平均速度",
-  "recodrTime": "記録(時間)"
+  "name1": "コース作りの人情報",
+  "name2": "コース作りの人の名前",
+  "des": "コースの説明",
+  "courseDate": "生成日"
 }

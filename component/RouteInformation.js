@@ -12,19 +12,21 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Link from "next/link";
 import moment from "moment";
+import "moment/locale/ja";
 
-function RouteInformation() {
+function RouteInformation({ t }) {
   const { loadMap } = useSelector((state) => state.map);
 
   const dateFormat = (d) => {
     let date = moment(d);
-    return date.format("YYYY년 MM월 DD일");
+    return date.format("date");
   };
 
   return (
     <Container>
       <Card
-        title="코스만든사람정보"
+        title={t("name1")}
+        // title="코스만든사람정보"
         hoverable
         style={{
           width: "100%",
@@ -34,9 +36,18 @@ function RouteInformation() {
         <DivWrapper>
           <Avatar size={58} src={loadMap.user.profile} />
           <div>
-            <p>코스만든사람이름:{loadMap.user.name}</p>
+            <p>
+              {t("name2")}:{loadMap.user.name}
+            </p>
+            <p>
+              {t("des")} : {loadMap.description}
+            </p>
+            <p>
+              {t("courseDate")} : {dateFormat(loadMap.createdAt)}
+            </p>
+            {/* <p>코스만든사람이름:{loadMap.user.name}</p>
             <p>코스설명 : {loadMap.description}</p>
-            <p>생성날짜 : {dateFormat(loadMap.createdAt)}</p>
+            <p>생성날짜 : {dateFormat(loadMap.createdAt)}</p> */}
           </div>
         </DivWrapper>
       </Card>

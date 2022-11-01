@@ -24,7 +24,7 @@
   "recordTime": "시간",
   "recordDate": "날짜",
   "recordCreate": "코스만들기",
-  "modify ": "수정",
+  "modify": "수정",
   "delete": "삭제",
   "course": "운동경로 탐색",
   "courseTitle": "코스탐색",
@@ -41,7 +41,7 @@
   "post": "게시물",
   "userSearch": "유저탐색",
   "userInput": "유저를 입력해주세요",
-  "userIntroduce ": "자기소개",
+  "userIntroduce": "자기소개",
   "userBirth": "생일",
   "userSex": "성별",
   "userLocation": "활동지역"
