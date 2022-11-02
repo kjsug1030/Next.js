@@ -180,7 +180,7 @@ function MyNote({ t }) {
                     lineHeight: "23px",
                   }}
                 >
-                  {t("index:target1")}
+                  {t("index:cycling")}
                   {/* 목표 */}
                 </Tag>
                 {bike[value].goalDistance}km
@@ -264,7 +264,7 @@ function MyNote({ t }) {
                     lineHeight: "23px",
                   }}
                 >
-                  {t("index:target1")}
+                  {t("index:running")}
                   {/* 목표 */}
                 </Tag>
                 {run[runValue].goalDistance}km
@@ -276,7 +276,7 @@ function MyNote({ t }) {
               <h4>
                 {t("index:end")}: {run[runValue].lastDate}
               </h4>
-              <h4>종료일 : {run[runValue].lastDate}</h4>
+              {/* <h4>종료일 : {run[runValue].lastDate}</h4> */}
             </div>
           </div>
         ) : (
