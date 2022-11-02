@@ -389,6 +389,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           "layout",
           "login",
           "badge",
+          "profile",
         ])),
       },
     };
