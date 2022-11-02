@@ -8,6 +8,7 @@
   "formContent2": "경로내용을 입력해주세요",
   "formBtn": "경로내용을 입력해주세요",
   "start": "출발",
+  "end": "도착",
   "date": "YYYY년 MM월 DD일",
   "distance": "거리",
   "highAltitude": "최고 고도",

@@ -130,10 +130,6 @@ function selectMap({ t }) {
         },
       });
     }
-
-    // setTimeout(() => {
-    //   runningSelectMap();
-    // }, 1000);
   }, [loadMap]);
 
   const handleOnLoad = (map) => {
